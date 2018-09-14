@@ -62,6 +62,7 @@
 
         .m-b-md {
             margin-bottom: 30px;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -79,8 +80,7 @@
     @endif
 
     <div class="content">
-        <div class="title m-b-md"> {{ config('app.name') }}</div>
-
+        <div class="title m-b-md app-name"> {{ config('app.name') }}</div>
     </div>
 </div>
 </body>

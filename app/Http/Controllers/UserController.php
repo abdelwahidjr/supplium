@@ -9,6 +9,7 @@ use App\Http\Requests\UserUpdate;
 use App\Http\Resources\UserResource;
 use App\Models\CompanyUser;
 use App\Models\User;
+use App\Notifications\OrderConfirmation;
 use Auth;
 use Hash;
 
@@ -52,6 +53,10 @@ class UserController extends Controller
                 'message' => trans('main.null_entity'),
             ], 422);
         }
+
+        $order = "#100";
+        Auth::user()->notify(new OrderConfirmation($order));
+
 
         return new UserResource($user);
     }

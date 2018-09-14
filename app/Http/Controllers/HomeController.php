@@ -2,10 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Http\Request;
-use Storage;
-
 class HomeController extends Controller
 {
     public function __construct()
@@ -26,9 +22,7 @@ class HomeController extends Controller
     public function test()
     {
 
-        $state = ['empty', 'not_empty'];
-        $i = array_rand($state);
-        echo $state[$i];
+        return view('mail.order.comfirm');
 
     }
 
