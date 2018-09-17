@@ -1,13 +1,23 @@
 {
-  "name"              : "Stanton Ltd",
-  "business_type"     : "quia",
-  "phone"             : "1-226-308-9834 x13108",
-  "address_1"         : "427 McGlynn Mill\nAntwonview, MT 43913-5899",
-  "address_2"         : "3649 Bogisich Summit\nZemlakshire, WI 66330",
-  "website"           : "aperiam.test",
-  "country"           : "Micronesia",
-  "city"              : "West Golden",
-  "state"             : null,
-  "zip"               : "76069-1361",
-  "extra_information" : "Non tempore aut nam odit."
+  "products"  : [
+    {
+      "id"    : "5",
+      "qty"   : "2",
+      "price" : "100"
+    },
+    {
+      "id"    : "11",
+      "qty"   : "4",
+      "price" : "100"
+    },
+    {
+      "id"    : "12",
+      "qty"   : "1",
+      "price" : "400"
+    }
+  ],
+  "status"    : "pending",
+  "notes"     : "test notes test notes test notes",
+  "tax"       : "10.00",
+  "outlet_id" : "31"
 }
