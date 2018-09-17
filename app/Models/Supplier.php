@@ -31,4 +31,9 @@ class Supplier extends Model
     {
         return $this->belongsTo(Company::class);
     }
+
+    public function brand()
+    {
+        return $this->belongsToMany(Brand::class)->withTimestamps();
+    }
 }

@@ -15,6 +15,7 @@ class Product extends Model
             'unit',
             'price',
             'supplier_id',
+            'category_id',
             'created_by_user_id',
             'updated_by_user_id',
         ];
@@ -27,5 +28,15 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function order()
+    {
+        return $this->belongsToMany(Order::class)->withTimestamps();
+    }
+
+    public function cart()
+    {
+        return $this->belongsToMany(Cart::class)->withTimestamps();
     }
 }

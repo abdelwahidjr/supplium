@@ -11,6 +11,13 @@ class Order extends Model
     protected $fillable
         = [
             'products',
+            'status',
+            'tax',
+            'tax_val',
+            'total_price_before_tax',
+            'total_price_after_tax',
+            'total_qty',
+            'notes',
             'outlet_id',
             'created_by_user_id',
             'updated_by_user_id',
@@ -24,6 +31,16 @@ class Order extends Model
     public function outlet()
     {
         return $this->belongsTo(Outlet::class);
+    }
+
+    public function standing_order()
+    {
+        return $this->belongsTo(StandingOrder::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsToMany(Product::class)->withTimestamps();
     }
 
 }

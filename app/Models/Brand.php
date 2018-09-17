@@ -28,6 +28,6 @@ class Brand extends Model
 
     public function supplier()
     {
-        return $this->belongsToMany(Supplier::class);
+        return $this->belongsToMany(Supplier::class)->withTimestamps();
     }
 }

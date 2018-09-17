@@ -13,19 +13,24 @@ class Cart extends Model
             'status',
             'notes',
             'outlet_id',
-            'orders',
+            'products',
             'created_by_user_id',
             'updated_by_user_id',
         ];
 
     protected $casts
         = [
-            'orders' => 'array',
+            'products' => 'array',
         ];
 
     public function outlet()
     {
         return $this->belongsTo(Outlet::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsToMany(Product::class)->withTimestamps();
     }
 
 }
