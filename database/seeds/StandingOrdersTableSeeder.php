@@ -38,8 +38,8 @@ class StandingOrdersTableSeeder extends Seeder
 
                 StandingOrder::create([
                     'name'          => $faker->name,
-                    'start_date'    => $faker->date(),
-                    'end_date'      => $faker->date(),
+                    'start_date'    => $faker->date('Y-m-d'),
+                    'end_date'      => $faker->date('Y-m-d'),
                     'repeated_days' => $days,
                     'order_id'      => Order::all()->random()->id,
                 ]);

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateSettingsTable extends Migration
 {
@@ -16,7 +16,7 @@ class CreateSettingsTable extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->increments('id');
             $table->enum('notifications',['on','off']);
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->integer('created_by_user_id')->nullable();
             $table->integer('updated_by_user_id')->nullable();
 

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateOutletsTable extends Migration
 {
@@ -22,7 +22,7 @@ class CreateOutletsTable extends Migration
             $table->string('latitude');
             $table->string('city');
             $table->string('shipping_address');
-            $table->unsignedInteger('brand_id');
+            $table->unsignedBigInteger('brand_id');
             $table->integer('created_by_user_id')->nullable();
             $table->integer('updated_by_user_id')->nullable();
 

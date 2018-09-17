@@ -19,8 +19,8 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->enum('unit', ['kg', 'liter', 'packet', 'bucket', 'case', 'piece', 'box', 'gallon']);
             $table->decimal('price', 8, 2);
-            $table->unsignedInteger('supplier_id');
-            $table->unsignedInteger('category_id');
+            $table->unsignedBigInteger('supplier_id');
+            $table->unsignedBigInteger('category_id');
             $table->integer('created_by_user_id')->nullable();
             $table->integer('updated_by_user_id')->nullable();
 

@@ -20,7 +20,7 @@ class CreateSuppliersTable extends Migration
             $table->string('phone');
             $table->string('category');
             $table->string('address');
-            $table->unsignedInteger('company_id');
+            $table->unsignedBigInteger('company_id');
             $table->integer('created_by_user_id')->nullable();
             $table->integer('updated_by_user_id')->nullable();
 
