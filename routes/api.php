@@ -28,9 +28,8 @@ Route::prefix('admin')->middleware('auth:api','role:admin')->group(function () {
     }
 });
 
-
-Route::prefix('user')->middleware('auth:api')->group(function () {
-    foreach (File::allFiles(base_path('routes/api/user')) as $file) {
+Route::prefix('public')->middleware('auth:api')->group(function () {
+    foreach (File::allFiles(base_path('routes/api/public')) as $file) {
         require($file->getPathname());
     }
 });
