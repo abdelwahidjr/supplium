@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\CompanyUser;
+use App\StandingOrder;
 use Illuminate\Http\Request;
 
-class CompanyUserController extends Controller
+class StandingOrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,11 @@ class CompanyUserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\CompanyUser  $companyUser
+     * @param  \App\StandingOrder $standingOrder
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show(CompanyUser $companyUser)
+    public function show(StandingOrder $standingOrder)
     {
         //
     }
@@ -52,10 +53,11 @@ class CompanyUserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\CompanyUser  $companyUser
+     * @param  \App\StandingOrder $standingOrder
+     *
      * @return \Illuminate\Http\Response
      */
-    public function edit(CompanyUser $companyUser)
+    public function edit(StandingOrder $standingOrder)
     {
         //
     }
@@ -63,11 +65,12 @@ class CompanyUserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\CompanyUser  $companyUser
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\StandingOrder       $standingOrder
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CompanyUser $companyUser)
+    public function update(Request $request, StandingOrder $standingOrder)
     {
         //
     }
@@ -75,10 +78,11 @@ class CompanyUserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\CompanyUser  $companyUser
+     * @param  \App\StandingOrder $standingOrder
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CompanyUser $companyUser)
+    public function destroy(StandingOrder $standingOrder)
     {
         //
     }

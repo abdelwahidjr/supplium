@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\CompanyResource;
+use App\Http\Resources\ModelResource;
 use App\Models\Company;
-use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
@@ -18,10 +17,10 @@ class CompanyController extends Controller
     public function all()
     {
         // all
-       // return CompanyResource::collection(Company::paginate(config('main.JsonResultCount')));
+        // return ModelResource::collection(Company::paginate(config('main.JsonResultCount')));
 
         //all with relations
-       return CompanyResource::collection((Company::with('brand','user','brand.outlet'))->paginate(config('main.JsonResultCount')));
+        return ModelResource::collection((Company::with('brand', 'user', 'brand.outlet'))->paginate(config('main.JsonResultCount')));
 
 
     }
@@ -38,7 +37,7 @@ class CompanyController extends Controller
             ], 422);
         }
 
-        return new CompanyResource($Company);
+        return new ModelResource($Company);
     }
 
 
