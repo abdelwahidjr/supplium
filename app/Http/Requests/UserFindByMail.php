@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserAddMember extends FormRequest
+class UserFindByMail extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,7 @@ class UserAddMember extends FormRequest
     public function rules()
     {
         return [
-            'name'       => 'required|max:255',
-            'email'      => 'required|unique:users|max:255',
-            'password'   => 'required|min:6|confirmed',
-            'user_role'  => 'required|string',
-            'company_id' => 'required|exists:companies,id',
+            'email' => 'required|exists:users,email',
         ];
     }
 }
