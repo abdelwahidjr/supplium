@@ -2,26 +2,23 @@
 
 namespace App\Console\Commands;
 
-use App\Models\User;
-use Faker\Factory;
-use Hash;
 use Illuminate\Console\Command;
 
-class TaskMinutely extends Command
+class StandingOrders extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'task:start';
+    protected $signature = 'standing-orders:check';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Task Start Description';
+    protected $description = 'check standing orders';
 
     /**
      * Create a new command instance.
@@ -35,15 +32,12 @@ class TaskMinutely extends Command
 
     public function handle()
     {
-        $faker = Factory::create();
 
-        foreach (range(1, 5) as $index) {
-            User::create([
-                'name'     => $faker->name,
-                'email'    => $faker->email,
-                'password' => Hash::make('secret'),
-            ]);
-        }
+
+        // handel
+
+
+
     }
 
 }

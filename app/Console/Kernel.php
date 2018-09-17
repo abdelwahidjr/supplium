@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands
         = [
             'App\Console\Commands\Install',
-            'App\Console\Commands\TaskMinutely',
+            'App\Console\Commands\StandingOrders',
         ];
 
     /**
@@ -29,15 +29,18 @@ class Kernel extends ConsoleKernel
     {
         /*
 
-        in server run "crontab -e" and add : * * * * * cd /project-path && php artisan schedule:run 1 >> /dev/null 2>&1
+        out of the box laradock comes with cron job pre-installed
 
-        * * * * * cd /var/www/ && php artisan schedule:run 1 >> /dev/null 2>&1
+        if your are using crontab
+
+        in server run "crontab -e" and add :
+
+        * * * * * cd /var/www/ && php artisan schedule:run >> /dev/null 2>&1
 
         */
 
-        // $schedule->command('inspire')->hourly();
 
-        // $schedule->command('task:start')->everyMinute();
+        // $schedule->command('standing-orders:check')->everyMinute();
 
     }
 
