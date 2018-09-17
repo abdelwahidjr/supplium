@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Order;
 use App\Models\StandingOrder;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
@@ -27,11 +26,10 @@ class StandingOrdersTableSeeder extends Seeder
                 $rand_day4   = $repeat_days[array_rand($repeat_days)];
 
                 StandingOrder::create([
-                    'name'          => $faker->name,
+                    'name'          => $faker->word,
                     'start_date'    => $faker->date('Y-m-d', $max = 'now'),
                     'end_date'      => $faker->date('Y-m-d', $max = 'now'),
                     'repeated_days' => [$rand_day1, $rand_day2, $rand_day3, $rand_day4],
-                    'order_id'      => Order::all()->random()->id,
                 ]);
             }
         }

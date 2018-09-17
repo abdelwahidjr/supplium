@@ -19,7 +19,6 @@ class CreateStandingOrdersTable extends Migration
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->string('repeated_days'); //array
-            $table->unsignedBigInteger('order_id');
             $table->timestamps();
         });
     }

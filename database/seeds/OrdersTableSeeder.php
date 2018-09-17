@@ -2,6 +2,7 @@
 
 use App\Models\Order;
 use App\Models\Outlet;
+use App\Models\StandingOrder;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 
@@ -44,6 +45,7 @@ class OrdersTableSeeder extends Seeder
                     'total_qty'              => $rand_integer,
                     'notes'                  => $faker->sentence($nbWords = 5),
                     'outlet_id'              => Outlet::all()->random()->id,
+                    'standing_order_id'      => StandingOrder::all()->random()->id,
                 ]);
             }
         }

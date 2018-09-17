@@ -23,9 +23,10 @@ class CreateOrdersTable extends Migration
             $table->decimal('tax_val', 8, 2);
             $table->decimal('total_price_after_tax', 8, 2);
             $table->text('notes')->nullable();
-            $table->text('outlet_id');
-            $table->integer('created_by_user_id')->nullable();
-            $table->integer('updated_by_user_id')->nullable();
+            $table->unsignedBigInteger('outlet_id');
+            $table->unsignedBigInteger('standing_order_id')->nullable();
+            $table->unsignedBigInteger('created_by_user_id')->nullable();
+            $table->unsignedBigInteger('updated_by_user_id')->nullable();
 
             $table->timestamps();
         });

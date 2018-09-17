@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands
         = [
             'App\Console\Commands\Install',
-            'App\Console\Commands\StandingOrders',
+            'App\Console\Commands\ScheduleStandingOrders',
         ];
 
     /**

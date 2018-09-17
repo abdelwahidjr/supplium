@@ -14,7 +14,6 @@ class StandingOrder extends Model
             'start_date',
             'end_date',
             'repeated_days',
-            'order_id',
             'created_by_user_id',
             'updated_by_user_id',
         ];

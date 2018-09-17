@@ -21,8 +21,8 @@ class CreateSuppliersTable extends Migration
             $table->string('category');
             $table->string('address');
             $table->unsignedBigInteger('company_id');
-            $table->integer('created_by_user_id')->nullable();
-            $table->integer('updated_by_user_id')->nullable();
+            $table->unsignedBigInteger('created_by_user_id')->nullable();
+            $table->unsignedBigInteger('updated_by_user_id')->nullable();
 
             $table->timestamps();
         });

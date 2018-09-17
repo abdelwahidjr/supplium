@@ -17,8 +17,8 @@ class CreateSettingsTable extends Migration
             $table->increments('id');
             $table->enum('notifications',['on','off']);
             $table->unsignedBigInteger('user_id');
-            $table->integer('created_by_user_id')->nullable();
-            $table->integer('updated_by_user_id')->nullable();
+            $table->unsignedBigInteger('created_by_user_id')->nullable();
+            $table->unsignedBigInteger('updated_by_user_id')->nullable();
 
             $table->timestamps();
         });

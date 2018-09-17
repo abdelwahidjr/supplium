@@ -19,6 +19,7 @@ class Order extends Model
             'total_qty',
             'notes',
             'outlet_id',
+            'standing_order_id',
             'created_by_user_id',
             'updated_by_user_id',
         ];

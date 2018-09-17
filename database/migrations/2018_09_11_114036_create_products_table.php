@@ -21,8 +21,8 @@ class CreateProductsTable extends Migration
             $table->decimal('price', 8, 2);
             $table->unsignedBigInteger('supplier_id');
             $table->unsignedBigInteger('category_id');
-            $table->integer('created_by_user_id')->nullable();
-            $table->integer('updated_by_user_id')->nullable();
+            $table->unsignedBigInteger('created_by_user_id')->nullable();
+            $table->unsignedBigInteger('updated_by_user_id')->nullable();
 
             $table->timestamps();
         });

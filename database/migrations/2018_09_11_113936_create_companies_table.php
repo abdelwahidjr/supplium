@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateCompaniesTable extends Migration
 {
@@ -26,8 +26,8 @@ class CreateCompaniesTable extends Migration
             $table->string('state')->nullable();
             $table->string('zip')->nullable();
             $table->text('extra_information')->nullable();
-            $table->integer('created_by_user_id')->nullable();
-            $table->integer('updated_by_user_id')->nullable();
+            $table->unsignedBigInteger('created_by_user_id')->nullable();
+            $table->unsignedBigInteger('updated_by_user_id')->nullable();
 
             $table->timestamps();
         });

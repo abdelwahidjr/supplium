@@ -23,8 +23,8 @@ class CreateOutletsTable extends Migration
             $table->string('city');
             $table->string('shipping_address');
             $table->unsignedBigInteger('brand_id');
-            $table->integer('created_by_user_id')->nullable();
-            $table->integer('updated_by_user_id')->nullable();
+            $table->unsignedBigInteger('created_by_user_id')->nullable();
+            $table->unsignedBigInteger('updated_by_user_id')->nullable();
 
 
             $table->timestamps();

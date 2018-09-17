@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ComapiesTableSeeder::class);
         $this->call(BrandsTableSeeder::class);
         $this->call(OutletsTableSeeder::class);
-        $this->call(ComapiesUsersTableSeeder::class);
         $this->call(PlansTableSeeder::class);
         $this->call(SuppliersTableSeeder::class);
         $this->call(CategoriesTableSeeder::class);
@@ -25,10 +24,13 @@ class DatabaseSeeder extends Seeder
         $this->call(SettingsTableSeeder::class);
         $this->call(CartsTableSeeder::class);
         $this->call(CategoriesTableSeeder::class);
-        $this->call(OrdersTableSeeder::class);
-        $this->call(CartsProductsTableSeeder::class);
-        $this->call(OrdersProductsTableSeeder::class);
-        $this->call(BrandsSuppliersTableSeeder::class);
         $this->call(StandingOrdersTableSeeder::class);
+        $this->call(OrdersTableSeeder::class);
+        $this->call(OrdersProductsTableSeeder::class);
+        $this->call(ComapiesUsersTableSeeder::class);
+        $this->call(CartsProductsTableSeeder::class);
+        $this->call(BrandsSuppliersTableSeeder::class);
+
+
     }
 }

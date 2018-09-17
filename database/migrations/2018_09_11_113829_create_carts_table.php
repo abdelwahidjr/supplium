@@ -19,8 +19,8 @@ class CreateCartsTable extends Migration
             $table->unsignedBigInteger('outlet_id');
             $table->text('notes')->nullable();
             $table->string('products'); //array
-            $table->integer('created_by_user_id')->nullable();
-            $table->integer('updated_by_user_id')->nullable();
+            $table->unsignedBigInteger('created_by_user_id')->nullable();
+            $table->unsignedBigInteger('updated_by_user_id')->nullable();
 
             $table->timestamps();
         });
