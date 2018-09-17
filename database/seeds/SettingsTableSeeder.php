@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Setting;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class SettingsTableSeeder extends Seeder
@@ -20,7 +21,7 @@ class SettingsTableSeeder extends Seeder
             foreach (range(1, 50) as $index) {
                 Setting::create([
                     'notifications' => $notification,
-                    'user_id'       => rand(1, 50),
+                    'user_id'       => User::all()->random()->id,
                 ]);
             }
         }

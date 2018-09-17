@@ -19,12 +19,16 @@ class DatabaseSeeder extends Seeder
         $this->call(ComapiesUsersTableSeeder::class);
         $this->call(PlansTableSeeder::class);
         $this->call(SuppliersTableSeeder::class);
+        $this->call(CategoriesTableSeeder::class);
         $this->call(ProductsTableSeeder::class);
         $this->call(AdsTableSeeder::class);
         $this->call(SettingsTableSeeder::class);
         $this->call(CartsTableSeeder::class);
         $this->call(CategoriesTableSeeder::class);
         $this->call(OrdersTableSeeder::class);
-        $this->call(CategoriesTableSeeder::class);
+        $this->call(CartsProductsTableSeeder::class);
+        $this->call(OrdersProductsTableSeeder::class);
+        $this->call(BrandsSuppliersTableSeeder::class);
+        $this->call(StandingOrdersTableSeeder::class);
     }
 }

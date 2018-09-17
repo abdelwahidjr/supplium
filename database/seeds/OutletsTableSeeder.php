@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Brand;
 use App\Models\Outlet;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
@@ -25,7 +26,7 @@ class OutletsTableSeeder extends Seeder
                     'longitude'        => $faker->longitude,
                     'latitude'         => $faker->latitude,
                     'shipping_address' => $faker->address,
-                    'brand_id'         => rand(1, 50),
+                    'brand_id'         => Brand::all()->random()->id,
                 ]);
             }
         }

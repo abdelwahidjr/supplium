@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateSuppliersTable extends Migration
 {
@@ -20,6 +20,7 @@ class CreateSuppliersTable extends Migration
             $table->string('phone');
             $table->string('category');
             $table->string('address');
+            $table->unsignedInteger('company_id');
             $table->integer('created_by_user_id')->nullable();
             $table->integer('updated_by_user_id')->nullable();
 

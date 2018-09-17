@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Company;
 use App\Models\Supplier;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
@@ -18,11 +19,12 @@ class  SuppliersTableSeeder extends Seeder
         if (app()->environment() !== 'production' && App::runningInConsole()) {
             foreach (range(1, 50) as $index) {
                 Supplier::create([
-                    'name'     => $faker->company,
-                    'email'    => $faker->email,
-                    'phone'    => $faker->phoneNumber,
-                    'address'  => $faker->address,
-                    'category' => $faker->word,
+                    'name'       => $faker->company,
+                    'email'      => $faker->email,
+                    'phone'      => $faker->phoneNumber,
+                    'address'    => $faker->address,
+                    'category'   => $faker->word,
+                    'company_id' => Company::all()->random()->id,
                 ]);
             }
         }

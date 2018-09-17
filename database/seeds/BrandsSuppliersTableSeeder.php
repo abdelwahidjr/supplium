@@ -1,11 +1,11 @@
 <?php
 
 use App\Models\Brand;
-use App\Models\Company;
-use Faker\Factory;
+use App\Models\BrandSupplier;
+use App\Models\Supplier;
 use Illuminate\Database\Seeder;
 
-class BrandsTableSeeder extends Seeder
+class BrandsSuppliersTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,13 +14,11 @@ class BrandsTableSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Factory::create();
-
         if (app()->environment() !== 'production' && App::runningInConsole()) {
             foreach (range(1, 50) as $index) {
-                Brand::create([
-                    'name'       => $faker->name,
-                    'company_id' => Company::all()->random()->id,
+                BrandSupplier::create([
+                    'brand_id'    => Brand::all()->random()->id,
+                    'supplier_id' => Supplier::all()->random()->id,
                 ]);
             }
         }
