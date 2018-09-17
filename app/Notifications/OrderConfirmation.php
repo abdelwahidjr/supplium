@@ -44,6 +44,11 @@ class OrderConfirmation extends Notification
      */
     public function toMail($notifiable)
     {
+        //usage
+        //$order = "#100";
+        //Auth::user()->notify(new OrderConfirmation($order));
+
+
         $confirm_url = url('/order/confirm/'.$this->order);
         $cancel_url = url('/order/cancel/'.$this->order);
 
