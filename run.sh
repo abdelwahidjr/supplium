@@ -262,7 +262,7 @@ echo "$msg_conn && sleep 2 && $d exec mysql bash -c \"$db_permission && $recreat
 - "workspace logs"                               "$c && $d logs -f workspace"
 - "database seed"                                "$c && $(os_commands "workspace_bash") -c \"php artisan project:install\""
 - "database recreate"                            "$c && $d exec mysql bash -c \"$recreate_db\" && $msg_db_recreated"
-- "mysql bash"                                   "$c && $d exec mysql bash"
+- "mysql bash"                                   "$c && $d exec mysql bash -c \"mysql -u$DB_USERNAME -p$DB_PASSWORD -P$DB_PORT -h$DB_HOST\""
 - "mysql logs"                                   "$c && $d logs -f mysql"
 - "restart nginx"                                "$c && $d restart nginx && $msg_nginx_restart"
 - "nginx logs"                                   "$c && $d logs -f nginx"

@@ -1,23 +1,8 @@
 {
-  "products"  : [
-    {
-      "id"    : "5",
-      "qty"   : "2",
-      "price" : "100"
-    },
-    {
-      "id"    : "11",
-      "qty"   : "4",
-      "price" : "100"
-    },
-    {
-      "id"    : "12",
-      "qty"   : "1",
-      "price" : "400"
-    }
-  ],
-  "status"    : "pending",
-  "notes"     : "test notes test notes test notes",
-  "tax"       : "10.00",
-  "outlet_id" : "31"
+  "name"        : "253325232",
+  "email"       : "wrewerwerI",
+  "phone"       : "wt",
+  "price"       : "99999.00",
+  "supplier_id" : 20,
+  "category_id" : 5
 }
