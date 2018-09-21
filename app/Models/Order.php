@@ -11,7 +11,9 @@ class Order extends Model
     protected $fillable
         = [
             'products',
+            'scheduled_on',
             'status',
+            'deliverd_status',
             'tax',
             'tax_val',
             'total_price_before_tax',
@@ -26,7 +28,8 @@ class Order extends Model
 
     protected $casts
         = [
-            'products' => 'array',
+            'products'     => 'array',
+            'scheduled_on' => 'array',
         ];
 
     public function outlet()

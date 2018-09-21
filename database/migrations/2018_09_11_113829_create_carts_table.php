@@ -18,7 +18,7 @@ class CreateCartsTable extends Migration
             $table->enum('status', ['empty', 'not_empty']);
             $table->unsignedBigInteger('outlet_id');
             $table->text('notes')->nullable();
-            $table->string('products'); //array
+            $table->text('products'); //array
             $table->unsignedBigInteger('created_by_user_id')->nullable();
             $table->unsignedBigInteger('updated_by_user_id')->nullable();
 

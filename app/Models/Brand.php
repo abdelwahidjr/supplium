@@ -11,6 +11,7 @@ class Brand extends Model
     protected $fillable
         = [
             'name',
+            'description',
             'company_id',
             'created_by_user_id',
             'updated_by_user_id',

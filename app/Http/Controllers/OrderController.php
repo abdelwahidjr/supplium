@@ -28,13 +28,13 @@ class OrderController extends Controller
 
     public function store(OrderRequest $request)
     {
+        // order status on creation should be pending
+
         $products    = [];
         $products_id = [];
 
-        $order           = new Order;
-        $order->products = $request->input('products');
-        $order->status   = $request->input('status');
-        $order->notes    = $request->input('notes');
+        $order = new Order;
+        $order->fill($request->all());
 
         foreach ($request->products as $k => $v) {
             $products[$k]    = $v;
@@ -44,17 +44,14 @@ class OrderController extends Controller
             $order->total_price_before_tax += ($v['qty'] * $v['price']);
         }
 
-        $order->tax                   = $request->input('tax');
         $order->tax_val               = ($order->total_price_before_tax * $order->tax / 100);
         $order->total_price_after_tax = (double)$order->total_price_before_tax + $order->tax_val;
-        $order->outlet_id             = $request->input('outlet_id');
         $order->created_by_user_id    = $request->user()->id;
         $order->save();
 
         $order->product()->sync($products_id);
 
         return new ModelResource($order);
-
 
     }
 
@@ -85,15 +82,16 @@ class OrderController extends Controller
             ], 422);
         }
 
-        if ($order->stauts !== 'pending') {
+        if ($order->status == "confirmed") {
             return response([
                 'message' => trans('main.edit_not_allowed'),
             ], 422);
         }
 
-        $order->products = $request->input('products');
-        $order->status   = $request->input('status');
-        $order->notes    = $request->input('notes');
+        $order->update($request->all());
+
+        $order->total_qty              = 0;
+        $order->total_price_before_tax = 0;
 
         foreach ($request->products as $k => $v) {
             $products[$k]    = $v;
@@ -103,11 +101,10 @@ class OrderController extends Controller
             $order->total_price_before_tax += ($v['qty'] * $v['price']);
         }
 
-        $order->tax                   = $request->input('tax');
         $order->tax_val               = ($order->total_price_before_tax * $order->tax / 100);
         $order->total_price_after_tax = (double)$order->total_price_before_tax + $order->tax_val;
-        $order->outlet_id             = $request->input('outlet_id');
         $order->updated_by_user_id    = $request->user()->id;
+
         $order->save();
 
         $order->product()->sync($products_id);
@@ -125,6 +122,15 @@ class OrderController extends Controller
                 'message' => trans('main.null_entity'),
             ], 422);
         }
+
+        $products_id = [];
+
+        foreach ($order->products as $k => $v) {
+            $products_id[$k] = $v['id'];
+        }
+
+        $order->product()->detach($products_id);
+
         $order->delete();
 
         return response()->json([

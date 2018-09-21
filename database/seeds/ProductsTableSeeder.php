@@ -18,7 +18,7 @@ class ProductsTableSeeder extends Seeder
         $faker = Factory::create();
 
         if (app()->environment() !== 'production' && App::runningInConsole()) {
-            foreach (range(1, 100) as $index) {
+            foreach (range(1, 50) as $index) {
 
                 $rand_decimal = (double)number_format(rand(10, 1000), 2, ".", "");
 

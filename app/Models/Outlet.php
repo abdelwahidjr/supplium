@@ -32,7 +32,7 @@ class Outlet extends Model
         return $this->hasOne(Cart::class);
     }
 
-    public function Order()
+    public function order()
     {
         return $this->hasMany(Order::class);
     }

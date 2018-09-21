@@ -11,6 +11,7 @@ class StandingOrder extends Model
     protected $fillable
         = [
             'name',
+            'status',
             'start_date',
             'end_date',
             'repeated_days',

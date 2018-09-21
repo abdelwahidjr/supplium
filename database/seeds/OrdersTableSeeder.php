@@ -2,6 +2,7 @@
 
 use App\Models\Order;
 use App\Models\Outlet;
+use App\Models\Product;
 use App\Models\StandingOrder;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
@@ -15,17 +16,18 @@ class OrdersTableSeeder extends Seeder
      */
     public function run()
     {
+        $order = new Order;
 
         $faker = Factory::create();
 
         if (app()->environment() !== 'production' && App::runningInConsole()) {
-            foreach (range(1, 100) as $index) {
+            foreach (range(1, 50) as $index) {
 
                 $tax          = number_format(rand(10, 50), 2, ".", "");
-                $rand_integer = rand(1, 100);
+                $rand_integer = rand(1, 50);
                 $rand_decimal = number_format(rand(10, 1000), 2, ".", "");
 
-                $status = ['pending', 'confirmed', 'fully delivered', 'fully delivered + bounce', 'partially delivered', 'not deliverd'];
+                $status = ['pending', 'confirmed'];
                 $i      = array_rand($status);
                 $status = $status[$i];
 
@@ -35,9 +37,21 @@ class OrdersTableSeeder extends Seeder
                 $total_price = (double)$price + $tax_val;
                 //$calculatedTaxRate = (($total_price - $price) / $price) * 100;      // = $tax_rate
 
+                $products     = [];
+                $scheduled_on = [];
+                foreach (range(1, 4) as $i) {
+                    $date = $faker->dateTimeInInterval($startDate = 'now', $interval = '+ '.rand(1, 50).' days');
+
+                    $scheduled_on[$i] = $date->format('Y-m-d');
+
+                    $products[$i] = Product::all()->random()->id;
+                }
+
                 Order::create([
-                    'products'               => [rand(1, 50), rand(1, 50), rand(1, 50)],
+                    'products'               => json_encode($products),
+                    'scheduled_on'           => json_encode($scheduled_on),
                     'status'                 => $status,
+                    'deliverd_status'        => "not_deliverd",
                     'tax'                    => $tax_rate,
                     'tax_val'                => $tax_val,
                     'total_price_before_tax' => $price,

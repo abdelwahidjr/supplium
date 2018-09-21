@@ -25,10 +25,15 @@ class StandingOrdersTableSeeder extends Seeder
                 $rand_day3   = $repeat_days[array_rand($repeat_days)];
                 $rand_day4   = $repeat_days[array_rand($repeat_days)];
 
+                $status = ['active', 'expired'];
+                $rand_i = array_rand($status);
+                $status = $status[$rand_i];
+
                 StandingOrder::create([
                     'name'          => $faker->word,
-                    'start_date'    => $faker->date('Y-m-d', $max = 'now'),
-                    'end_date'      => $faker->date('Y-m-d', $max = 'now'),
+                    'status'        => $status,
+                    'start_date'    => $faker->dateTimeInInterval($startDate = 'now', $interval = '+ '.rand(1, 50).' days'),
+                    'end_date'      => $faker->dateTimeInInterval($startDate = 'now', $interval = '+ '.rand(100, 200).' days'),
                     'repeated_days' => [$rand_day1, $rand_day2, $rand_day3, $rand_day4],
                 ]);
             }

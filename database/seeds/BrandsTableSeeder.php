@@ -19,8 +19,9 @@ class BrandsTableSeeder extends Seeder
         if (app()->environment() !== 'production' && App::runningInConsole()) {
             foreach (range(1, 50) as $index) {
                 Brand::create([
-                    'name'       => $faker->name,
-                    'company_id' => Company::all()->random()->id,
+                    'name'        => $faker->name,
+                    'description' => $faker->sentence,
+                    'company_id'  => Company::all()->random()->id,
                 ]);
             }
         }

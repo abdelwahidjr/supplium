@@ -18,8 +18,9 @@ class CreateSuppliersTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('phone');
-            $table->string('category');
             $table->string('address');
+            $table->enum('directory_option', ['on', 'off']);
+            $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('company_id');
             $table->unsignedBigInteger('created_by_user_id')->nullable();
             $table->unsignedBigInteger('updated_by_user_id')->nullable();

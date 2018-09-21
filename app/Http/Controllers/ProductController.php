@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DirectoryRequest;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ModelResource;
 use App\Models\Product;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -83,4 +85,36 @@ class ProductController extends Controller
         ], 200);
     }
 
+
+    public function directory(DirectoryRequest $request)
+    {
+
+        // todo unfinished
+
+        $path = $request->file->getRealPath();
+        $data = Excel::load($path, function ($reader) {
+        })->get();
+
+        if ( ! empty($data) && $data->count()) {
+
+            foreach ($data as $key => $value) {
+                $insert[] = [
+                    'name'     => $value->name,
+                    'email'    => $value->email,
+                    'phone'    => $value->phone,
+                    'address'  => $value->address,
+                    'category' => $value->category,
+                ];
+            }
+
+            dd($insert);
+
+            if ( ! empty($insert)) {
+
+                $insertData = DB::table('products')->insert($insert);
+            }
+
+
+        }
+    }
 }

@@ -2,84 +2,86 @@
 
 namespace App\Http\Controllers;
 
-use App\Brand;
-use Illuminate\Http\Request;
+use App\Http\Requests\BrandRequest;
+use App\Http\Resources\ModelResource;
+use App\Models\Brand;
 
 class BrandController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function __construct()
     {
-        //
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+    public function all()
     {
-        //
+        // all
+        return ModelResource::collection(Brand::paginate(config('main.JsonResultCount')));
+
+        // all with relations
+        //return ModelResource::collection((Brand::with('brand','setting'))->paginate(config('main.JsonResultCount')));
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function store(BrandRequest $request)
     {
-        //
+        $brand = new Brand;
+        $brand->fill($request->all());
+        $brand->created_by_user_id = $request->user()->id;
+        $brand->save();
+
+        return new ModelResource($brand);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Brand  $brand
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Brand $brand)
+
+    public function show($id)
     {
-        //
+
+        $Brand = Brand::with('comapny', 'outlet', 'supplier')->find($id);
+
+        if ($Brand === null) {
+            return response([
+                'message' => trans('main.null_entity'),
+            ], 422);
+        }
+
+        return new ModelResource($Brand);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Brand  $brand
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Brand $brand)
+
+    public function update(BrandRequest $request, $id)
     {
-        //
+        $brand = Brand::find($id);
+        if ($brand === null) {
+            return response([
+                'message' => trans('main.null_entity'),
+            ], 422);
+        }
+        $brand->update($request->all());
+        $brand->updated_by_user_id = $request->user()->id;
+        $brand->save();
+
+        return new ModelResource($brand);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Brand  $brand
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Brand $brand)
+
+    public function destroy($id)
     {
-        //
+        $brand = Brand::find($id);
+        if ($brand === null) {
+            return response([
+                'message' => trans('main.null_entity'),
+            ], 422);
+        }
+        $brand->delete();
+
+        return response()->json([
+            'status'  => 'Success',
+            'message' => trans('main.deleted'),
+        ], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Brand  $brand
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Brand $brand)
-    {
-        //
-    }
 }

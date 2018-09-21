@@ -2,84 +2,119 @@
 
 namespace App\Http\Controllers;
 
-use App\Supplier;
-use Illuminate\Http\Request;
+use App\Http\Requests\DirectoryRequest;
+use App\Http\Requests\SupplierRequest;
+use App\Http\Resources\ModelResource;
+use App\Models\Supplier;
+use DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SupplierController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function __construct()
     {
-        //
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+    public function all()
     {
-        //
+        // all
+        return ModelResource::collection(Supplier::paginate(config('main.JsonResultCount')));
+
+        // all with relations
+        //return ModelResource::collection((Supplier::with('company','setting'))->paginate(config('main.JsonResultCount')));
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function store(SupplierRequest $request)
     {
-        //
+        $supplier = new Supplier;
+        $supplier->fill($request->all());
+        $supplier->created_by_user_id = $request->user()->id;
+        $supplier->save();
+
+        return new ModelResource($supplier);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Supplier  $supplier
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Supplier $supplier)
+
+    public function show($id)
     {
-        //
+        $supplier = Supplier::with('product', 'company', 'brand')->find($id);
+
+        if ($supplier === null) {
+            return response([
+                'message' => trans('main.null_entity'),
+            ], 422);
+        }
+
+        return new ModelResource($supplier);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Supplier  $supplier
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Supplier $supplier)
+
+    public function update(SupplierRequest $request, $id)
     {
-        //
+        $supplier = Supplier::find($id);
+        if ($supplier === null) {
+            return response([
+                'message' => trans('main.null_entity'),
+            ], 422);
+        }
+        $supplier->update($request->all());
+        $supplier->updated_by_user_id = $request->user()->id;
+        $supplier->save();
+
+        return new ModelResource($supplier);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Supplier  $supplier
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Supplier $supplier)
+
+    public function destroy($id)
     {
-        //
+        $supplier = Supplier::find($id);
+        if ($supplier === null) {
+            return response([
+                'message' => trans('main.null_entity'),
+            ], 422);
+        }
+        $supplier->delete();
+
+        return response()->json([
+            'status'  => 'Success',
+            'message' => trans('main.deleted'),
+        ], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Supplier  $supplier
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Supplier $supplier)
+
+    public function directory(DirectoryRequest $request)
     {
-        //
+        // todo unfinished
+
+        $path = $request->file->getRealPath();
+        $data = Excel::load($path, function ($reader) {
+        })->get();
+
+        if ( ! empty($data) && $data->count()) {
+
+            foreach ($data as $key => $value) {
+                $insert[] = [
+                    'name'     => $value->name,
+                    'email'    => $value->email,
+                    'phone'    => $value->phone,
+                    'address'  => $value->address,
+                    'category' => $value->category,
+                ];
+            }
+
+            dd($insert);
+
+            if ( ! empty($insert)) {
+
+                $insertData = DB::table('suppliers')->insert($insert);
+            }
+
+
+        }
     }
 }

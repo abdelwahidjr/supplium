@@ -2,88 +2,91 @@
 
 namespace App\Http\Controllers;
 
-use App\StandingOrder;
-use Illuminate\Http\Request;
+use App\Http\Requests\StandingOrderRequest;
+use App\Http\Resources\ModelResource;
+use App\Models\StandingOrder;
 
 class StandingOrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+
+    public function __construct()
     {
-        //
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+    public function all()
     {
-        //
+        // all
+        return ModelResource::collection(StandingOrder::paginate(config('main.JsonResultCount')));
+
+        // all with relations
+        //return ModelResource::collection((Order::with('company','setting'))->paginate(config('main.JsonResultCount')));
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function store(StandingOrderRequest $request)
     {
-        //
+        // first create order and don't save it
+        // untill craete standing Order then complete order
+
+        $standing_order = new StandingOrder;
+        $standing_order->fill($request->all());
+        $standing_order->created_by_user_id = $request->user()->id;
+        $standing_order->save();
+
+        return new ModelResource($standing_order);
+
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\StandingOrder $standingOrder
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show(StandingOrder $standingOrder)
+
+    public function show($id)
     {
-        //
+        $standing_order = StandingOrder::with('order')->find($id);
+
+        if ($standing_order === null) {
+            return response([
+                'message' => trans('main.null_entity'),
+            ], 422);
+        }
+
+        return new ModelResource($standing_order);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\StandingOrder $standingOrder
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(StandingOrder $standingOrder)
+
+    public function update(StandingOrderRequest $request, $id)
     {
-        //
+        $standing_order = StandingOrder::find($id);
+
+        if ($standing_order === null) {
+            return response([
+                'message' => trans('main.null_entity'),
+            ], 422);
+        }
+        $standing_order->update($request->all());
+        $standing_order->updated_by_user_id = $request->user()->id;
+        $standing_order->save();
+
+        return new ModelResource($standing_order);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\StandingOrder       $standingOrder
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, StandingOrder $standingOrder)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\StandingOrder $standingOrder
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(StandingOrder $standingOrder)
+    public function destroy($id)
     {
-        //
+        $standing_order = StandingOrder::find($id);
+        if ($standing_order === null) {
+            return response([
+                'message' => trans('main.null_entity'),
+            ], 422);
+        }
+        $standing_order->delete();
+
+        return response()->json([
+            'status'  => 'Success',
+            'message' => trans('main.deleted'),
+        ], 200);
     }
 }

@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands
         = [
             'App\Console\Commands\Install',
-            'App\Console\Commands\ScheduleStandingOrders',
+            'App\Console\Commands\CheckStandingOrders',
         ];
 
     /**
@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
     {
         /*
 
-        out of the box laradock comes with cron job pre-installed
+        laradock out of the box comes with crontab  pre-installed
 
         if your are using crontab
 
@@ -41,6 +41,7 @@ class Kernel extends ConsoleKernel
 
 
         // $schedule->command('standing-orders:check')->everyMinute();
+        // $schedule->command('standing-orders:check')->->dailyAt('24:00');
 
     }
 

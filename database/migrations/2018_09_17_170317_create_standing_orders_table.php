@@ -16,9 +16,13 @@ class CreateStandingOrdersTable extends Migration
         Schema::create('standing_orders', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->enum('status', ['active', 'expired']);
             $table->date('start_date');
             $table->date('end_date')->nullable();
-            $table->string('repeated_days'); //array
+            $table->text('repeated_days'); //array
+            $table->unsignedBigInteger('created_by_user_id')->nullable();
+            $table->unsignedBigInteger('updated_by_user_id')->nullable();
+
             $table->timestamps();
         });
     }
