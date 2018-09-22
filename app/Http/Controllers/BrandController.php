@@ -40,7 +40,7 @@ class BrandController extends Controller
     public function show($id)
     {
 
-        $Brand = Brand::with('comapny', 'outlet', 'supplier')->find($id);
+        $Brand = Brand::with('company', 'outlet', 'supplier')->find($id);
 
         if ($Brand === null) {
             return response([

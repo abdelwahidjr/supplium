@@ -4,15 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Brand extends Model
+class Invoice extends Model
 {
+
     protected $guarded = ['id'];
 
     protected $fillable
         = [
-            'name',
-            'description',
+            'amount',
             'company_id',
+            'order_id',
             'created_by_user_id',
             'updated_by_user_id',
         ];
@@ -22,13 +23,9 @@ class Brand extends Model
         return $this->belongsTo(Company::class);
     }
 
-    public function outlet()
+    public function order()
     {
-        return $this->hasMany(Outlet::class);
+        return $this->belongsTo(Order::class);
     }
 
-    public function supplier()
-    {
-        return $this->belongsToMany(Supplier::class)->withTimestamps();
-    }
 }

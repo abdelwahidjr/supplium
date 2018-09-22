@@ -37,14 +37,20 @@ class Order extends Model
         return $this->belongsTo(Outlet::class);
     }
 
+    public function product()
+    {
+        return $this->belongsToMany(Product::class)->withTimestamps();
+    }
+
     public function standing_order()
     {
         return $this->belongsTo(StandingOrder::class);
     }
 
-    public function product()
+
+    public function invoice()
     {
-        return $this->belongsToMany(Product::class)->withTimestamps();
+        return $this->hasMany(Invoice::class);
     }
 
 }

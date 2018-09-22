@@ -15,7 +15,7 @@ class Category extends Model
             'updated_by_user_id',
         ];
 
-    public function supplier()
+    public function product()
     {
         return $this->hasMany(Product::class);
     }

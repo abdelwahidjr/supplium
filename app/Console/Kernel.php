@@ -39,8 +39,7 @@ class Kernel extends ConsoleKernel
 
         */
 
-
-        // $schedule->command('standing-orders:check')->everyMinute();
+        $schedule->command('standing-orders:check')->everyMinute();
         // $schedule->command('standing-orders:check')->->dailyAt('24:00');
 
     }

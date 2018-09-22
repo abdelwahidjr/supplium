@@ -23,16 +23,19 @@ class ProductsTableSeeder extends Seeder
                 $rand_decimal = (double)number_format(rand(10, 1000), 2, ".", "");
 
                 $units = ['kg', 'liter', 'packet', 'bucket', 'case', 'piece', 'box', 'gallon'];
-                $i     = array_rand($units);
-                $unit  = $units[$i];
+                $unit  = $units[array_rand($units)];
+
+                $option = ['on', 'off'];
+                $option = $option[array_rand($option)];
 
                 Product::create([
-                    'name'        => $faker->name,
-                    'sku'         => $faker->ean8,
-                    'unit'        => $unit,
-                    'price'       => $rand_decimal,
-                    'supplier_id' => Supplier::all()->random()->id,
-                    'category_id' => Category::all()->random()->id,
+                    'name'             => $faker->name,
+                    'sku'              => $faker->ean8,
+                    'unit'             => $unit,
+                    'price'            => $rand_decimal,
+                    'directory_option' => $option,
+                    'supplier_id'      => Supplier::all()->random()->id,
+                    'category_id'      => Category::all()->random()->id,
                 ]);
             }
         }

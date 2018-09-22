@@ -58,7 +58,7 @@ class OrderController extends Controller
 
     public function show($id)
     {
-        $order = Order::with('outlet', 'product')->find($id);
+        $order = Order::with('outlet', 'product', 'standing_order', 'invoice')->find($id);
 
         if ($order === null) {
             return response([

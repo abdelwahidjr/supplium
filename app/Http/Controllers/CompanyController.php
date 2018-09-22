@@ -40,7 +40,7 @@ class CompanyController extends Controller
     public function show($id)
     {
 
-        $Company = Company::with('brand', 'user', 'brand.outlet')->find($id);
+        $Company = Company::with('brand', 'user', 'supplier', 'invoice')->find($id);
 
         if ($Company === null) {
             return response([

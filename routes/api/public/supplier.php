@@ -12,6 +12,8 @@ Route::group(['prefix' => 'supplier'], function () {
 
     Route::delete('/{id}', 'SupplierController@destroy')->where('id', '[0-9]+');
 
+    Route::post('/directory', 'SupplierController@directory');
+
 });
 
 

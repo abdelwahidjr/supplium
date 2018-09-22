@@ -27,7 +27,7 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'sku'         => 'required|string|max:255',
+            'sku'         => 'required|unique:products|string|max:255',
             "name"        => 'required|string|max:255',
             "unit"        => 'required|in:'.implode(',', $this->units),
             "price"       => 'required|regex:/^\d{0,6}\.\d{0,2}?$/',

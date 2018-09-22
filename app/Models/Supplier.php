@@ -28,11 +28,16 @@ class Supplier extends Model
         return $this->hasMany(Product::class);
     }
 
+
+    public function supplier_payment()
+    {
+        return $this->hasOne(SupplierPayment::class);
+    }
+
     public function company()
     {
         return $this->belongsTo(Company::class);
     }
-
     public function brand()
     {
         return $this->belongsToMany(Brand::class)->withTimestamps();

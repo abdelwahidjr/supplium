@@ -14,6 +14,7 @@ class Product extends Model
             'name',
             'unit',
             'price',
+            'directory_option',
             'supplier_id',
             'category_id',
             'created_by_user_id',

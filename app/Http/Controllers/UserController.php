@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserAddMember;
 use App\Http\Requests\UserChangePassword;
+use App\Http\Requests\UserCreate;
 use App\Http\Requests\UserFindByMail;
 use App\Http\Requests\UserUpdate;
 use App\Http\Resources\ModelResource;
