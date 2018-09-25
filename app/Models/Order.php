@@ -21,6 +21,7 @@ class Order extends Model
             'total_qty',
             'notes',
             'outlet_id',
+            'supplier_id',
             'standing_order_id',
             'created_by_user_id',
             'updated_by_user_id',
@@ -31,6 +32,12 @@ class Order extends Model
             'products'     => 'array',
             'scheduled_on' => 'array',
         ];
+
+
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
+    }
 
     public function outlet()
     {
