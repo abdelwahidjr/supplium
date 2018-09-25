@@ -13,17 +13,17 @@ class PlansTableSeeder extends Seeder
     public function run()
     {
 
-        $name = [
+        $name        = [
             'Basic',
             'Professional',
             'Enterprise',
         ];
-        $brand_free = [
+        $brand_free  = [
             '0',
             '0',
             '0',
         ];
-        $brand_max = [
+        $brand_max   = [
             '1',
             '3',
             'unlimited',
@@ -33,7 +33,7 @@ class PlansTableSeeder extends Seeder
             '3',
             '0',
         ];
-        $outlet_max = [
+        $outlet_max  = [
             '1',
             '10',
             'unlimited',

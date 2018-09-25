@@ -1,8 +1,6 @@
 <?php
 
-use App\Models\Category;
 use App\Models\Product;
-use App\Models\Supplier;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 
@@ -34,8 +32,8 @@ class ProductsTableSeeder extends Seeder
                     'unit'             => $unit,
                     'price'            => $rand_decimal,
                     'directory_option' => $option,
-                    'supplier_id'      => Supplier::all()->random()->id,
-                    'category_id'      => Category::all()->random()->id,
+                    'supplier_id'      => rand(1, 50),
+                    'category_id'      => rand(1, 50),
                 ]);
             }
         }

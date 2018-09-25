@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Setting;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class SettingsTableSeeder extends Seeder
@@ -13,15 +12,15 @@ class SettingsTableSeeder extends Seeder
      */
     public function run()
     {
-        $state = ['on', 'off'];
-        $i = array_rand($state);
+        $state        = ['on', 'off'];
+        $i            = array_rand($state);
         $notification = $state[$i];
 
         if (app()->environment() !== 'production' && App::runningInConsole()) {
             foreach (range(1, 50) as $index) {
                 Setting::create([
                     'notifications' => $notification,
-                    'user_id'       => User::all()->random()->id,
+                    'user_id'       => rand(1, 50),
                 ]);
             }
         }

@@ -1,9 +1,6 @@
 <?php
 
 use App\Models\Order;
-use App\Models\Outlet;
-use App\Models\Product;
-use App\Models\StandingOrder;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 
@@ -24,7 +21,6 @@ class OrdersTableSeeder extends Seeder
             foreach (range(1, 50) as $index) {
 
                 $tax          = number_format(rand(10, 50), 2, ".", "");
-                $rand_integer = rand(1, 50);
                 $rand_decimal = number_format(rand(10, 1000), 2, ".", "");
 
                 $status = ['pending', 'confirmed'];
@@ -44,7 +40,7 @@ class OrdersTableSeeder extends Seeder
 
                     $scheduled_on[$i] = $date->format('Y-m-d');
 
-                    $products[$i] = Product::all()->random()->id;
+                    $products[$i] = rand(1, 50);
                 }
 
                 Order::create([
@@ -56,10 +52,11 @@ class OrdersTableSeeder extends Seeder
                     'tax_val'                => $tax_val,
                     'total_price_before_tax' => $price,
                     'total_price_after_tax'  => $total_price,
-                    'total_qty'              => $rand_integer,
+                    'total_qty'              => rand(1, 50),
                     'notes'                  => $faker->sentence($nbWords = 5),
-                    'outlet_id'              => Outlet::all()->random()->id,
-                    'standing_order_id'      => StandingOrder::all()->random()->id,
+                    'supplier_id'            => rand(1, 50),
+                    'outlet_id'              => rand(1, 50),
+                    'standing_order_id'      => rand(1, 50),
                 ]);
             }
         }

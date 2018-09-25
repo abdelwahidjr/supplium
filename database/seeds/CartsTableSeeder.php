@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Cart;
-use App\Models\Outlet;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 
@@ -26,7 +25,7 @@ class CartsTableSeeder extends Seeder
                     'products'  => [rand(1, 50), rand(1, 50), rand(1, 50)],
                     'status'    => $status,
                     'notes'     => $faker->sentence($nbWords = 5),
-                    'outlet_id' => Outlet::all()->random()->id,
+                    'outlet_id' => rand(1, 50),
                 ]);
             }
         }

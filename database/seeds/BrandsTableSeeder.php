@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Brand;
-use App\Models\Company;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 
@@ -21,7 +20,7 @@ class BrandsTableSeeder extends Seeder
                 Brand::create([
                     'name'        => $faker->name,
                     'description' => $faker->sentence,
-                    'company_id'  => Company::all()->random()->id,
+                    'company_id'  => rand(1, 50),
                 ]);
             }
         }

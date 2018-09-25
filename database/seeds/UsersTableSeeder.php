@@ -30,7 +30,7 @@ class UsersTableSeeder extends Seeder
 
     public function systemUsersSeeding()
     {
-        $users = [
+        $users  = [
             'abdelwahid',
         ];
         $emails = [

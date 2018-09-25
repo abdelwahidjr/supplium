@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Supplier;
 use App\Models\SupplierPayment;
 use Illuminate\Database\Seeder;
 
@@ -28,7 +27,7 @@ class  SupplierPaymentTableSeeder extends Seeder
                     'credit_limit'     => $payment_type == "cash" ? null : rand(10000, 100000),
                     'credit_period'    => $payment_type == "cash" ? null : $credit_period,
                     'payment_due_date' => $payment_type == "cash" ? null : rand(1, 30),
-                    'supplier_id'      => Supplier::all()->random()->id,
+                    'supplier_id'      => rand(1, 50),
                 ]);
             }
         }

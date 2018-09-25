@@ -1,8 +1,6 @@
 <?php
 
-use App\Models\Company;
 use App\Models\CompanyUser;
-use App\Models\User;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 
@@ -20,8 +18,8 @@ class ComapiesUsersTableSeeder extends Seeder
         if (app()->environment() !== 'production' && App::runningInConsole()) {
             foreach (range(1, 50) as $index) {
                 CompanyUser::create([
-                    'user_id'    => User::all()->random()->id,
-                    'company_id' => Company::all()->random()->id,
+                    'user_id'    => rand(1, 50),
+                    'company_id' => rand(1, 50),
                 ]);
             }
         }
