@@ -54,6 +54,7 @@ class OrderRequest extends FormRequest
             'tax'              => 'required|regex:/^\d{0,2}\.\d{0,2}?$/',
             'notes'            => 'required|string|max:1000',
             'outlet_id'        => 'required|exists:outlets,id',
+            'supplier_id'      => 'required|exists:suppliers,id',
         ];
     }
 
