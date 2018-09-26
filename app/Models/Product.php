@@ -17,6 +17,7 @@ class Product extends Model
             'directory_option',
             'supplier_id',
             'category_id',
+            'cart_id',
             'created_by_user_id',
             'updated_by_user_id',
         ];
