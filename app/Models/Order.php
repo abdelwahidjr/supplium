@@ -60,4 +60,9 @@ class Order extends Model
         return $this->hasMany(Invoice::class);
     }
 
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
+    }
+
 }

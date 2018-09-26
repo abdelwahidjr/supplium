@@ -42,4 +42,10 @@ class Supplier extends Model
     {
         return $this->belongsToMany(Brand::class)->withTimestamps();
     }
+
+    public function order()
+    {
+        return $this->hasOne(Order::class);
+    }
+
 }
