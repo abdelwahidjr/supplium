@@ -50,4 +50,21 @@ class CogsController extends Controller
     }
 
 
+    public function TotalPurchases($id)
+    {
+
+        $company_id = $id;
+
+        if ( ! Company::find($id)) {
+            return response([
+                'message' => trans('main.null_entity'),
+            ], 422);
+        }
+
+        return response()->json([
+            'Company Total Purchases' => "",
+        ]);
+    }
+
+
 }
