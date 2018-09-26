@@ -15,7 +15,7 @@ class CogsController extends Controller
 
     }
 
-
+    // TotalOrders
     public function TotalOrders($id)
     {
         $company_id = $id;
@@ -49,6 +49,7 @@ class CogsController extends Controller
 
     }
 
+    // TotalPurchases
 
     public function TotalPurchases($id)
     {
