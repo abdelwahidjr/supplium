@@ -34,6 +34,8 @@ class ProductsTableSeeder extends Seeder
                     'directory_option' => $option,
                     'supplier_id'      => rand(1, 50),
                     'category_id'      => rand(1, 50),
+                    'order_id'         => rand(1, 50),
+                    'cart_id'          => rand(1, 50),
                 ]);
             }
         }
