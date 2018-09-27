@@ -10,13 +10,14 @@ class StandingOrder extends Model
 
     protected $fillable
         = [
-            'name',
-            'status',
-            'start_date',
-            'end_date',
-            'repeated_days',
-            'created_by_user_id',
-            'updated_by_user_id',
+            'name' ,
+            'status' ,
+            'start_date' ,
+            'end_date' ,
+            'repeated_days' ,
+            'repeated_period' ,
+            'created_by_user_id' ,
+            'updated_by_user_id' ,
         ];
     protected $casts
         = [

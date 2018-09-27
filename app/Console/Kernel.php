@@ -14,8 +14,9 @@ class Kernel extends ConsoleKernel
      */
     protected $commands
         = [
-            'App\Console\Commands\Install',
-            'App\Console\Commands\CheckStandingOrders',
+            'App\Console\Commands\Install' ,
+            'App\Console\Commands\ProceedStandingOrders' ,
+            'App\Console\Commands\CancelStandingOrders' ,
         ];
 
     /**
@@ -39,8 +40,8 @@ class Kernel extends ConsoleKernel
 
         */
 
-        $schedule->command('standing-orders:check')->everyMinute();
-        // $schedule->command('standing-orders:check')->->dailyAt('24:00');
+        $schedule->command('standing-orders:proceed')->dailyAt('24:00');
+        $schedule->command('standing-orders:cancel')->dailyAt('24:00');
 
     }
 
@@ -51,7 +52,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }
