@@ -17,7 +17,7 @@ class ProductRequest extends FormRequest
     }
 
 
-    public $units = ['kg', 'liter', 'packet', 'bucket', 'case', 'piece', 'box', 'gallon'];
+    public $units = ['kg' , 'liter' , 'packet' , 'bucket' , 'case' , 'piece' , 'box' , 'gallon'];
 
     /**
      * Get the validation rules that apply to the request.
@@ -27,12 +27,13 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'sku'         => 'required|unique:products|string|max:255',
-            "name"        => 'required|string|max:255',
-            "unit"        => 'required|in:'.implode(',', $this->units),
-            "price"       => 'required|regex:/^\d{0,6}\.\d{0,2}?$/',
-            'supplier_id' => 'required|exists:suppliers,id',
-            'category_id' => 'required|exists:categories,id',
+            'sku'         => 'required|unique:products|string|max:255' ,
+            "name"        => 'required|string|max:255' ,
+            "unit"        => 'required|in:' . implode(',' , $this->units) ,
+            "price"       => 'required|regex:/^\d{0,6}\.\d{0,2}?$/' ,
+            'supplier_id' => 'required|exists:suppliers,id' ,
+            'category_id' => 'required|exists:categories,id' ,
+            'cart_id'     => 'required|exists:carts,id' ,
         ];
     }
 
@@ -40,8 +41,8 @@ class ProductRequest extends FormRequest
     public function messages()
     {
         return [
-            "price.regex" => "max decimal number is 999999.99 decimal(8,2)",
-            "unit.in"     => "avilable units ['kg', 'liter', 'packet', 'bucket', 'case', 'piece', 'box', 'gallon']",
+            "price.regex" => "max decimal number is 999999.99 decimal(8,2)" ,
+            "unit.in"     => "avilable units ['kg', 'liter', 'packet', 'bucket', 'case', 'piece', 'box', 'gallon']" ,
         ];
     }
 
