@@ -28,7 +28,7 @@ class StandingOrdersTableSeeder extends Seeder
                 $status = ['active', 'expired'];
                 $status = $status[array_rand($status)];
 
-                $repeated_period = ['1w', '2w', '3w', '4w'];
+                $repeated_period = ['1 week' , '2 week' , '3 week' , '4 week'];
                 $repeated_period = $repeated_period[array_rand($repeated_period)];
 
                 StandingOrder::create([
