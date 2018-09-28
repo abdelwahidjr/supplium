@@ -44,7 +44,7 @@ class SupplierController extends Controller
 
     public function show($id)
     {
-        $supplier = Supplier::with('product', 'supplier_payment', 'company', 'brand')->find($id);
+        $supplier = Supplier::with('product' , 'supplier_payment' , 'company' , 'brand')->find($id);
 
         if ($supplier === null) {
             return response([
