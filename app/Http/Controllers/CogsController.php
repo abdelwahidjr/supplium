@@ -150,6 +150,7 @@ class CogsController extends Controller
         }
 
 
+
         $brand_id_array = [];
         $outlet_id_array = [];
 
@@ -473,7 +474,6 @@ class CogsController extends Controller
 
 
 
-        //dump(count($products));
         return response()->json([
             'Purchases by Supplier' => $filtered_repositroy
         ]);
