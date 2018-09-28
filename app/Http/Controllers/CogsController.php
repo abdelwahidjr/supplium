@@ -9,7 +9,6 @@ use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\Outlet;
 use App\Models\Supplier;
-use function GuzzleHttp\Psr7\str;
 
 class CogsController extends Controller
 {
@@ -376,6 +375,11 @@ class CogsController extends Controller
     }
 
 
+    /**
+     * TopProductPurchases
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     */
     public function TopProductPurchases($id)
     {
 
@@ -411,10 +415,8 @@ class CogsController extends Controller
         $repositroy = [];
         for ($i = 0; $i < count($products); $i++) {
 
-            //dump(count($products[$i]->products));
             for ($x = 0; $x < count($products[$i]->products); $x++) {
                 array_push($products_arr_before_count_accurrences, $products[$i]->products[$x]);
-                // dump($products[$i]->products[$x]);
             }
         }
 
@@ -429,11 +431,6 @@ class CogsController extends Controller
         }
 
         $filtered_repositroy = [];
-      /*  if (count($repositroy) > 0) {
-            array_push($filtered_repositroy, $repositroy[0]);
-
-        }*/
-
         for ($u = 0; $u < count($repositroy); $u++) {
 
 
@@ -448,7 +445,6 @@ class CogsController extends Controller
                         if ($repositroy[$u]['id'] === $filtered_repositroy[$t]['id']) {
                             $found_flag = true;
                             $filtered_repositroy[$t]['total']+=$repositroy[$u]['total'];
-                            // dump("found");
                         }
 
                     }
@@ -472,7 +468,7 @@ class CogsController extends Controller
 
 
 
-        //to sort array of suppliers depending on puerchases from max to min
+        //to sort array of products depending on puerchases from max to min
         array_multisort(array_column($filtered_repositroy, 'total'), SORT_DESC, $filtered_repositroy);
 
 
