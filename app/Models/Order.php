@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogsActivity;
+use Spatie\Activitylog\LogsActivityInterface;
 
-class Order extends Model
+class Order extends Model implements LogsActivityInterface
 {
+    use LogsActivity;
+
     protected $guarded = ['id'];
 
     protected $fillable
@@ -32,6 +36,30 @@ class Order extends Model
             'products'     => 'array' ,
             'scheduled_on' => 'array' ,
         ];
+
+
+    public function getActivityDescriptionForEvent($eventName)
+    {
+        $class_name = explode('\\' , get_class($this));
+        $model_name = $class_name[2];
+
+        if ($eventName == 'created')
+        {
+            return 'created ' . '|' . ' id => ' . $this->id . ' @ ' . $model_name;
+        }
+
+        if ($eventName == 'updated')
+        {
+            return 'updated ' . '|' . ' id => ' . $this->id . ' @ ' . $model_name;
+        }
+
+        if ($eventName == 'deleted')
+        {
+            return 'deleted ' . '|' . ' id => ' . $this->id . ' @ ' . $model_name;
+        }
+
+        return '';
+    }
 
 
     public function supplier()

@@ -5,11 +5,15 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Spatie\Activitylog\LogsActivity;
+use Spatie\Activitylog\LogsActivityInterface;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements LogsActivityInterface
 {
+    use LogsActivity;
+
     use HasApiTokens , Notifiable , HasRoles;
 
     /**
@@ -38,8 +42,10 @@ class User extends Authenticatable
         ];
 
 
-//        $user->AssignRole('admin'); // guard will be default
-//        $user->AssignRole('admin', 'api'); // explcitly setting the guard
+    /*############################################################################################*/
+
+    //   $user->AssignRole('admin'); // guard will be default
+    //   $user->AssignRole('admin', 'api'); // explcitly setting the guard
 
     public function AssignRole($roles , string $guard = null)
     {
@@ -76,6 +82,31 @@ class User extends Authenticatable
         }
 
         return $role;
+    }
+
+    /*############################################################################################*/
+
+    public function getActivityDescriptionForEvent($eventName)
+    {
+        $class_name = explode('\\' , get_class($this));
+        $model_name = $class_name[2];
+
+        if ($eventName == 'created')
+        {
+            return 'created ' . '|' . ' id => ' . $this->id . ' @ ' . $model_name;
+        }
+
+        if ($eventName == 'updated')
+        {
+            return 'updated ' . '|' . ' id => ' . $this->id . ' @ ' . $model_name;
+        }
+
+        if ($eventName == 'deleted')
+        {
+            return 'deleted ' . '|' . ' id => ' . $this->id . ' @ ' . $model_name;
+        }
+
+        return '';
     }
 
 

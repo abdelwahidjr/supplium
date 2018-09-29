@@ -163,6 +163,7 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class ,
         Spatie\Permission\PermissionServiceProvider::class ,
         Maatwebsite\Excel\ExcelServiceProvider::class ,
+        Spatie\Activitylog\ActivitylogServiceProvider::class ,
 
     ] ,
 
@@ -213,6 +214,7 @@ return [
         'Validator'    => Illuminate\Support\Facades\Validator::class ,
         'View'         => Illuminate\Support\Facades\View::class ,
         'Excel'        => Maatwebsite\Excel\Facades\Excel::class ,
+        'Activity'     => 'Spatie\Activitylog\ActivitylogFacade' ,
 
     ] ,
 
