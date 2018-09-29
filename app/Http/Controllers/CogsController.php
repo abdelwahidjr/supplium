@@ -150,7 +150,6 @@ class CogsController extends Controller
         }
 
 
-
         $brand_id_array = [];
         $outlet_id_array = [];
 
@@ -435,17 +434,15 @@ class CogsController extends Controller
         for ($u = 0; $u < count($repositroy); $u++) {
 
 
-            if (count($filtered_repositroy)>0)
-            {
+            if (count($filtered_repositroy) > 0) {
                 $found_flag = false;
-
 
 
                 for ($t = 0; $t < count($filtered_repositroy); $t++) {
                     if (!$found_flag) {
                         if ($repositroy[$u]['id'] === $filtered_repositroy[$t]['id']) {
                             $found_flag = true;
-                            $filtered_repositroy[$t]['total']+=$repositroy[$u]['total'];
+                            $filtered_repositroy[$t]['total'] += $repositroy[$u]['total'];
                         }
 
                     }
@@ -456,22 +453,17 @@ class CogsController extends Controller
                     array_push($filtered_repositroy, $repositroy[$u]);
 
                 }
-            }else{
+            } else {
                 array_push($filtered_repositroy, $repositroy[$u]);
 
             }
 
 
-
-
         }
-
-
 
 
         //to sort array of products depending on puerchases from max to min
         array_multisort(array_column($filtered_repositroy, 'total'), SORT_DESC, $filtered_repositroy);
-
 
 
         return response()->json([
