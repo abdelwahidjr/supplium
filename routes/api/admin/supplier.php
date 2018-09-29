@@ -1,9 +1,10 @@
 <?php
 
-Route::group(['prefix' => 'supplier'], function () {
+Route::group(['prefix' => 'supplier'] , function ()
+{
 
 
-    Route::post('/directory', 'SupplierController@directory');
+    Route::post('/directory' , 'SupplierController@directory');
 
 });
 

@@ -11,25 +11,27 @@
 |
 */
 
+Route::prefix('auth')->group(function ()
+{
 
-Route::prefix('auth')->group(function () {
-
-    Route::post('/login', 'UserAuthController@login');
-    Route::post('/change-password', 'UserAuthController@changePassword');
-    Route::post('/password/email', 'Auth\ForgotPasswordController@getResetToken');;
-    Route::post('/password/reset', 'Auth\ResetPasswordController@reset');
+    Route::post('/login' , 'UserAuthController@login');
+    Route::post('/change-password' , 'UserAuthController@changePassword');
+    Route::post('/password/email' , 'Auth\ForgotPasswordController@getResetToken');;
+    Route::post('/password/reset' , 'Auth\ResetPasswordController@reset');
 });
 
-
-
-Route::prefix('admin')->middleware('auth:api','role:admin')->group(function () {
-    foreach (File::allFiles(base_path('routes/api/admin')) as $file) {
+Route::prefix('admin')->middleware('auth:api' , 'role:admin')->group(function ()
+{
+    foreach (File::allFiles(base_path('routes/api/admin')) as $file)
+    {
         require($file->getPathname());
     }
 });
 
-Route::prefix('public')->middleware('auth:api')->group(function () {
-    foreach (File::allFiles(base_path('routes/api/public')) as $file) {
+Route::prefix('public')->middleware('auth:api')->group(function ()
+{
+    foreach (File::allFiles(base_path('routes/api/public')) as $file)
+    {
         require($file->getPathname());
     }
 });

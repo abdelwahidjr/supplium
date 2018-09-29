@@ -38,25 +38,27 @@ class CartController extends Controller
 
     public function show($id)
     {
-        $cart = Cart::with('outlet', 'product')->find($id);
+        $cart = Cart::with('outlet' , 'product')->find($id);
 
-        if ($cart === null) {
+        if ($cart === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
         return new ModelResource($cart);
     }
 
 
-    public function update(CartRequest $request, $id)
+    public function update(CartRequest $request , $id)
     {
         $cart = Cart::find($id);
-        if ($cart === null) {
+        if ($cart === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
         $cart->update($request->all());
         $cart->updated_by_user_id = $request->user()->id;
@@ -69,16 +71,17 @@ class CartController extends Controller
     public function destroy($id)
     {
         $cart = Cart::find($id);
-        if ($cart === null) {
+        if ($cart === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
         $cart->delete();
 
         return response()->json([
-            'status'  => 'Success',
-            'message' => trans('main.deleted'),
-        ], 200);
+            'status'  => 'Success' ,
+            'message' => trans('main.deleted') ,
+        ] , 200);
     }
 }

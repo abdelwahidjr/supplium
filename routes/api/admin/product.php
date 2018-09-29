@@ -1,9 +1,10 @@
 <?php
 
-Route::group(['prefix' => 'product'], function () {
+Route::group(['prefix' => 'product'] , function ()
+{
 
 
-    Route::post('/directory', 'ProductController@directory');
+    Route::post('/directory' , 'ProductController@directory');
 
 });
 

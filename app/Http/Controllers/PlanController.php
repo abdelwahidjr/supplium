@@ -2,84 +2,87 @@
 
 namespace App\Http\Controllers;
 
-use App\Plan;
-use Illuminate\Http\Request;
+use App\Http\Requests\PlanRequest;
+use App\Http\Resources\ModelResource;
+use App\Models\Plan;
 
 class PlanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct()
     {
-        //
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+    public function all()
     {
-        //
+        // all
+        return ModelResource::collection(Plan::paginate(config('main.JsonResultCount')));
+
+        // all with relations
+        //return ModelResource::collection((Plan::with('plan','setting'))->paginate(config('main.JsonResultCount')));
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function store(PlanRequest $request)
     {
-        //
+        $plan = new Plan;
+        $plan->fill($request->all());
+        $plan->created_by_user_id = $request->user()->id;
+        $plan->save();
+
+        return new ModelResource($plan);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Plan  $plan
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Plan $plan)
+
+    public function show($id)
     {
-        //
+
+        $Plan = Plan::with('company')->find($id);
+
+        if ($Plan === null)
+        {
+            return response([
+                'message' => trans('main.null_entity') ,
+            ] , 422);
+        }
+
+        return new ModelResource($Plan);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Plan  $plan
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Plan $plan)
+
+    public function update(PlanRequest $request , $id)
     {
-        //
+        $plan = Plan::find($id);
+        if ($plan === null)
+        {
+            return response([
+                'message' => trans('main.null_entity') ,
+            ] , 422);
+        }
+        $plan->update($request->all());
+        $plan->updated_by_user_id = $request->user()->id;
+        $plan->save();
+
+        return new ModelResource($plan);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Plan  $plan
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Plan $plan)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Plan  $plan
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Plan $plan)
+    public function destroy($id)
     {
-        //
+        $plan = Plan::find($id);
+        if ($plan === null)
+        {
+            return response([
+                'message' => trans('main.null_entity') ,
+            ] , 422);
+        }
+        $plan->delete();
+
+        return response()->json([
+            'status'  => 'Success' ,
+            'message' => trans('main.deleted') ,
+        ] , 200);
     }
 }

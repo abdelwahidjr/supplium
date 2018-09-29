@@ -46,25 +46,27 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = User::with('company', 'setting')->find($id);
+        $user = User::with('company' , 'setting')->find($id);
 
-        if ($user === null) {
+        if ($user === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
         return new ModelResource($user);
     }
 
 
-    public function update(UserUpdate $request, $id)
+    public function update(UserUpdate $request , $id)
     {
         $user = User::find($id);
-        if ($user === null) {
+        if ($user === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
         $user->update($request->all());
         $user->updated_by_user_id = $request->user()->id;
@@ -77,17 +79,18 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
-        if ($user === null) {
+        if ($user === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
         $user->delete();
 
         return response()->json([
-            'status'  => 'Success',
-            'message' => trans('main.deleted'),
-        ], 200);
+            'status'  => 'Success' ,
+            'message' => trans('main.deleted') ,
+        ] , 200);
     }
 
 
@@ -95,12 +98,13 @@ class UserController extends Controller
     {
         $email = $request->input('email');
 
-        $user = User::with('company', 'setting')->where('email', $email)->first();
+        $user = User::with('company' , 'setting')->where('email' , $email)->first();
 
-        if ($user === null) {
+        if ($user === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
         return new ModelResource($user);
@@ -120,8 +124,8 @@ class UserController extends Controller
 
         $role = $request->input('user_role');
 
-        $user->AssignRole($role, 'web');
-        $user->AssignRole($role, 'api');
+        $user->AssignRole($role , 'web');
+        $user->AssignRole($role , 'api');
 
         $user = User::with(['company'])->find($user->id);
 
@@ -131,25 +135,27 @@ class UserController extends Controller
 
     public function ChangeUserPassword(UserChangePassword $request)
     {
-        $user = User::where('email', $request->input('email'))->first();
+        $user = User::where('email' , $request->input('email'))->first();
 
-        if ( ! $user) {
+        if ( ! $user)
+        {
             return response()->json([
-                'status'  => 'Failed',
-                'message' => trans('main.credentials'),
-            ], 400);
-        } elseif (Hash::check($request->input('old_password'), $user->password)
-        ) {
+                'status'  => 'Failed' ,
+                'message' => trans('main.credentials') ,
+            ] , 400);
+        } elseif (Hash::check($request->input('old_password') , $user->password)
+        )
+        {
             $user->password = Hash::make($request->input('password'));
             $user->save();
 
-            return response(['message' => trans('passwords.reset')], 200);
+            return response(['message' => trans('passwords.reset')] , 200);
         }
 
         return response()->json([
-            'status'  => 'Failed',
-            'message' => trans('main.credentials'),
-        ], 400);
+            'status'  => 'Failed' ,
+            'message' => trans('main.credentials') ,
+        ] , 400);
     }
 
 

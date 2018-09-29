@@ -1,16 +1,17 @@
 <?php
 
-Route::group(['prefix' => 'user'], function () {
+Route::group(['prefix' => 'user'] , function ()
+{
 
-    Route::get('/all', 'UserController@all');
+    Route::get('/all' , 'UserController@all');
 
-    Route::post('/', 'UserController@store');
+    Route::post('/' , 'UserController@store');
 
-    Route::get('/{id}', 'UserController@show')->where('id', '[0-9]+');
+    Route::get('/{id}' , 'UserController@show')->where('id' , '[0-9]+');
 
-    Route::post('/{id}', 'UserController@update')->where('id', '[0-9]+');
+    Route::post('/{id}' , 'UserController@update')->where('id' , '[0-9]+');
 
-    Route::post('/add-member', 'UserController@AddMember');
+    Route::post('/add-member' , 'UserController@AddMember');
 
 });
 

@@ -31,17 +31,19 @@ class InvoiceController extends Controller
     {
         $order = Order::find($request->input('order_id'));
 
-        if ($order->status != 'confirmed') {
+        if ($order->status != 'confirmed')
+        {
             return response([
-                'message' => "order should be confirmed",
-            ], 422);
+                'message' => "order should be confirmed" ,
+            ] , 422);
 
         }
 
-        if ($order->deliverd_status == 'partially_delivered' || $order->deliverd_status == 'not_deliverd') {
+        if ($order->deliverd_status == 'partially_delivered' || $order->deliverd_status == 'not_deliverd')
+        {
             return response([
-                'message' => "order should be fully_delivered or fully_delivered_with_bounce",
-            ], 422);
+                'message' => "order should be fully_delivered or fully_delivered_with_bounce" ,
+            ] , 422);
 
         }
 
@@ -53,7 +55,7 @@ class InvoiceController extends Controller
         $invoice->created_by_user_id = $request->user()->id;
         $invoice->save();
 
-        $invoice = Invoice::with('company', 'order')->find($invoice->id);
+        $invoice = Invoice::with('company' , 'order')->find($invoice->id);
 
         return new ModelResource($invoice);
     }
@@ -61,42 +63,46 @@ class InvoiceController extends Controller
 
     public function show($id)
     {
-        $invoice = Invoice::with('company', 'order')->find($id);
+        $invoice = Invoice::with('company' , 'order')->find($id);
 
-        if ($invoice === null) {
+        if ($invoice === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
         return new ModelResource($invoice);
     }
 
 
-    public function update(InvoiceRequest $request, $id)
+    public function update(InvoiceRequest $request , $id)
     {
         $order = Order::find($request->input('order_id'));
 
-        if ($order->status == 'confirmed') {
+        if ($order->status == 'confirmed')
+        {
             return response([
-                'message' => "order should be confirmed",
-            ], 422);
+                'message' => "order should be confirmed" ,
+            ] , 422);
 
         }
 
-        if ($order->deliverd_status == 'fully_delivered' || $order->deliverd_status == 'fully_delivered_with_bounce') {
+        if ($order->deliverd_status == 'fully_delivered' || $order->deliverd_status == 'fully_delivered_with_bounce')
+        {
             return response([
-                'message' => "order should be fully_delivered or fully_delivered_with_bounce",
-            ], 422);
+                'message' => "order should be fully_delivered or fully_delivered_with_bounce" ,
+            ] , 422);
 
         }
 
         $invoice = Invoice::find($id);
 
-        if ($invoice === null) {
+        if ($invoice === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
         $invoice->amount             = $order->total_price_after_tax;
@@ -113,17 +119,18 @@ class InvoiceController extends Controller
     public function destroy($id)
     {
         $invoice = Invoice::find($id);
-        if ($invoice === null) {
+        if ($invoice === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
         $invoice->delete();
 
         return response()->json([
-            'status'  => 'Success',
-            'message' => trans('main.deleted'),
-        ], 200);
+            'status'  => 'Success' ,
+            'message' => trans('main.deleted') ,
+        ] , 200);
     }
 
 

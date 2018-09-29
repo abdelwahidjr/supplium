@@ -13,9 +13,10 @@ class CreateSettingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('settings', function (Blueprint $table) {
+        Schema::create('settings' , function (Blueprint $table)
+        {
             $table->increments('id');
-            $table->enum('notifications',['on','off']);
+            $table->enum('notifications' , ['on' , 'off']);
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('created_by_user_id')->nullable();
             $table->unsignedBigInteger('updated_by_user_id')->nullable();

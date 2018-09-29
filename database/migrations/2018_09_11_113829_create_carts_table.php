@@ -13,9 +13,10 @@ class CreateCartsTable extends Migration
      */
     public function up()
     {
-        Schema::create('carts', function (Blueprint $table) {
+        Schema::create('carts' , function (Blueprint $table)
+        {
             $table->increments('id');
-            $table->enum('status', ['empty', 'not_empty']);
+            $table->enum('status' , ['empty' , 'not_empty']);
             $table->unsignedBigInteger('outlet_id');
             $table->text('notes')->nullable();
             $table->text('products'); //array

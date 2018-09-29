@@ -10,7 +10,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable, HasRoles;
+    use HasApiTokens , Notifiable , HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -19,11 +19,11 @@ class User extends Authenticatable
      */
     protected $fillable
         = [
-            'name',
-            'email',
-            'password',
-            'created_by_user_id',
-            'updated_by_user_id',
+            'name' ,
+            'email' ,
+            'password' ,
+            'created_by_user_id' ,
+            'updated_by_user_id' ,
         ];
 
     /**
@@ -33,25 +33,28 @@ class User extends Authenticatable
      */
     protected $hidden
         = [
-            'password',
-            'remember_token',
+            'password' ,
+            'remember_token' ,
         ];
 
 
 //        $user->AssignRole('admin'); // guard will be default
 //        $user->AssignRole('admin', 'api'); // explcitly setting the guard
 
-    public function AssignRole($roles, string $guard = null)
+    public function AssignRole($roles , string $guard = null)
     {
-        if ($guard) {
+        if ($guard)
+        {
             $roles = is_string($roles) ? [$roles] : $roles;
             $guard = $guard ?: $this->getDefaultGuardName();
 
             $roles = collect($roles)->flatten()->map(function ($role) use (
                 $guard
-            ) {
-                return $this->GetStoredRole($role, $guard);
-            })->each(function ($role) {
+            )
+            {
+                return $this->GetStoredRole($role , $guard);
+            })->each(function ($role)
+            {
                 $this->ensureModelSharesGuard($role);
             })->all();
 
@@ -65,10 +68,11 @@ class User extends Authenticatable
 
     }
 
-    protected function GetStoredRole($role, string $guard): Role
+    protected function GetStoredRole($role , string $guard) : Role
     {
-        if (is_string($role)) {
-            return app(Role::class)->findByName($role, $guard);
+        if (is_string($role))
+        {
+            return app(Role::class)->findByName($role , $guard);
         }
 
         return $role;

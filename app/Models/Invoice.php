@@ -11,11 +11,11 @@ class Invoice extends Model
 
     protected $fillable
         = [
-            'amount',
-            'company_id',
-            'order_id',
-            'created_by_user_id',
-            'updated_by_user_id',
+            'amount' ,
+            'company_id' ,
+            'order_id' ,
+            'created_by_user_id' ,
+            'updated_by_user_id' ,
         ];
 
     public function company()

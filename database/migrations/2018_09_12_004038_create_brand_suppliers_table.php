@@ -13,7 +13,8 @@ class CreateBrandSuppliersTable extends Migration
      */
     public function up()
     {
-        Schema::create('brand_supplier', function (Blueprint $table) {
+        Schema::create('brand_supplier' , function (Blueprint $table)
+        {
             $table->increments('id');
             $table->unsignedBigInteger('brand_id');
             $table->unsignedBigInteger('supplier_id');

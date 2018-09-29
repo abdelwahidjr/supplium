@@ -25,17 +25,18 @@ class CompanyRequest extends FormRequest
     public function rules()
     {
         return [
-            "name"              => 'required|string|max:255',
-            "business_type"     => 'required|string|max:255',
-            "phone"             => 'required|string|max:255',
-            'address_1'         => 'required|string|max:255',
-            'address_2'         => 'string|max:255',
-            'website'           => 'string|max:255',
-            'country'           => 'required|string|max:255',
-            'city'              => 'required|string|max:255',
-            'state'             => 'string|max:255',
-            'zip'               => 'string|max:255',
-            'extra_information' => 'string|max:255',
+            "name"              => 'required|string|max:255' ,
+            "business_type"     => 'required|string|max:255' ,
+            "phone"             => 'required|string|max:255' ,
+            'address_1'         => 'required|string|max:255' ,
+            'address_2'         => 'string|max:255' ,
+            'website'           => 'string|max:255' ,
+            'country'           => 'required|string|max:255' ,
+            'city'              => 'required|string|max:255' ,
+            'state'             => 'string|max:255' ,
+            'zip'               => 'string|max:255' ,
+            'extra_information' => 'string|max:255' ,
+            'plan_id'           => 'required|exists:plans,id' ,
         ];
     }
 

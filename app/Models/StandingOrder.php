@@ -21,7 +21,7 @@ class StandingOrder extends Model
         ];
     protected $casts
         = [
-            'repeated_days' => 'array',
+            'repeated_days' => 'array' ,
         ];
 
     public function order()

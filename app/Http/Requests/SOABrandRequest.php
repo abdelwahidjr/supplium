@@ -27,7 +27,7 @@ class SOABrandRequest extends FormRequest
     public function rules()
     {
         return [
-            'brand_id' => 'required|exists:brands,id',
+            'brand_id' => 'required|exists:brands,id' ,
         ];
     }
 

@@ -40,25 +40,27 @@ class BrandController extends Controller
     public function show($id)
     {
 
-        $Brand = Brand::with('company', 'outlet', 'supplier')->find($id);
+        $Brand = Brand::with('company' , 'outlet' , 'supplier')->find($id);
 
-        if ($Brand === null) {
+        if ($Brand === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
         return new ModelResource($Brand);
     }
 
 
-    public function update(BrandRequest $request, $id)
+    public function update(BrandRequest $request , $id)
     {
         $brand = Brand::find($id);
-        if ($brand === null) {
+        if ($brand === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
         $brand->update($request->all());
         $brand->updated_by_user_id = $request->user()->id;
@@ -71,17 +73,18 @@ class BrandController extends Controller
     public function destroy($id)
     {
         $brand = Brand::find($id);
-        if ($brand === null) {
+        if ($brand === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
         $brand->delete();
 
         return response()->json([
-            'status'  => 'Success',
-            'message' => trans('main.deleted'),
-        ], 200);
+            'status'  => 'Success' ,
+            'message' => trans('main.deleted') ,
+        ] , 200);
     }
 
 }

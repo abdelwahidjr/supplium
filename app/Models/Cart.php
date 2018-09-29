@@ -10,17 +10,17 @@ class Cart extends Model
 
     protected $fillable
         = [
-            'status',
-            'notes',
-            'outlet_id',
-            'products',
-            'created_by_user_id',
-            'updated_by_user_id',
+            'status' ,
+            'notes' ,
+            'outlet_id' ,
+            'products' ,
+            'created_by_user_id' ,
+            'updated_by_user_id' ,
         ];
 
     protected $casts
         = [
-            'products' => 'array',
+            'products' => 'array' ,
         ];
 
     public function outlet()

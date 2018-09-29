@@ -25,9 +25,9 @@ class BrandRequest extends FormRequest
     public function rules()
     {
         return [
-            "name"        => 'required|string|unique:brands|max:255',
-            "description" => 'required|string|max:1000',
-            'company_id'  => 'required|exists:companies,id',
+            "name"        => 'required|string|unique:brands|max:255' ,
+            "description" => 'required|string|max:1000' ,
+            'company_id'  => 'required|exists:companies,id' ,
         ];
     }
 

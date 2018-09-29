@@ -15,11 +15,13 @@ class ComapiesUsersTableSeeder extends Seeder
     {
         $faker = Factory::create();
 
-        if (app()->environment() !== 'production' && App::runningInConsole()) {
-            foreach (range(1, 50) as $index) {
+        if (app()->environment() !== 'production' && App::runningInConsole())
+        {
+            foreach (range(1 , 50) as $index)
+            {
                 CompanyUser::create([
-                    'user_id'    => rand(1, 50),
-                    'company_id' => rand(1, 50),
+                    'user_id'    => rand(1 , 50) ,
+                    'company_id' => rand(1 , 50) ,
                 ]);
             }
         }

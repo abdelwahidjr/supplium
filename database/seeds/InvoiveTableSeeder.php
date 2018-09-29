@@ -13,16 +13,18 @@ class  InvoiveTableSeeder extends Seeder
      */
     public function run()
     {
-        if (app()->environment() !== 'production' && App::runningInConsole()) {
-            foreach (range(1, 50) as $index) {
+        if (app()->environment() !== 'production' && App::runningInConsole())
+        {
+            foreach (range(1 , 50) as $index)
+            {
 
-                $order_id = rand(1, 50);
+                $order_id = rand(1 , 50);
                 $order    = Order::find($order_id);
 
                 Invoice::create([
-                    'amount'     => $order->total_price_after_tax,
-                    'company_id' => $order->outlet->brand->company->id,
-                    'order_id'   => $order_id,
+                    'amount'     => $order->total_price_after_tax ,
+                    'company_id' => $order->outlet->brand->company->id ,
+                    'order_id'   => $order_id ,
                 ]);
             }
         }

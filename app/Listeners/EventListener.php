@@ -9,7 +9,7 @@ use Illuminate\Queue\SerializesModels;
 
 class EventListener implements ShouldBroadcast
 {
-    use SerializesModels, InteractsWithSockets;
+    use SerializesModels , InteractsWithSockets;
 
     public $msg;
 

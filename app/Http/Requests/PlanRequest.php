@@ -4,10 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SearchByDateAndCompanyRequest extends FormRequest
+class PlanRequest extends FormRequest
 {
-
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -18,7 +16,6 @@ class SearchByDateAndCompanyRequest extends FormRequest
         return true;
     }
 
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -27,10 +24,11 @@ class SearchByDateAndCompanyRequest extends FormRequest
     public function rules()
     {
         return [
-            'start_date' => 'date_format:"Y-m-d"|required|before_or_equal:end_date' ,
-            'end_date'   => 'date_format:"Y-m-d"|required|after_or_equal:start_date' ,
-            'company_id' => 'required|exists:companies,id' ,
-
+            'name'        => 'required|unique:plans|string|max:255' ,
+            "brand_free"  => 'required|string|max:255' ,
+            "brand_max"   => 'required|string|max:255' ,
+            "outlet_free" => 'required|string|max:255' ,
+            'outlet_max'  => 'required|string|max:255' ,
         ];
     }
 

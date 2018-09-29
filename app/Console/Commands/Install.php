@@ -38,16 +38,16 @@ class Install extends Command
      */
     public function handle()
     {
-        Artisan::call('migrate:refresh', ['--force' => true,]);
+        Artisan::call('migrate:refresh' , ['--force' => true ,]);
 
         $this->info(Artisan::output());
 
-        Artisan::call('db:seed',
-            ['--force' => true, '--no-interaction' => true,]);
+        Artisan::call('db:seed' ,
+            ['--force' => true , '--no-interaction' => true ,]);
 
         $this->info(Artisan::output());
 
-        Artisan::call('passport:install', ['--force' => true,]);
+        Artisan::call('passport:install' , ['--force' => true ,]);
 
         $this->info(Artisan::output());
 

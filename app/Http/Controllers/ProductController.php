@@ -44,25 +44,27 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $product = Product::with('supplier', 'category', 'order', 'cart')->find($id);
+        $product = Product::with('supplier' , 'category' , 'order' , 'cart')->find($id);
 
-        if ($product === null) {
+        if ($product === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
         return new ModelResource($product);
     }
 
 
-    public function update(ProductRequest $request, $id)
+    public function update(ProductRequest $request , $id)
     {
         $product = Product::find($id);
-        if ($product === null) {
+        if ($product === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
         $product->update($request->all());
         $product->updated_by_user_id = $request->user()->id;
@@ -75,17 +77,18 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::find($id);
-        if ($product === null) {
+        if ($product === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
         $product->delete();
 
         return response()->json([
-            'status'  => 'Success',
-            'message' => trans('main.deleted'),
-        ], 200);
+            'status'  => 'Success' ,
+            'message' => trans('main.deleted') ,
+        ] , 200);
     }
 
 
@@ -94,73 +97,81 @@ class ProductController extends Controller
         //file columns ['sku','name','unit','price','supplier_email','category_name']
 
         $path = $request->file->getRealPath();
-        $data = Excel::load($path, function ($reader) {
+        $data = Excel::load($path , function ($reader)
+        {
         })->get();
 
-        if ( ! empty($data) && $data->count()) {
+        if ( ! empty($data) && $data->count())
+        {
 
-            foreach ($data as $key => $value) {
+            foreach ($data as $key => $value)
+            {
 
-                $product  = Product::where('sku', $value->sku)->first();
-                $supplier = Supplier::where('email', $value->supplier_email)->first();
-                $category = Category::where('name', $value->category_name)->first();
+                $product  = Product::where('sku' , $value->sku)->first();
+                $supplier = Supplier::where('email' , $value->supplier_email)->first();
+                $category = Category::where('name' , $value->category_name)->first();
 
-                if ($product) {
+                if ($product)
+                {
                     return response([
-                        'message'       => "file columns ['sku','name','unit','price','supplier_email','category_name']",
-                        'message:error' => $value->sku." product already exists",
-                    ], 422);
+                        'message'       => "file columns ['sku','name','unit','price','supplier_email','category_name']" ,
+                        'message:error' => $value->sku . " product already exists" ,
+                    ] , 422);
 
                 }
 
-                if ( ! $supplier) {
+                if ( ! $supplier)
+                {
                     return response([
-                        'message'       => "file columns ['sku','name','unit','price','supplier_email','category_name']",
-                        'message:error' => $value->supplier_email." supplier not found",
-                    ], 422);
+                        'message'       => "file columns ['sku','name','unit','price','supplier_email','category_name']" ,
+                        'message:error' => $value->supplier_email . " supplier not found" ,
+                    ] , 422);
 
                 }
 
-                if ( ! $category) {
+                if ( ! $category)
+                {
                     return response([
-                        'message'       => "file columns ['sku','name','unit','price','supplier_email','category_name']",
-                        'message:error' => $value->category_name." category not found",
-                    ], 422);
+                        'message'       => "file columns ['sku','name','unit','price','supplier_email','category_name']" ,
+                        'message:error' => $value->category_name . " category not found" ,
+                    ] , 422);
 
                 }
 
                 $insert[] = [
-                    'sku'              => $value->sku,
-                    'name'             => $value->name,
-                    'unit'             => $value->unit,
-                    'price'            => $value->price,
-                    'supplier_id'      => $supplier->id,
-                    'category_id'      => $category->id,
-                    'directory_option' => 'on',
+                    'sku'              => $value->sku ,
+                    'name'             => $value->name ,
+                    'unit'             => $value->unit ,
+                    'price'            => $value->price ,
+                    'supplier_id'      => $supplier->id ,
+                    'category_id'      => $category->id ,
+                    'directory_option' => 'on' ,
                 ];
             }
 
-            if ( ! empty($insert)) {
+            if ( ! empty($insert))
+            {
                 DB::table('products')->insert($insert);
 
                 return response([
-                    'message:success' => "file data saved!",
-                ], 422);
+                    'message:success' => "file data saved!" ,
+                ] , 422);
 
-            } else {
+            } else
+            {
                 return response([
-                    'message'       => "file columns ['sku','name','unit','price','supplier_email','category_name']",
-                    'message:error' => "file data not saved!, please check the file data",
-                ], 422);
+                    'message'       => "file columns ['sku','name','unit','price','supplier_email','category_name']" ,
+                    'message:error' => "file data not saved!, please check the file data" ,
+                ] , 422);
             }
 
 
         }
 
         return response([
-            'message'       => "file columns ['sku','name','unit','price','supplier_email','category_name']",
-            'message:error' => "empty data",
-        ], 422);
+            'message'       => "file columns ['sku','name','unit','price','supplier_email','category_name']" ,
+            'message:error' => "empty data" ,
+        ] , 422);
     }
 
 

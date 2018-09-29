@@ -12,8 +12,8 @@ class BrandSupplier extends Model
 
     protected $fillable
         = [
-            'brand_id',
-            'supplier_id',
+            'brand_id' ,
+            'supplier_id' ,
         ];
 
 }

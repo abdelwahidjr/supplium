@@ -48,15 +48,14 @@ class OrderConfirmation extends Notification
         //$order = "#100";
         //Auth::user()->notify(new OrderConfirmation($order));
 
-
-        $confirm_url = url('/order/confirm/'.$this->order);
-        $cancel_url = url('/order/cancel/'.$this->order);
+        $confirm_url = url('/order/confirm/' . $this->order);
+        $cancel_url  = url('/order/cancel/' . $this->order);
 
         return (new MailMessage)
             ->subject(' Order Confirmation')
-            ->markdown('mail.order.comfirm', [
-                '$confirm_url' => $confirm_url,
-                'cancel_url'   => $cancel_url,
+            ->markdown('mail.order.comfirm' , [
+                '$confirm_url' => $confirm_url ,
+                'cancel_url'   => $cancel_url ,
             ]);
 
     }

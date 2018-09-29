@@ -6,6 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ProductRequest extends FormRequest
 {
+    public $units = ['kg' , 'liter' , 'packet' , 'bucket' , 'case' , 'piece' , 'box' , 'gallon'];
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -15,9 +17,6 @@ class ProductRequest extends FormRequest
     {
         return true;
     }
-
-
-    public $units = ['kg' , 'liter' , 'packet' , 'bucket' , 'case' , 'piece' , 'box' , 'gallon'];
 
     /**
      * Get the validation rules that apply to the request.

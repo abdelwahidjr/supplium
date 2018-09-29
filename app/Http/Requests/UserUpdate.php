@@ -24,8 +24,8 @@ class UserUpdate extends FormRequest
     public function rules()
     {
         return [
-            'name'  => 'max:255',
-            'eamil' => 'unique:users|max:255',
+            'name'  => 'max:255' ,
+            'eamil' => 'unique:users|max:255' ,
         ];
     }
 }

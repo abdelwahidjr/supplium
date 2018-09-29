@@ -42,23 +42,25 @@ class CategoryController extends Controller
     {
         $category = Category::with('product')->find($id);
 
-        if ($category === null) {
+        if ($category === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
         return new ModelResource($category);
     }
 
 
-    public function update(CategoryRequest $request, $id)
+    public function update(CategoryRequest $request , $id)
     {
         $category = Category::find($id);
-        if ($category === null) {
+        if ($category === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
         $category->update($request->all());
         $category->updated_by_user_id = $request->user()->id;
@@ -71,16 +73,17 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category = Category::find($id);
-        if ($category === null) {
+        if ($category === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
         $category->delete();
 
         return response()->json([
-            'status'  => 'Success',
-            'message' => trans('main.deleted'),
-        ], 200);
+            'status'  => 'Success' ,
+            'message' => trans('main.deleted') ,
+        ] , 200);
     }
 }

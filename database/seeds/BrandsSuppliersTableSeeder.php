@@ -12,11 +12,13 @@ class BrandsSuppliersTableSeeder extends Seeder
      */
     public function run()
     {
-        if (app()->environment() !== 'production' && App::runningInConsole()) {
-            foreach (range(1, 50) as $index) {
+        if (app()->environment() !== 'production' && App::runningInConsole())
+        {
+            foreach (range(1 , 50) as $index)
+            {
                 BrandSupplier::create([
-                    'brand_id'    => rand(1, 50),
-                    'supplier_id' => rand(1, 50),
+                    'brand_id'    => rand(1 , 50) ,
+                    'supplier_id' => rand(1 , 50) ,
                 ]);
             }
         }

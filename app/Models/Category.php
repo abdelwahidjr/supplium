@@ -10,9 +10,9 @@ class Category extends Model
 
     protected $fillable
         = [
-            'name',
-            'created_by_user_id',
-            'updated_by_user_id',
+            'name' ,
+            'created_by_user_id' ,
+            'updated_by_user_id' ,
         ];
 
     public function product()

@@ -11,10 +11,10 @@ class Setting extends Model
 
     protected $fillable
         = [
-            'notifications',
-            'user_id',
-            'created_by_user_id',
-            'updated_by_user_id',
+            'notifications' ,
+            'user_id' ,
+            'created_by_user_id' ,
+            'updated_by_user_id' ,
         ];
 
     public function user()

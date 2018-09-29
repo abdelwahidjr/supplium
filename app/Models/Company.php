@@ -11,19 +11,20 @@ class Company extends Model
 
     protected $fillable
         = [
-            'name',
-            'business_type',
-            'phone',
-            'address_1',
-            'address_2',
-            'website',
-            'country',
-            'city',
-            'state',
-            'zip',
-            'extra_information',
-            'created_by_user_id',
-            'updated_by_user_id',
+            'name' ,
+            'business_type' ,
+            'phone' ,
+            'address_1' ,
+            'address_2' ,
+            'website' ,
+            'country' ,
+            'city' ,
+            'state' ,
+            'zip' ,
+            'extra_information' ,
+            'plan_id' ,
+            'created_by_user_id' ,
+            'updated_by_user_id' ,
         ];
 
     public function brand()
@@ -45,5 +46,11 @@ class Company extends Model
     {
         return $this->hasMany(Invoice::class);
     }
+
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class);
+    }
+
 
 }

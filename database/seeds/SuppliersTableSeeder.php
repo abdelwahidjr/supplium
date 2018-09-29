@@ -15,20 +15,22 @@ class  SuppliersTableSeeder extends Seeder
     {
         $faker = Factory::create();
 
-        if (app()->environment() !== 'production' && App::runningInConsole()) {
-            foreach (range(1, 50) as $index) {
+        if (app()->environment() !== 'production' && App::runningInConsole())
+        {
+            foreach (range(1 , 50) as $index)
+            {
 
-                $option = ['on', 'off'];
+                $option = ['on' , 'off'];
                 $option = $option[array_rand($option)];
 
                 Supplier::create([
-                    'name'             => $faker->company,
-                    'email'            => $faker->email,
-                    'phone'            => $faker->phoneNumber,
-                    'address'          => $faker->address,
-                    'directory_option' => $option,
-                    'category_id'      => rand(1, 50),
-                    'company_id'       => rand(1, 50),
+                    'name'             => $faker->company ,
+                    'email'            => $faker->email ,
+                    'phone'            => $faker->phoneNumber ,
+                    'address'          => $faker->address ,
+                    'directory_option' => $option ,
+                    'category_id'      => rand(1 , 50) ,
+                    'company_id'       => rand(1 , 50) ,
                 ]);
             }
         }

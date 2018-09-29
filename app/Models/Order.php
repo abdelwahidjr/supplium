@@ -10,27 +10,27 @@ class Order extends Model
 
     protected $fillable
         = [
-            'products',
-            'scheduled_on',
-            'status',
-            'deliverd_status',
-            'tax',
-            'tax_val',
-            'total_price_before_tax',
-            'total_price_after_tax',
-            'total_qty',
-            'notes',
-            'outlet_id',
-            'supplier_id',
-            'standing_order_id',
-            'created_by_user_id',
-            'updated_by_user_id',
+            'products' ,
+            'scheduled_on' ,
+            'status' ,
+            'deliverd_status' ,
+            'tax' ,
+            'tax_val' ,
+            'total_price_before_tax' ,
+            'total_price_after_tax' ,
+            'total_qty' ,
+            'notes' ,
+            'outlet_id' ,
+            'supplier_id' ,
+            'standing_order_id' ,
+            'created_by_user_id' ,
+            'updated_by_user_id' ,
         ];
 
     protected $casts
         = [
-            'products'     => 'array',
-            'scheduled_on' => 'array',
+            'products'     => 'array' ,
+            'scheduled_on' => 'array' ,
         ];
 
 

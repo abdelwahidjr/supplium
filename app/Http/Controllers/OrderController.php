@@ -36,7 +36,8 @@ class OrderController extends Controller
         $order = new Order;
         $order->fill($request->all());
 
-        foreach ($request->products as $k => $v) {
+        foreach ($request->products as $k => $v)
+        {
             $products[$k]    = $v;
             $products_id[$k] = $v['id'];
 
@@ -45,7 +46,7 @@ class OrderController extends Controller
         }
 
         $order->tax_val               = ($order->total_price_before_tax * $order->tax / 100);
-        $order->total_price_after_tax = (double)$order->total_price_before_tax + $order->tax_val;
+        $order->total_price_after_tax = (double) $order->total_price_before_tax + $order->tax_val;
         $order->created_by_user_id    = $request->user()->id;
         $order->save();
 
@@ -58,34 +59,37 @@ class OrderController extends Controller
 
     public function show($id)
     {
-        $order = Order::with('outlet', 'product', 'standing_order', 'invoice')->find($id);
+        $order = Order::with('outlet' , 'product' , 'standing_order' , 'invoice')->find($id);
 
-        if ($order === null) {
+        if ($order === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
         return new ModelResource($order);
     }
 
 
-    public function update(OrderRequest $request, $id)
+    public function update(OrderRequest $request , $id)
     {
         $products    = [];
         $products_id = [];
 
         $order = Order::find($id);
-        if ($order === null) {
+        if ($order === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
-        if ($order->status == "confirmed") {
+        if ($order->status == "confirmed")
+        {
             return response([
-                'message' => trans('main.edit_not_allowed'),
-            ], 422);
+                'message' => trans('main.edit_not_allowed') ,
+            ] , 422);
         }
 
         $order->update($request->all());
@@ -93,7 +97,8 @@ class OrderController extends Controller
         $order->total_qty              = 0;
         $order->total_price_before_tax = 0;
 
-        foreach ($request->products as $k => $v) {
+        foreach ($request->products as $k => $v)
+        {
             $products[$k]    = $v;
             $products_id[$k] = $v['id'];
 
@@ -102,7 +107,7 @@ class OrderController extends Controller
         }
 
         $order->tax_val               = ($order->total_price_before_tax * $order->tax / 100);
-        $order->total_price_after_tax = (double)$order->total_price_before_tax + $order->tax_val;
+        $order->total_price_after_tax = (double) $order->total_price_before_tax + $order->tax_val;
         $order->updated_by_user_id    = $request->user()->id;
 
         $order->save();
@@ -117,15 +122,17 @@ class OrderController extends Controller
     public function destroy($id)
     {
         $order = Order::find($id);
-        if ($order === null) {
+        if ($order === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
         $products_id = [];
 
-        foreach ($order->products as $k => $v) {
+        foreach ($order->products as $k => $v)
+        {
             $products_id[$k] = $v['id'];
         }
 
@@ -134,8 +141,8 @@ class OrderController extends Controller
         $order->delete();
 
         return response()->json([
-            'status'  => 'Success',
-            'message' => trans('main.deleted'),
-        ], 200);
+            'status'  => 'Success' ,
+            'message' => trans('main.deleted') ,
+        ] , 200);
     }
 }

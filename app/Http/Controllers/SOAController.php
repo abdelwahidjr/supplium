@@ -9,7 +9,6 @@ use App\Http\Requests\SOASupplierRequest;
 use App\Http\Resources\ModelResource;
 use App\Models\Invoice;
 use App\Models\SupplierPayment;
-use Illuminate\Http\Request;
 
 class SOAController extends Controller
 {
@@ -34,8 +33,9 @@ class SOAController extends Controller
         $brand_id = $request->brand_id;
 
         return ModelResource::collection(Invoice::with(['order.supplier.supplier_payment'])
-            ->whereHas('order.outlet.brand', function ($query) use ($brand_id) {
-                $query->where('brands.id', '=', $brand_id);
+            ->whereHas('order.outlet.brand' , function ($query) use ($brand_id)
+            {
+                $query->where('brands.id' , '=' , $brand_id);
             })
             ->paginate(config('main.JsonResultCount')));
     }
@@ -47,8 +47,9 @@ class SOAController extends Controller
         $supplier_id = $request->supplier_id;
 
         return ModelResource::collection(Invoice::with(['order.supplier.supplier_payment'])
-            ->whereHas('order.supplier', function ($query) use ($supplier_id) {
-                $query->where('suppliers.id', '=', $supplier_id);
+            ->whereHas('order.supplier' , function ($query) use ($supplier_id)
+            {
+                $query->where('suppliers.id' , '=' , $supplier_id);
             })
             ->paginate(config('main.JsonResultCount')));
     }
@@ -58,11 +59,11 @@ class SOAController extends Controller
     {
         // filter by date
         $start_date = $request->start_date;
-        $end_date = $request->end_date;
+        $end_date   = $request->end_date;
 
         return ModelResource::collection(Invoice::with(['order.supplier.supplier_payment'])
-            ->whereDate('invoices.created_at', '>=', $start_date)
-            ->whereDate('invoices.created_at', '<=', $end_date)
+            ->whereDate('invoices.created_at' , '>=' , $start_date)
+            ->whereDate('invoices.created_at' , '<=' , $end_date)
             ->paginate(config('main.JsonResultCount')));
     }
 
@@ -73,8 +74,9 @@ class SOAController extends Controller
         $outlet_id = $request->outlet_id;
 
         return ModelResource::collection(Invoice::with(['order.supplier.supplier_payment'])
-            ->whereHas('order.outlet', function ($query) use ($outlet_id) {
-                $query->where('outlets.id', '=', $outlet_id);
+            ->whereHas('order.outlet' , function ($query) use ($outlet_id)
+            {
+                $query->where('outlets.id' , '=' , $outlet_id);
             })
             ->paginate(config('main.JsonResultCount')));
     }

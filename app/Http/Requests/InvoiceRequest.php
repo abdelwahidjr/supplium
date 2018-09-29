@@ -25,7 +25,7 @@ class InvoiceRequest extends FormRequest
     public function rules()
     {
         return [
-            'order_id' => 'required|exists:orders,id',
+            'order_id' => 'required|exists:orders,id' ,
         ];
     }
 

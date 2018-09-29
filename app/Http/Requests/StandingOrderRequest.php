@@ -8,6 +8,10 @@ class StandingOrderRequest extends FormRequest
 {
 
 
+    public $status = ['active' , 'expired'];
+    public $repeat_days = ['Sun' , 'Mon' , 'Tue' , 'Wed' , 'Thu' , 'Fri' , 'Sat'];
+    public $repeated_period = ['1 week' , '2 week' , '3 week' , '4 week'];
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -17,11 +21,6 @@ class StandingOrderRequest extends FormRequest
     {
         return true;
     }
-
-
-    public $status = ['active' , 'expired'];
-    public $repeat_days = ['Sun' , 'Mon' , 'Tue' , 'Wed' , 'Thu' , 'Fri' , 'Sat'];
-    public $repeated_period = ['1 week' , '2 week' , '3 week' , '4 week'];
 
     /**
      * Get the validation rules that apply to the request.

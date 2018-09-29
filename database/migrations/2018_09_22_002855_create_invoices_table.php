@@ -13,9 +13,10 @@ class CreateInvoicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('invoices', function (Blueprint $table) {
+        Schema::create('invoices' , function (Blueprint $table)
+        {
             $table->increments('id');
-            $table->decimal('amount', 9, 2);
+            $table->decimal('amount' , 9 , 2);
             $table->unsignedBigInteger('company_id');
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('created_by_user_id')->nullable();

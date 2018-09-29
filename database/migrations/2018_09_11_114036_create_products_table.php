@@ -13,13 +13,14 @@ class CreateProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('products' , function (Blueprint $table)
+        {
             $table->increments('id');
             $table->string('sku');
             $table->string('name');
-            $table->enum('unit', ['kg', 'liter', 'packet', 'bucket', 'case', 'piece', 'box', 'gallon']);
-            $table->decimal('price', 8, 2);
-            $table->enum('directory_option', ['on', 'off'])->default('off');
+            $table->enum('unit' , ['kg' , 'liter' , 'packet' , 'bucket' , 'case' , 'piece' , 'box' , 'gallon']);
+            $table->decimal('price' , 8 , 2);
+            $table->enum('directory_option' , ['on' , 'off'])->default('off');
             $table->unsignedBigInteger('supplier_id');
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('cart_id');

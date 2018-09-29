@@ -13,9 +13,10 @@ class CreateSupplierPaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('supplier_payment', function (Blueprint $table) {
+        Schema::create('supplier_payment' , function (Blueprint $table)
+        {
             $table->increments('id');
-            $table->enum('payment_type', ['cash', 'credit']);
+            $table->enum('payment_type' , ['cash' , 'credit']);
             $table->string('credit_limit')->nullable();
             $table->string('credit_period')->nullable();
             $table->string('payment_due_date')->nullable();
@@ -26,8 +27,6 @@ class CreateSupplierPaymentsTable extends Migration
             $table->timestamps();
         });
     }
-
-    //	Add agreement terms (Credit Limit, Credit Period, Payment Due Date)
 
     /**
      * Reverse the migrations.

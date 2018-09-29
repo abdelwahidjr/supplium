@@ -30,7 +30,8 @@ class AdController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -41,7 +42,8 @@ class AdController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Ad  $ad
+     * @param  \App\Ad $ad
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Ad $ad)
@@ -52,7 +54,8 @@ class AdController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Ad  $ad
+     * @param  \App\Ad $ad
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(Ad $ad)
@@ -63,11 +66,12 @@ class AdController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Ad  $ad
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Ad                  $ad
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ad $ad)
+    public function update(Request $request , Ad $ad)
     {
         //
     }
@@ -75,7 +79,8 @@ class AdController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Ad  $ad
+     * @param  \App\Ad $ad
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Ad $ad)

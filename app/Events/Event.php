@@ -9,7 +9,7 @@ use Illuminate\Queue\SerializesModels;
 
 class Event
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable , InteractsWithSockets , SerializesModels;
 
     /**
      * Create a new event instance.

@@ -10,16 +10,16 @@ class Outlet extends Model
 
     protected $fillable
         = [
-            'name',
-            'phone',
-            'address',
-            'longitude',
-            'latitude',
-            'city',
-            'shipping_address',
-            'brand_id',
-            'created_by_user_id',
-            'updated_by_user_id',
+            'name' ,
+            'phone' ,
+            'address' ,
+            'longitude' ,
+            'latitude' ,
+            'city' ,
+            'shipping_address' ,
+            'brand_id' ,
+            'created_by_user_id' ,
+            'updated_by_user_id' ,
         ];
 
     public function brand()

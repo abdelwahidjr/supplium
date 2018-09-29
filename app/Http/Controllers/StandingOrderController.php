@@ -47,24 +47,26 @@ class StandingOrderController extends Controller
     {
         $standing_order = StandingOrder::with('order')->find($id);
 
-        if ($standing_order === null) {
+        if ($standing_order === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
         return new ModelResource($standing_order);
     }
 
 
-    public function update(StandingOrderRequest $request, $id)
+    public function update(StandingOrderRequest $request , $id)
     {
         $standing_order = StandingOrder::find($id);
 
-        if ($standing_order === null) {
+        if ($standing_order === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
         $standing_order->update($request->all());
         $standing_order->updated_by_user_id = $request->user()->id;
@@ -77,16 +79,17 @@ class StandingOrderController extends Controller
     public function destroy($id)
     {
         $standing_order = StandingOrder::find($id);
-        if ($standing_order === null) {
+        if ($standing_order === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
         $standing_order->delete();
 
         return response()->json([
-            'status'  => 'Success',
-            'message' => trans('main.deleted'),
-        ], 200);
+            'status'  => 'Success' ,
+            'message' => trans('main.deleted') ,
+        ] , 200);
     }
 }

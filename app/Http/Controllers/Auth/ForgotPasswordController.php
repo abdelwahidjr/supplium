@@ -48,22 +48,23 @@ class ForgotPasswordController extends Controller
      */
     public function getResetToken(Request $request)
     {
-        $this->validate($request,
+        $this->validate($request ,
             ['email' => 'required|string|email|max:255|exists:users']);
 
-        $user = User::where('email', $request->input('email'))->first();
-        if ( ! $user) {
-            return response(['message' => trans('passwords.user')], 400);
+        $user = User::where('email' , $request->input('email'))->first();
+        if ( ! $user)
+        {
+            return response(['message' => trans('passwords.user')] , 400);
         }
 
         $token = $this->broker()->createToken($user);
         Mail::to($request->input('email'))->send(new ForgetPassword($token));
 
         return response([
-            'message' => trans('passwords.sent'),
-            'token'   => $token,
+            'message' => trans('passwords.sent') ,
+            'token'   => $token ,
 
-        ], 200);
+        ] , 200);
 
     }
 }

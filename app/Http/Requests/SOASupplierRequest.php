@@ -27,7 +27,7 @@ class SOASupplierRequest extends FormRequest
     public function rules()
     {
         return [
-            'supplier_id' => 'required|exists:suppliers,id',
+            'supplier_id' => 'required|exists:suppliers,id' ,
         ];
     }
 

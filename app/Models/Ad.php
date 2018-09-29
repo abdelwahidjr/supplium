@@ -11,11 +11,11 @@ class Ad extends Model
 
     protected $fillable
         = [
-            'name',
-            'description',
-            'url',
-            'created_by_user_id',
-            'updated_by_user_id',
+            'name' ,
+            'description' ,
+            'url' ,
+            'created_by_user_id' ,
+            'updated_by_user_id' ,
         ];
 
 }

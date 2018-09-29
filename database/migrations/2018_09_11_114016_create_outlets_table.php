@@ -13,7 +13,8 @@ class CreateOutletsTable extends Migration
      */
     public function up()
     {
-        Schema::create('outlets', function (Blueprint $table) {
+        Schema::create('outlets' , function (Blueprint $table)
+        {
             $table->increments('id');
             $table->string('name');
             $table->string('phone');
@@ -25,7 +26,6 @@ class CreateOutletsTable extends Migration
             $table->unsignedBigInteger('brand_id');
             $table->unsignedBigInteger('created_by_user_id')->nullable();
             $table->unsignedBigInteger('updated_by_user_id')->nullable();
-
 
             $table->timestamps();
         });

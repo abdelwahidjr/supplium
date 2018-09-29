@@ -18,41 +18,46 @@ class OrderHistoryController extends Controller
 
     /**
      * @param $id
+     *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function TotalOrders($id)
     {
         $company_id = $id;
 
-        if (!Company::find($id)) {
+        if ( ! Company::find($id))
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
-        $brand_id_array = [];
+        $brand_id_array  = [];
         $outlet_id_array = [];
-        $brands = Brand::where('company_id', $company_id)->get();
+        $brands          = Brand::where('company_id' , $company_id)->get();
 
-        foreach ($brands as $brand) {
-            array_push($brand_id_array, $brand->id);
+        foreach ($brands as $brand)
+        {
+            array_push($brand_id_array , $brand->id);
         }
 
-        $outlets = Outlet::whereIn('brand_id', $brand_id_array)->get();
+        $outlets = Outlet::whereIn('brand_id' , $brand_id_array)->get();
 
-        foreach ($outlets as $outlet) {
-            array_push($outlet_id_array, $outlet->id);
+        foreach ($outlets as $outlet)
+        {
+            array_push($outlet_id_array , $outlet->id);
         }
-        $order_count = Order::whereIn('outlet_id', $outlet_id_array)->count();
+        $order_count = Order::whereIn('outlet_id' , $outlet_id_array)->count();
 
         return response()->json([
-            'Company Total Orders' => $order_count,
+            'Company Total Orders' => $order_count ,
         ]);
 
     }
 
     /**
      * @param $id
+     *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function TotalPurchases($id)
@@ -60,26 +65,30 @@ class OrderHistoryController extends Controller
 
         $company_id = $id;
 
-        if (!Company::find($id)) {
+        if ( ! Company::find($id))
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
-        $brand_id_array = [];
+        $brand_id_array  = [];
         $outlet_id_array = [];
 
-        $brands = Brand::where('company_id', $company_id)->get();
-        foreach ($brands as $brand) {
-            array_push($brand_id_array, $brand->id);
+        $brands = Brand::where('company_id' , $company_id)->get();
+        foreach ($brands as $brand)
+        {
+            array_push($brand_id_array , $brand->id);
         }
-        $outlets = Outlet::whereIn('brand_id', $brand_id_array)->get();
-        foreach ($outlets as $outlet) {
-            array_push($outlet_id_array, $outlet->id);
+        $outlets = Outlet::whereIn('brand_id' , $brand_id_array)->get();
+        foreach ($outlets as $outlet)
+        {
+            array_push($outlet_id_array , $outlet->id);
         }
-        $total = Order::whereIn('outlet_id', $outlet_id_array)->sum('total_price_after_tax');
+        $total = Order::whereIn('outlet_id' , $outlet_id_array)->sum('total_price_after_tax');
+
         return response()->json([
-            'Company Total Purchases' => $total,
+            'Company Total Purchases' => $total ,
         ]);
 
 
@@ -87,37 +96,43 @@ class OrderHistoryController extends Controller
 
     /**
      * TotalSupliers
+     *
      * @param $id
+     *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function TotalSupliers($id)
     {
         $company_id = $id;
-        if (!Company::find($id)) {
+        if ( ! Company::find($id))
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
         $brand_id_array = [];
-        $brands = Brand::where('company_id', $company_id)->get();
+        $brands         = Brand::where('company_id' , $company_id)->get();
 
-        foreach ($brands as $brand) {
-            array_push($brand_id_array, $brand->id);
+        foreach ($brands as $brand)
+        {
+            array_push($brand_id_array , $brand->id);
         }
 
-        $supplier_id_array = BrandSupplier::select('supplier_id')->whereIn('brand_id', $brand_id_array)->get();
-        $total = count($supplier_id_array);
+        $supplier_id_array = BrandSupplier::select('supplier_id')->whereIn('brand_id' , $brand_id_array)->get();
+        $total             = count($supplier_id_array);
 
         return response()->json([
-            'Company Total Suppliers' => $total,
+            'Company Total Suppliers' => $total ,
         ]);
     }
 
 
     /**
      * TotalItems
+     *
      * @param $id
+     *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function TotalItems($id)
@@ -125,32 +140,35 @@ class OrderHistoryController extends Controller
 
         $company_id = $id;
 
-        if (!Company::find($id)) {
+        if ( ! Company::find($id))
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
-        $brand_id_array = [];
+        $brand_id_array  = [];
         $outlet_id_array = [];
-        $brands = Brand::where('company_id', $company_id)->get();
+        $brands          = Brand::where('company_id' , $company_id)->get();
 
-        foreach ($brands as $brand) {
-            array_push($brand_id_array, $brand->id);
+        foreach ($brands as $brand)
+        {
+            array_push($brand_id_array , $brand->id);
         }
 
-        $outlets = Outlet::whereIn('brand_id', $brand_id_array)->get();
-        foreach ($outlets as $outlet) {
-            array_push($outlet_id_array, $outlet->id);
+        $outlets = Outlet::whereIn('brand_id' , $brand_id_array)->get();
+        foreach ($outlets as $outlet)
+        {
+            array_push($outlet_id_array , $outlet->id);
         }
         //to get total quantity (confirmed or pending)
         //$total=Order::whereIn('outlet_id',$outlet_id_array)->sum('total_qty');
 
         //to get total quantity (confirmed only)
-        $total = Order::whereIn('outlet_id', $outlet_id_array)->where('status', 'confirmed')->sum('total_qty');
+        $total = Order::whereIn('outlet_id' , $outlet_id_array)->where('status' , 'confirmed')->sum('total_qty');
 
         return response()->json([
-            'Company Total Confirmed Items' => $total,
+            'Company Total Confirmed Items' => $total ,
         ]);
 
 

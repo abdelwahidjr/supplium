@@ -27,7 +27,7 @@ class SOAOutletRequest extends FormRequest
     public function rules()
     {
         return [
-            'outlet_id' => 'required|exists:outlets,id',
+            'outlet_id' => 'required|exists:outlets,id' ,
         ];
     }
 

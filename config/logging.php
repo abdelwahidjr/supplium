@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('LOG_CHANNEL', 'stack'),
+    'default' => env('LOG_CHANNEL' , 'stack') ,
 
     /*
     |--------------------------------------------------------------------------
@@ -34,48 +34,48 @@ return [
 
     'channels' => [
         'stack' => [
-            'driver'   => 'stack',
-            'channels' => ['single'],
-        ],
+            'driver'   => 'stack' ,
+            'channels' => ['single'] ,
+        ] ,
 
         'single' => [
-            'driver' => 'single',
-            'path'   => storage_path('logs/laravel.log'),
-            'level'  => 'debug',
-        ],
+            'driver' => 'single' ,
+            'path'   => storage_path('logs/laravel.log') ,
+            'level'  => 'debug' ,
+        ] ,
 
         'daily' => [
-            'driver' => 'daily',
-            'path'   => storage_path('logs/laravel.log'),
-            'level'  => 'debug',
-            'days'   => 7,
-        ],
+            'driver' => 'daily' ,
+            'path'   => storage_path('logs/laravel.log') ,
+            'level'  => 'debug' ,
+            'days'   => 7 ,
+        ] ,
 
         'slack' => [
-            'driver'   => 'slack',
-            'url'      => env('LOG_SLACK_WEBHOOK_URL'),
-            'username' => 'Laravel Log',
-            'emoji'    => ':boom:',
-            'level'    => 'critical',
-        ],
+            'driver'   => 'slack' ,
+            'url'      => env('LOG_SLACK_WEBHOOK_URL') ,
+            'username' => 'Laravel Log' ,
+            'emoji'    => ':boom:' ,
+            'level'    => 'critical' ,
+        ] ,
 
         'stderr' => [
-            'driver'  => 'monolog',
-            'handler' => StreamHandler::class,
+            'driver'  => 'monolog' ,
+            'handler' => StreamHandler::class ,
             'with'    => [
-                'stream' => 'php://stderr',
-            ],
-        ],
+                'stream' => 'php://stderr' ,
+            ] ,
+        ] ,
 
         'syslog' => [
-            'driver' => 'syslog',
-            'level'  => 'debug',
-        ],
+            'driver' => 'syslog' ,
+            'level'  => 'debug' ,
+        ] ,
 
         'errorlog' => [
-            'driver' => 'errorlog',
-            'level'  => 'debug',
-        ],
-    ],
+            'driver' => 'errorlog' ,
+            'level'  => 'debug' ,
+        ] ,
+    ] ,
 
 ];

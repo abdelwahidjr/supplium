@@ -17,12 +17,14 @@ class UsersTableSeeder extends Seeder
 
         $faker = Factory::create();
 
-        if (app()->environment() !== 'production' && App::runningInConsole()) {
-            foreach (range(1, 50) as $index) {
+        if (app()->environment() !== 'production' && App::runningInConsole())
+        {
+            foreach (range(1 , 50) as $index)
+            {
                 User::create([
-                    'name'     => $faker->name,
-                    'email'    => $faker->email,
-                    'password' => Hash::make('secret'),
+                    'name'     => $faker->name ,
+                    'email'    => $faker->email ,
+                    'password' => Hash::make('secret') ,
                 ]);
             }
         }
@@ -31,17 +33,18 @@ class UsersTableSeeder extends Seeder
     public function systemUsersSeeding()
     {
         $users  = [
-            'abdelwahid',
+            'abdelwahid' ,
         ];
         $emails = [
-            'm.abdelwahid@madad.sa',
+            'm.abdelwahid@madad.sa' ,
         ];
 
-        foreach (range(0, 0) as $i) {
+        foreach (range(0 , 0) as $i)
+        {
             User::create([
-                'name'     => $users[$i],
-                'email'    => $emails[$i],
-                'password' => Hash::make('00001111'),
+                'name'     => $users[$i] ,
+                'email'    => $emails[$i] ,
+                'password' => Hash::make('00001111') ,
             ]);
         }
     }

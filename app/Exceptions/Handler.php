@@ -24,8 +24,8 @@ class Handler extends ExceptionHandler
      */
     protected $dontFlash
         = [
-            'password',
-            'password_confirmation',
+            'password' ,
+            'password_confirmation' ,
         ];
 
     /**
@@ -48,8 +48,8 @@ class Handler extends ExceptionHandler
      *
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request , Exception $exception)
     {
-        return parent::render($request, $exception);
+        return parent::render($request , $exception);
     }
 }

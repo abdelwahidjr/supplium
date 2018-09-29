@@ -40,25 +40,27 @@ class CompanyController extends Controller
     public function show($id)
     {
 
-        $Company = Company::with('brand', 'user', 'supplier', 'invoice')->find($id);
+        $Company = Company::with('brand' , 'user' , 'supplier' , 'invoice' , 'plan')->find($id);
 
-        if ($Company === null) {
+        if ($Company === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
         return new ModelResource($Company);
     }
 
 
-    public function update(CompanyRequest $request, $id)
+    public function update(CompanyRequest $request , $id)
     {
         $company = Company::find($id);
-        if ($company === null) {
+        if ($company === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
         $company->update($request->all());
         $company->updated_by_user_id = $request->user()->id;
@@ -71,17 +73,18 @@ class CompanyController extends Controller
     public function destroy($id)
     {
         $company = Company::find($id);
-        if ($company === null) {
+        if ($company === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
         $company->delete();
 
         return response()->json([
-            'status'  => 'Success',
-            'message' => trans('main.deleted'),
-        ], 200);
+            'status'  => 'Success' ,
+            'message' => trans('main.deleted') ,
+        ] , 200);
     }
 
 

@@ -40,25 +40,27 @@ class OutletController extends Controller
     public function show($id)
     {
 
-        $Outlet = Outlet::with('brand', 'cart', 'order')->find($id);
+        $Outlet = Outlet::with('brand' , 'cart' , 'order')->find($id);
 
-        if ($Outlet === null) {
+        if ($Outlet === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
         return new ModelResource($Outlet);
     }
 
 
-    public function update(OutletRequest $request, $id)
+    public function update(OutletRequest $request , $id)
     {
         $outlet = Outlet::find($id);
-        if ($outlet === null) {
+        if ($outlet === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
         $outlet->update($request->all());
         $outlet->updated_by_user_id = $request->user()->id;
@@ -71,16 +73,17 @@ class OutletController extends Controller
     public function destroy($id)
     {
         $outlet = Outlet::find($id);
-        if ($outlet === null) {
+        if ($outlet === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
         $outlet->delete();
 
         return response()->json([
-            'status'  => 'Success',
-            'message' => trans('main.deleted'),
-        ], 200);
+            'status'  => 'Success' ,
+            'message' => trans('main.deleted') ,
+        ] , 200);
     }
 }

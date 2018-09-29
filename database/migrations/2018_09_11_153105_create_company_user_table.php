@@ -13,7 +13,8 @@ class CreateCompanyUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('company_user', function (Blueprint $table) {
+        Schema::create('company_user' , function (Blueprint $table)
+        {
             $table->increments('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('company_id');

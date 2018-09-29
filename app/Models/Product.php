@@ -10,16 +10,16 @@ class Product extends Model
 
     protected $fillable
         = [
-            'sku',
-            'name',
-            'unit',
-            'price',
-            'directory_option',
-            'supplier_id',
-            'category_id',
-            'cart_id',
-            'created_by_user_id',
-            'updated_by_user_id',
+            'sku' ,
+            'name' ,
+            'unit' ,
+            'price' ,
+            'directory_option' ,
+            'supplier_id' ,
+            'category_id' ,
+            'cart_id' ,
+            'created_by_user_id' ,
+            'updated_by_user_id' ,
         ];
 
     public function supplier()

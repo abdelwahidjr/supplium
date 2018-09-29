@@ -13,7 +13,8 @@ class CreatePlansTable extends Migration
      */
     public function up()
     {
-        Schema::create('plans', function (Blueprint $table) {
+        Schema::create('plans' , function (Blueprint $table)
+        {
             $table->increments('id');
             $table->string('name');
             $table->string('brand_free');
@@ -22,7 +23,6 @@ class CreatePlansTable extends Migration
             $table->string('outlet_max');
             $table->unsignedBigInteger('created_by_user_id')->nullable();
             $table->unsignedBigInteger('updated_by_user_id')->nullable();
-
 
             $table->timestamps();
         });

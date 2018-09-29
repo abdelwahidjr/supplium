@@ -13,7 +13,8 @@ class CreateCompaniesTable extends Migration
      */
     public function up()
     {
-        Schema::create('companies', function (Blueprint $table) {
+        Schema::create('companies' , function (Blueprint $table)
+        {
             $table->increments('id');
             $table->string('name');
             $table->string('business_type');
@@ -26,6 +27,7 @@ class CreateCompaniesTable extends Migration
             $table->string('state')->nullable();
             $table->string('zip')->nullable();
             $table->text('extra_information')->nullable();
+            $table->unsignedBigInteger('plan_id');
             $table->unsignedBigInteger('created_by_user_id')->nullable();
             $table->unsignedBigInteger('updated_by_user_id')->nullable();
 

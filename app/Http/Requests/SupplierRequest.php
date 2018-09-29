@@ -6,6 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class SupplierRequest extends FormRequest
 {
+    public $directory_option = ['on' , 'off'];
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -16,10 +18,6 @@ class SupplierRequest extends FormRequest
         return true;
     }
 
-
-    public $directory_option = ['on', 'off'];
-
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -28,13 +26,13 @@ class SupplierRequest extends FormRequest
     public function rules()
     {
         return [
-            "name"             => 'required|string|max:255',
-            'email'            => 'required|unique:suppliers|max:255',
-            "phone"            => 'required|string|max:255',
-            'address'          => 'required|string|max:255',
-            'directory_option' => 'required|in:'.implode(',', $this->directory_option),
-            'category_id'      => 'required|exists:categories,id',
-            'company_id'       => 'required|exists:companies,id',
+            "name"             => 'required|string|max:255' ,
+            'email'            => 'required|unique:suppliers|max:255' ,
+            "phone"            => 'required|string|max:255' ,
+            'address'          => 'required|string|max:255' ,
+            'directory_option' => 'required|in:' . implode(',' , $this->directory_option) ,
+            'category_id'      => 'required|exists:categories,id' ,
+            'company_id'       => 'required|exists:companies,id' ,
         ];
     }
 
@@ -42,7 +40,7 @@ class SupplierRequest extends FormRequest
     public function messages()
     {
         return [
-            "directory_option.in" => "avilable options ['on', 'off']",
+            "directory_option.in" => "avilable options ['on', 'off']" ,
         ];
     }
 

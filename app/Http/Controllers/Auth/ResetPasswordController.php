@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Transformers\Json;
 use App\Models\User;
 use Auth;
 use Hash;
@@ -50,52 +49,58 @@ class ResetPasswordController extends Controller
     }
 
     /**
-     * @param User $user
-     * @param      $password
-     */
-    protected function resetPassword(User $user, $password)
-    {
-        $user->password = Hash::make($password);
-
-        $user->save();
-
-        event(new PasswordReset($user));
-    }
-
-    /**
      * @param Request $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function reset(Request $request)
     {
-        $this->validate($request, $this->rules(),
+        $this->validate($request , $this->rules() ,
             $this->validationErrorMessages());
 
         $response = $this->broker()->reset(
-            $this->credentials($request), function ($user, $password) {
-            $this->resetPassword($user, $password);
+            $this->credentials($request) , function ($user , $password)
+        {
+            $this->resetPassword($user , $password);
         });
 
-        if ($request->wantsJson()) {
-            if ($response == Password::PASSWORD_RESET) {
+        if ($request->wantsJson())
+        {
+            if ($response == Password::PASSWORD_RESET)
+            {
                 return response()->json(['message' => trans($response)]);
-            } else {
+            } else
+            {
                 return response()->json([
-                    'email'   => $request->input('email'),
-                    'message' => trans($response),
-                ], 400);
+                    'email'   => $request->input('email') ,
+                    'message' => trans($response) ,
+                ] , 400);
             }
         }
 
-        if ($response == Password::PASSWORD_RESET) {
-            $user = User::where('email', $request->input('email'))->first();
+        if ($response == Password::PASSWORD_RESET)
+        {
+            $user = User::where('email' , $request->input('email'))->first();
             Auth::login($user);
 
-            return $this->sendResetResponse($request,$response);
-        } else {
-            return $this->sendResetFailedResponse($request, $response);
+            return $this->sendResetResponse($request , $response);
+        } else
+        {
+            return $this->sendResetFailedResponse($request , $response);
         }
 
+    }
+
+    /**
+     * @param User $user
+     * @param      $password
+     */
+    protected function resetPassword(User $user , $password)
+    {
+        $user->password = Hash::make($password);
+
+        $user->save();
+
+        event(new PasswordReset($user));
     }
 }

@@ -29,9 +29,9 @@ class UserChangePassword extends FormRequest
     public function rules()
     {
         return [
-            'email'        => 'required|string|email|max:255|exists:users',
-            'old_password' => 'required|min:6',
-            'password'     => 'required|min:6|confirmed',
+            'email'        => 'required|string|email|max:255|exists:users' ,
+            'old_password' => 'required|min:6' ,
+            'password'     => 'required|min:6|confirmed' ,
         ];
     }
 }

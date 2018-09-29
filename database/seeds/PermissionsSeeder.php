@@ -20,65 +20,69 @@ class PermissionsSeeder extends Seeder
         $this->permissions_api_seeding();
 
         $user = User::find(1);
-        $user->AssignRole('admin', 'web');
-        $user->AssignRole('admin', 'api');
+        $user->AssignRole('admin' , 'web');
+        $user->AssignRole('admin' , 'api');
     }
 
     public function roles_web_seeding()
     {
         $roles = [
-            'admin',
-            'owner',
-            'manager',
-            'purchases',
-            'accountant',
+            'admin' ,
+            'owner' ,
+            'manager' ,
+            'purchases' ,
+            'accountant' ,
         ];
 
-        foreach ($roles as $role) {
-            Role::create(['guard_name' => 'web', 'name' => $role]);
+        foreach ($roles as $role)
+        {
+            Role::create(['guard_name' => 'web' , 'name' => $role]);
         }
     }
 
     public function roles_api_seeding()
     {
         $roles = [
-            'admin',
-            'owner',
-            'manager',
-            'purchases',
-            'accountant',
+            'admin' ,
+            'owner' ,
+            'manager' ,
+            'purchases' ,
+            'accountant' ,
         ];
 
-        foreach ($roles as $role) {
-            Role::create(['guard_name' => 'api', 'name' => $role]);
+        foreach ($roles as $role)
+        {
+            Role::create(['guard_name' => 'api' , 'name' => $role]);
         }
     }
 
     public function permissions_web_seeding()
     {
         $permissions = [
-            'show',
-            'create',
-            'edit',
-            'delete',
+            'show' ,
+            'create' ,
+            'edit' ,
+            'delete' ,
         ];
 
-        foreach ($permissions as $permission) {
-            Permission::create(['guard_name' => 'web', 'name' => $permission]);
+        foreach ($permissions as $permission)
+        {
+            Permission::create(['guard_name' => 'web' , 'name' => $permission]);
         }
     }
 
     public function permissions_api_seeding()
     {
         $permissions = [
-            'show',
-            'create',
-            'edit',
-            'delete',
+            'show' ,
+            'create' ,
+            'edit' ,
+            'delete' ,
         ];
 
-        foreach ($permissions as $permission) {
-            Permission::create(['guard_name' => 'api', 'name' => $permission]);
+        foreach ($permissions as $permission)
+        {
+            Permission::create(['guard_name' => 'api' , 'name' => $permission]);
         }
     }
 }

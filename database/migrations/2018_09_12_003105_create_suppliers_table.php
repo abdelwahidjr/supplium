@@ -13,13 +13,14 @@ class CreateSuppliersTable extends Migration
      */
     public function up()
     {
-        Schema::create('suppliers', function (Blueprint $table) {
+        Schema::create('suppliers' , function (Blueprint $table)
+        {
             $table->increments('id');
             $table->string('name');
             $table->string('email');
             $table->string('phone');
             $table->string('address');
-            $table->enum('directory_option', ['on', 'off'])->default('off');
+            $table->enum('directory_option' , ['on' , 'off'])->default('off');
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('company_id');
             $table->unsignedBigInteger('created_by_user_id')->nullable();
