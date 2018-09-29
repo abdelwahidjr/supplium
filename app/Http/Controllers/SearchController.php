@@ -20,7 +20,11 @@ class SearchController extends Controller
 
     }
 
-
+    /**
+     * SearchOrdersByCompany
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     */
     public function SearchOrdersByCompany($id)
     {
         if (!Company::find($id)) {
@@ -34,7 +38,11 @@ class SearchController extends Controller
         ]);
     }
 
-
+    /**
+     * SearchSuppliersByCompany
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     */
     public function SearchSuppliersByCompany($id)
     {
         if (!Company::find($id)) {
@@ -48,7 +56,11 @@ class SearchController extends Controller
         ]);
     }
 
-
+    /**
+     * SearchOrdersByBrand
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     */
     public function SearchOrdersByBrand($id)
     {
         if (!Brand::find($id)) {
@@ -62,7 +74,11 @@ class SearchController extends Controller
         ]);
     }
 
-
+    /**
+     * SearchSuppliersByBrand
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     */
     public function SearchSuppliersByBrand($id)
     {
         if (!Brand::find($id)) {
@@ -76,7 +92,11 @@ class SearchController extends Controller
         ]);
     }
 
-
+    /**
+     * SearchOrdersByOutlet
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     */
     public function SearchOrdersByOutlet($id)
     {
         if (!Outlet::find($id)) {
@@ -90,7 +110,11 @@ class SearchController extends Controller
         ]);
     }
 
-
+    /**
+     * SearchSuppliersByOutlet
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     */
     public function SearchSuppliersByOutlet($id)
     {
         if (!Outlet::find($id)) {
@@ -104,7 +128,11 @@ class SearchController extends Controller
         ]);
     }
 
-
+    /**
+     * SearchUsersByEmail
+     * @param UserFindByMail $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function SearchUsersByEmail(UserFindByMail $request)
     {
         $email = $request->email;
@@ -114,7 +142,11 @@ class SearchController extends Controller
         ]);
     }
 
-
+    /**
+     * SearchInvoicesByCompanyAndDate
+     * @param SearchByDateAndCompanyRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function SearchInvoicesByCompanyAndDate(SearchByDateAndCompanyRequest $request)
     {
         $start_date = $request->start_date;
@@ -129,6 +161,11 @@ class SearchController extends Controller
 
     }
 
+    /**
+     * SearchInvoicesByDate
+     * @param SearchByDateRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function SearchInvoicesByDate(SearchByDateRequest $request)
     {
         $start_date = $request->start_date;
@@ -142,7 +179,11 @@ class SearchController extends Controller
         ]);
     }
 
-
+    /**
+     * SearchOrdersByCompanyAndDate
+     * @param SearchByDateAndCompanyRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function SearchOrdersByCompanyAndDate(SearchByDateAndCompanyRequest $request)
     {
         $start_date = $request->start_date;
@@ -166,6 +207,11 @@ class SearchController extends Controller
         ]);
     }
 
+    /**
+     * SearchOrdersByDate
+     * @param SearchByDateRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function SearchOrdersByDate(SearchByDateRequest $request)
     {
         $start_date = $request->start_date;
