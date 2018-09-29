@@ -223,6 +223,4 @@ class SearchController extends Controller
             'Orders' => $orders,
         ]);
     }
-
-
 }
