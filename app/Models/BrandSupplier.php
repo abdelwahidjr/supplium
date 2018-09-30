@@ -23,7 +23,7 @@ class BrandSupplier extends Model implements LogsActivityInterface
     public function getActivityDescriptionForEvent($eventName)
     {
         $class_name = explode('\\' , get_class($this));
-        $model_name = $class_name[2];
+        $model_name = $class_name[2] . ' ' . 'Model';
 
         if ($eventName == 'created')
         {
