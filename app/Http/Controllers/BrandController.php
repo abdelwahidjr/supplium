@@ -31,9 +31,7 @@ class BrandController extends Controller
     public function store(BrandRequest $request)
     {
 
-
         $allow = false;
-
         $company = Company::find($request->company_id);
         if (!is_object($company)) {
             {
@@ -42,7 +40,6 @@ class BrandController extends Controller
                 ], 422);
             }
         }
-
         $brands = Brand::where('company_id', $request->company_id)->get();
         $brand_max = Plan::select('plans.brand_max')->where('id', $company->plan_id)->first();
         $numer_existing_brands = count($brands);

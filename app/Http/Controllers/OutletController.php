@@ -29,12 +29,10 @@ class OutletController extends Controller
     }
 
 
+
     public function store(OutletRequest $request)
     {
-
-
         $allow = false;
-
         $brand = Brand::find($request->brand_id);
         if (!is_object($brand)) {
             {
@@ -43,7 +41,6 @@ class OutletController extends Controller
                 ], 422);
             }
         }
-
         $company = Company::find($brand->company_id);
         if (!is_object($company)) {
             {
@@ -52,7 +49,6 @@ class OutletController extends Controller
                 ], 422);
             }
         }
-
 
         $brand_id_array = [];
         $brands = Brand::where('company_id', $company->id)->get();
