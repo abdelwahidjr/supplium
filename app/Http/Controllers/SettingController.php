@@ -2,89 +2,88 @@
 
 namespace App\Http\Controllers;
 
-use App\Setting;
-use Illuminate\Http\Request;
+use App\Http\Requests\SettingRequest;
+use App\Http\Resources\ModelResource;
+use App\Models\Setting;
 
 class SettingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function __construct()
     {
-        //
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+    public function all()
     {
-        //
+        // all
+        return ModelResource::collection(Setting::paginate(config('main.JsonResultCount')));
+
+        // all with relations
+        //return ModelResource::collection((Setting::with('setting','setting'))->paginate(config('main.JsonResultCount')));
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function store(SettingRequest $request)
     {
-        //
+        $setting = new Setting;
+        $setting->fill($request->all());
+        $setting->created_by_user_id = $request->user()->id;
+        $setting->save();
+
+        return new ModelResource($setting);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Setting $setting
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Setting $setting)
+
+    public function show($id)
     {
-        //
+        $Setting = Setting::with('user')->find($id);
+
+        if ($Setting === null)
+        {
+            return response([
+                'message' => trans('main.null_entity') ,
+            ] , 422);
+        }
+
+        return new ModelResource($Setting);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Setting $setting
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Setting $setting)
+
+    public function update(SettingRequest $request , $id)
     {
-        //
+        $setting = Setting::find($id);
+        if ($setting === null)
+        {
+            return response([
+                'message' => trans('main.null_entity') ,
+            ] , 422);
+        }
+        $setting->update($request->all());
+        $setting->updated_by_user_id = $request->user()->id;
+        $setting->save();
+
+        return new ModelResource($setting);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\Setting             $setting
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request , Setting $setting)
+
+    public function destroy($id)
     {
-        //
+        $setting = Setting::find($id);
+        if ($setting === null)
+        {
+            return response([
+                'message' => trans('main.null_entity') ,
+            ] , 422);
+        }
+        $setting->delete();
+
+        return response()->json([
+            'status'  => 'Success' ,
+            'message' => trans('main.deleted') ,
+        ] , 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Setting $setting
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Setting $setting)
-    {
-        //
-    }
 }

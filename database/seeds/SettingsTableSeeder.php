@@ -13,8 +13,7 @@ class SettingsTableSeeder extends Seeder
     public function run()
     {
         $state        = ['on' , 'off'];
-        $i            = array_rand($state);
-        $notification = $state[$i];
+        $notification = $state[array_rand($state)];
 
         if (app()->environment() !== 'production' && App::runningInConsole())
         {
