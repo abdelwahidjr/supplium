@@ -42,7 +42,7 @@ class InvoiceController extends Controller
         if ($order->deliverd_status == 'partially_delivered' || $order->deliverd_status == 'not_deliverd')
         {
             return response([
-                'message' => "order should be fully_delivered or fully_delivered_with_bounce" ,
+                'message' => "order should be delivered" ,
             ] , 422);
 
         }
@@ -91,7 +91,7 @@ class InvoiceController extends Controller
         if ($order->deliverd_status == 'fully_delivered' || $order->deliverd_status == 'fully_delivered_with_bounce')
         {
             return response([
-                'message' => "order should be fully_delivered or fully_delivered_with_bounce" ,
+                'message' => "order should be deliverd" ,
             ] , 422);
 
         }
