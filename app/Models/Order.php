@@ -14,6 +14,7 @@ class Order extends Model implements LogsActivityInterface
 
     protected $fillable
         = [
+            'number' ,
             'products' ,
             'scheduled_on' ,
             'status' ,
@@ -81,7 +82,6 @@ class Order extends Model implements LogsActivityInterface
     {
         return $this->belongsTo(StandingOrder::class);
     }
-
 
     public function invoice()
     {

@@ -13,39 +13,39 @@
         @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500,700,700italic,900);
 
         body {
-            font-family: 'Roboto', Arial, sans-serif !important;
+            font-family : 'Roboto', Arial, sans-serif !important;
         }
 
         a[href^="tel"] {
-            color: inherit;
-            text-decoration: none;
-            outline: 0;
+            color           : inherit;
+            text-decoration : none;
+            outline         : 0;
         }
 
         a:hover, a:active, a:focus {
-            outline: 0;
+            outline : 0;
         }
 
         a:visited {
-            color: #FFF;
+            color : #FFF;
         }
 
         span.MsoHyperlink {
-            mso-style-priority: 99;
-            color: inherit;
+            mso-style-priority : 99;
+            color              : inherit;
         }
 
         span.MsoHyperlinkFollowed {
-            mso-style-priority: 99;
-            color: inherit;
+            mso-style-priority : 99;
+            color              : inherit;
         }
 
         .logo-image {
-            padding: 15px 0 20px 0;
+            padding : 15px 0 20px 0;
         }
 
         .rights {
-            color: gray;
+            color : gray;
         }
     </style>
 
@@ -84,8 +84,9 @@
                             <tr>
                                 <td align="center" style="padding:15px 0 20px 0; ">
                                     <p style="margin:0; font-size:18px; color:#000; line-height:24px; ">
-                                        You'll receive an email when your items are shipped. If you have any questions,
-                                        call us any time at 1-800-672-4399 or simply reply to this email.
+                                        You'll receive an email when your purchased products are shipped. If you have
+                                        any questions,
+                                        call us any time or simply reply to this email.
                                     </p>
                                 </td>
                             </tr>
@@ -138,7 +139,7 @@
                                                         </td>
                                                         <td align="left">
                                                             <p style="font-size:16px; color:#000; margin:0 0 5px 0; ">
-                                                                65006500
+                                                                {{$order->number}}
                                                             </p>
                                                         </td>
                                                     </tr>
@@ -150,26 +151,26 @@
                                                         </td>
                                                         <td align="left">
                                                             <p style="font-size:16px; color:#000; margin:0 0 5px 0; ">
-                                                                Apr 3, 2017
+                                                                {{$order->created_at->format('d-m-Y')}}
                                                             </p>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>
                                                             <p style="font-size:16px; color:#000; margin:0 0 10px 0; ">
-                                                                Order Total:
+                                                                Supplier:
                                                             </p>
                                                         </td>
                                                         <td align="left">
                                                             <p style="font-size:16px; color:#000; margin:0 0 10px 0; ">
-                                                                $49.35
+                                                                {{$order->supplier->name}}
                                                             </p>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td align="left" style=";" colspan="2">
                                                             <p style="font-size:16px; color:#bc0101; margin:0;padding:0; font-weight:bold; ">
-                                                                You saved $12.69!
+                                                                Order Total: {{$order->total_price_after_tax}}
                                                             </p>
                                                         </td>
                                                     </tr>
@@ -195,24 +196,9 @@
                                                 <table width="100%" style="border-collapse:collapse">
                                                     <tbody>
                                                     <tr>
-                                                        <td>
-                                                            <p style="font-size:16px; color:#000; margin:0 0 5px 0; ">
-                                                                Smiles Davis
-                                                            </p>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <p style="font-size:16px; color:#000; margin:0 0 5px 0; ">
-                                                                123 Somewhere St
-                                                            </p>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
                                                         <td style=";">
                                                             <p style="font-size:16px; color:#000; margin:0;padding:0; ">
-                                                                Somewhere, USA 65060
+                                                                {{$order->outlet->shipping_address}}
                                                             </p>
                                                         </td>
                                                     </tr>

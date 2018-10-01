@@ -39,8 +39,11 @@ class OrdersTableSeeder extends Seeder
                 {
                     $products[$i] = rand(1 , 50);
                 }
+                $today      = new DateTime('today');
+                $today_date = $today->format('Y-m-d');
 
                 Order::create([
+                    'number'                 => $today_date . $index ,
                     'products'               => json_encode($products) ,
                     'scheduled_on'           => null ,
                     'status'                 => $status ,

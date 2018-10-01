@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Spatie\Activitylog\Models\Activity;
-
 class HomeController extends Controller
 {
     public function __construct()
@@ -24,8 +22,6 @@ class HomeController extends Controller
     public function test()
     {
 
-        $latestActivities = Activity::with('user')->latest()->limit(10)->get();
 
-        dd($latestActivities);
     }
 }

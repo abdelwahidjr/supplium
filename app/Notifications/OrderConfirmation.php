@@ -44,8 +44,7 @@ class OrderConfirmation extends Notification
      */
     public function toMail($notifiable)
     {
-        //usage
-        //$order = "#100";
+
         //Auth::user()->notify(new OrderConfirmation($order));
 
         $confirm_url = url('/order/confirm/' . $this->order);
@@ -56,6 +55,7 @@ class OrderConfirmation extends Notification
             ->markdown('mail.order.comfirm' , [
                 '$confirm_url' => $confirm_url ,
                 'cancel_url'   => $cancel_url ,
+                'order'        => $this->order ,
             ]);
 
     }

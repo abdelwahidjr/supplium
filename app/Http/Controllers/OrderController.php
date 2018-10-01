@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\OrderRequest;
 use App\Http\Resources\ModelResource;
 use App\Models\Order;
+use App\Notifications\OrderConfirmation;
+use DateTime;
+use Notification;
 
 class OrderController extends Controller
 {
@@ -30,6 +33,9 @@ class OrderController extends Controller
     {
         // order status on creation should be pending
 
+        $today     = new DateTime();
+        $timestamp = $today->format('His');//
+
         $products    = [];
         $products_id = [];
 
@@ -48,9 +54,26 @@ class OrderController extends Controller
         $order->tax_val               = ($order->total_price_before_tax * $order->tax / 100);
         $order->total_price_after_tax = (double) $order->total_price_before_tax + $order->tax_val;
         $order->created_by_user_id    = $request->user()->id;
+
+        $order->number = $timestamp . '-' . rand(10 , 1000);
+
         $order->save();
 
         $order->product()->sync($products_id);
+
+        // find order company users and send email
+
+        $order = Order::find('80');
+
+        $users = $order->outlet->brand->company->user;
+
+        foreach ($users as $user)
+        {
+            if ($user->setting->notifications == 'on')
+            {
+                Notification::send($user , (new OrderConfirmation($order)));
+            }
+        }
 
         return new ModelResource($order);
 

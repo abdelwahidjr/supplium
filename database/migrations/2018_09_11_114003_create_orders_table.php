@@ -16,6 +16,7 @@ class CreateOrdersTable extends Migration
         Schema::create('orders' , function (Blueprint $table)
         {
             $table->increments('id');
+            $table->string('number');
             $table->text('products'); /*array*/
             $table->text('scheduled_on')->nullable(); /*array*/
             $table->enum('status' , ['pending' , 'confirmed']);
