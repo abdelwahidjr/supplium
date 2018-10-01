@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\OrderRequest;
 use App\Http\Resources\ModelResource;
 use App\Models\Order;
+use App\Models\Supplier;
+use App\Models\SupplierPayment;
 use App\Notifications\OrderConfirmation;
 use DateTime;
 use Notification;
@@ -33,105 +35,167 @@ class OrderController extends Controller
     {
         // order status on creation should be pending
 
-        $today     = new DateTime();
-        $timestamp = $today->format('His');//
-
-        $products    = [];
-        $products_id = [];
-
         $order = new Order;
-        $order->fill($request->all());
+        $msg = '';
+        $supplier_payment = SupplierPayment::where('supplier_id', $request->supplier_id)->first();
 
-        foreach ($request->products as $k => $v)
-        {
-            $products[$k]    = $v;
-            $products_id[$k] = $v['id'];
+        if (is_object($supplier_payment)) {
 
-            $order->total_qty              += $v['qty'];
-            $order->total_price_before_tax += ($v['qty'] * $v['price']);
-        }
+            //if supplier payment type is credit
+            if ($supplier_payment->payment_type == "credit") {
 
-        $order->tax_val               = ($order->total_price_before_tax * $order->tax / 100);
-        $order->total_price_after_tax = (double) $order->total_price_before_tax + $order->tax_val;
-        $order->created_by_user_id    = $request->user()->id;
+                //get creation date of supplier
+                $supplier = Supplier::select('created_at')->where('id', $request->supplier_id)->first();
+                $supplier_creation_date = date("d-m-Y", strtotime($supplier->created_at));
+                //get supplier credit limit
+                $supplier_credit_limit = $supplier_payment->credit_limit;
+                //get supplier credit period
+                $supplier_credit_period = $supplier_payment->credit_period;
+                //get available period for this supplier
+                $available_until = date('d-m-Y', strtotime($supplier_creation_date . ' + ' . $supplier_credit_period . ' days'));
+                //get the current date
+                $current_date = date("d-m-Y");
 
-        $order->number = $timestamp . '-' . rand(10 , 1000);
 
-        $order->save();
+                //compare the current date with the available period
+                if (strtotime($current_date) > strtotime($available_until)) {
+                    $allow = false;
+                    //no_enough_credit_period
+                    //$msg='this supplier has no enough credit period to deliver this request.';
+                    $msg = trans('main.no_enough_credit_period');
 
-        $order->product()->sync($products_id);
+                } else {
+                    //check credit if the supplier has available credit period
+                    $products = [];
+                    $products_id = [];
+                    $order->fill($request->all());
+                    foreach ($request->products as $k => $v) {
+                        $products[$k] = $v;
+                        $products_id[$k] = $v['id'];
 
-        // find order company users and send email
+                        $order->total_qty += $v['qty'];
+                        $order->total_price_before_tax += ($v['qty'] * $v['price']);
+                    }
 
-        $order = Order::find('80');
 
-        $users = $order->outlet->brand->company->user;
+                    $order->tax_val = ($order->total_price_before_tax * $order->tax / 100);
+                    //the current order total price after tax
+                    $order->total_price_after_tax = (double)$order->total_price_before_tax + $order->tax_val;
+                    //the (previous) total_price_after_tax for this supplier
+                    $previous_total_price = Order::where('supplier_id', $request->supplier_id)->sum('total_price_after_tax');
+                    //get the available credit of this supplier
+                    $available_credit = $supplier_credit_limit - $previous_total_price;
 
-        foreach ($users as $user)
-        {
-            if ($user->setting->notifications == 'on')
-            {
-                Notification::send($user , (new OrderConfirmation($order)));
+
+                    if ($order->total_price_after_tax < $available_credit) {
+                        //this supplier has available credit and can recieve more orders
+                        $allow = true;
+                    } else {
+                        //$msg='this supplier has no enough credit to deliver this request.';
+
+                        $allow = false;
+                        $msg = trans('main.no_enough_credit_limit');
+                    }
+                }
+            }
+
+
+            else {
+                //payment type is cash not credit
+                $allow = true;
+            }
+
+            if ($allow) {
+                $today = new DateTime();
+                $timestamp = $today->format('His');//
+                $order->created_by_user_id = $request->user()->id;
+                //there is unknown varaible ($order->number)
+                //$order->number = $timestamp . '-' . rand(10, 1000);
+                $order->save();
+                $order->product()->sync($products_id);
+
+                // find order company users and send email
+                //80
+                //$order = Order::find(80);
+                //this line was has a parameter 80 ???!!!
+                $order = Order::find($order->id);
+                $users = $order->outlet->brand->company->user;
+                foreach ($users as $user) {
+                    if ($user->setting->notifications == 'on') {
+                        Notification::send($user, (new OrderConfirmation($order)));
+                    }
+                }
+                return new ModelResource($order);
+            }
+
+            else if (!$allow) {
+                //return the reason of not allowing submitting this order
+                return response([
+                    'message' => $msg,
+                ], 200);
             }
         }
 
-        return new ModelResource($order);
+        else {
+            //it is not object
+            return response([
+                'message' => trans('main.null_entity'),
+            ], 422);
+
+        }
+
 
     }
 
 
     public function show($id)
     {
-        $order = Order::with('outlet' , 'product' , 'standing_order' , 'invoice')->find($id);
+        $order = Order::with('outlet', 'product', 'standing_order', 'invoice')->find($id);
 
-        if ($order === null)
-        {
+        if ($order === null) {
             return response([
-                'message' => trans('main.null_entity') ,
-            ] , 422);
+                'message' => trans('main.null_entity'),
+            ], 422);
         }
 
         return new ModelResource($order);
     }
 
 
-    public function update(OrderRequest $request , $id)
+    public function update(OrderRequest $request, $id)
     {
-        $products    = [];
+        $products = [];
         $products_id = [];
 
         $order = Order::find($id);
-        if ($order === null)
-        {
+        if ($order === null) {
             return response([
-                'message' => trans('main.null_entity') ,
-            ] , 422);
+                'message' => trans('main.null_entity'),
+            ], 422);
         }
 
-        if ($order->status == "confirmed")
-        {
+        if ($order->status == "confirmed") {
             return response([
-                'message' => trans('main.edit_not_allowed') ,
-            ] , 422);
+                'message' => trans('main.edit_not_allowed'),
+            ], 422);
         }
 
         $order->update($request->all());
 
-        $order->total_qty              = 0;
+        $order->total_qty = 0;
         $order->total_price_before_tax = 0;
 
-        foreach ($request->products as $k => $v)
-        {
-            $products[$k]    = $v;
+        foreach ($request->products as $k => $v) {
+            $products[$k] = $v;
             $products_id[$k] = $v['id'];
 
-            $order->total_qty              += $v['qty'];
+            $order->total_qty += $v['qty'];
             $order->total_price_before_tax += ($v['qty'] * $v['price']);
         }
 
-        $order->tax_val               = ($order->total_price_before_tax * $order->tax / 100);
-        $order->total_price_after_tax = (double) $order->total_price_before_tax + $order->tax_val;
-        $order->updated_by_user_id    = $request->user()->id;
+        $order->tax_val = ($order->total_price_before_tax * $order->tax / 100);
+        $order->total_price_after_tax = (double)$order->total_price_before_tax + $order->tax_val;
+        $order->updated_by_user_id = $request->user()->id;
 
         $order->save();
 
@@ -145,17 +209,15 @@ class OrderController extends Controller
     public function destroy($id)
     {
         $order = Order::find($id);
-        if ($order === null)
-        {
+        if ($order === null) {
             return response([
-                'message' => trans('main.null_entity') ,
-            ] , 422);
+                'message' => trans('main.null_entity'),
+            ], 422);
         }
 
         $products_id = [];
 
-        foreach ($order->products as $k => $v)
-        {
+        foreach ($order->products as $k => $v) {
             $products_id[$k] = $v['id'];
         }
 
@@ -164,8 +226,8 @@ class OrderController extends Controller
         $order->delete();
 
         return response()->json([
-            'status'  => 'Success' ,
-            'message' => trans('main.deleted') ,
-        ] , 200);
+            'status' => 'Success',
+            'message' => trans('main.deleted'),
+        ], 200);
     }
 }
