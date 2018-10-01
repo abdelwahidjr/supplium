@@ -11,23 +11,10 @@ use Illuminate\Support\Facades\Storage;
 
 class AdController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function all()
     {
         return ModelResource::collection(Ad::paginate(config('main.JsonResultCount')));
-    }
-
-
-    /**
-     * create
-     */
-    public function create()
-    {
-
 
     }
 
@@ -41,6 +28,7 @@ class AdController extends Controller
         $extension = $request->image->getClientOriginalExtension();
         $sha1 = sha1($request->image->getClientOriginalName());
         $filename = date('Y-m-d-h-i-s') . "_" . $sha1;
+
         /*note that i created :
         'ads' => [
             'driver'     => 'local' ,
@@ -52,14 +40,17 @@ class AdController extends Controller
         in filesystems.php file to to assign a folder for ads .
         remove this comment after reading it .
         */
+
         Storage::disk('ads')->put($filename . "." . $extension, File::get($request->image));
         $ad = new Ad();
         $ad->name = $filename;
+
         //put your base url to retrieve images
         $ad->url = 'storage/images/ads/' . $filename . "." . $extension;
         $ad->fill($request->all());
         $ad->created_by_user_id = $request->user()->id;
         $ad->save();
+
         return new ModelResource($ad);
 
     }
@@ -81,15 +72,6 @@ class AdController extends Controller
 
         return new ModelResource($ad);
 
-    }
-
-
-    /**
-     * @param $id
-     */
-    public function edit($id)
-    {
-        //
     }
 
 
