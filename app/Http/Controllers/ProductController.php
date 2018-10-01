@@ -16,13 +16,13 @@ class ProductController extends Controller
 
     public function __construct()
     {
-      /*  $user=Auth::user();
+        /*  $user=Auth::user();
 
-        //$user->hasRole('writer'); will return true or false
-        //test
-        $this->middleware('auth');
-        $this->middleware('log')->only('index');
-        $this->middleware('subscribed')->except('store');*/
+          //$user->hasRole('writer'); will return true or false
+          //test
+          $this->middleware('auth');
+          $this->middleware('log')->only('index');
+          $this->middleware('subscribed')->except('store');*/
 
     }
 

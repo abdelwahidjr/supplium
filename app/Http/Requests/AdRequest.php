@@ -28,8 +28,8 @@ class AdRequest extends FormRequest
 
         return [
 
-            'description' => 'required',
-            'image' => 'required|mimes:jpeg,jpg,png',
+            'description' => 'required' ,
+            'image'       => 'required|mimes:jpeg,jpg,png' ,
 
         ];
     }

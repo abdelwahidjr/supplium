@@ -21,13 +21,14 @@ class AdController extends Controller
 
     /**
      * @param AdRequest $request
+     *
      * @return ModelResource
      */
     public function store(AdRequest $request)
     {
         $extension = $request->image->getClientOriginalExtension();
-        $sha1 = sha1($request->image->getClientOriginalName());
-        $filename = date('Y-m-d-h-i-s') . "_" . $sha1;
+        $sha1      = sha1($request->image->getClientOriginalName());
+        $filename  = date('Y-m-d-h-i-s') . "_" . $sha1;
 
         /*note that i created :
         'ads' => [
@@ -41,8 +42,8 @@ class AdController extends Controller
         remove this comment after reading it .
         */
 
-        Storage::disk('ads')->put($filename . "." . $extension, File::get($request->image));
-        $ad = new Ad();
+        Storage::disk('ads')->put($filename . "." . $extension , File::get($request->image));
+        $ad       = new Ad();
         $ad->name = $filename;
 
         //put your base url to retrieve images
@@ -58,16 +59,18 @@ class AdController extends Controller
 
     /**
      * @param $id
+     *
      * @return ModelResource|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function show($id)
     {
         $ad = Ad::find($id);
 
-        if ($ad === null) {
+        if ($ad === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
         return new ModelResource($ad);
@@ -77,23 +80,26 @@ class AdController extends Controller
 
     /**
      * @param AdUpdateRequest $request
-     * @param $id
+     * @param                 $id
+     *
      * @return ModelResource|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function update(AdUpdateRequest $request, $id)
+    public function update(AdUpdateRequest $request , $id)
     {
         $ad = Ad::find($id);
-        if ($ad === null) {
+        if ($ad === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
         //if user update image
-        if ($request->image != null) {
+        if ($request->image != null)
+        {
             $extension = $request->image->getClientOriginalExtension();
-            $sha1 = sha1($request->image->getClientOriginalName());
-            $filename = date('Y-m-d-h-i-s') . "_" . $sha1;
-            Storage::disk('ads')->put($filename . "." . $extension, File::get($request->image));
+            $sha1      = sha1($request->image->getClientOriginalName());
+            $filename  = date('Y-m-d-h-i-s') . "_" . $sha1;
+            Storage::disk('ads')->put($filename . "." . $extension , File::get($request->image));
             $ad->name = $filename;
             //put your base url to retrieve images
             $ad->url = 'storage/images/ads/' . $filename . "." . $extension;
@@ -101,27 +107,31 @@ class AdController extends Controller
         $ad->update($request->all());
         $ad->updated_by_user_id = $request->user()->id;
         $ad->save();
+
         return new ModelResource($ad);
     }
 
 
     /**
      * @param $id
+     *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $ad = Ad::find($id);
-        if ($ad === null) {
+        if ($ad === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
         $ad->delete();
+
         return response()->json([
-            'status' => 'Success',
-            'message' => trans('main.deleted'),
-        ], 200);
+            'status'  => 'Success' ,
+            'message' => trans('main.deleted') ,
+        ] , 200);
 
     }
 }
