@@ -9,6 +9,7 @@ use App\Models\Supplier;
 use App\Models\SupplierPayment;
 use App\Notifications\OrderConfirmation;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
 use Notification;
 
 class OrderController extends Controller
@@ -45,14 +46,16 @@ class OrderController extends Controller
             if ($supplier_payment->payment_type == "credit") {
 
                 //get creation date of supplier
-                $supplier = Supplier::select('created_at')->where('id', $request->supplier_id)->first();
-                $supplier_creation_date = date("d-m-Y", strtotime($supplier->created_at));
+                // $supplier = Supplier::select('created_at')->where('id', $request->supplier_id)->first();
+                //$supplier_creation_date = date("d-m-Y", strtotime($supplier->created_at));
+                $supplier_period_renewal = $supplier_payment->period_renewal;
+
                 //get supplier credit limit
                 $supplier_credit_limit = $supplier_payment->credit_limit;
                 //get supplier credit period
                 $supplier_credit_period = $supplier_payment->credit_period;
                 //get available period for this supplier
-                $available_until = date('d-m-Y', strtotime($supplier_creation_date . ' + ' . $supplier_credit_period . ' days'));
+                $available_until = date('d-m-Y', strtotime($supplier_period_renewal . ' + ' . $supplier_credit_period . ' days'));
                 //get the current date
                 $current_date = date("d-m-Y");
 
@@ -110,7 +113,7 @@ class OrderController extends Controller
                 $timestamp = $today->format('His');//
                 $order->created_by_user_id = $request->user()->id;
                 //there is unknown varaible ($order->number)
-                //$order->number = $timestamp . '-' . rand(10, 1000);
+                $order->number = $timestamp . '-' . rand(10, 1000);
                 $order->save();
                 $order->product()->sync($products_id);
 

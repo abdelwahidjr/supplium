@@ -19,6 +19,7 @@ class SupplierPayment extends Model implements LogsActivityInterface
             'payment_type' ,
             'credit_limit' ,
             'credit_period' ,
+            'period_renewal' ,
             'payment_due_date' ,
             'supplier_id' ,
             'created_by_user_id' ,

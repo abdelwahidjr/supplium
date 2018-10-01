@@ -16,11 +16,18 @@ class ProductController extends Controller
 
     public function __construct()
     {
+      /*  $user=Auth::user();
+
+        //$user->hasRole('writer'); will return true or false
+        //test
+        $this->middleware('auth');
+        $this->middleware('log')->only('index');
+        $this->middleware('subscribed')->except('store');*/
 
     }
 
 
-    public function all()
+    public function all()//only admin
     {
         // all
         return ModelResource::collection(Product::paginate(config('main.JsonResultCount')));
@@ -31,7 +38,7 @@ class ProductController extends Controller
     }
 
 
-    public function store(ProductRequest $request)
+    public function store(ProductRequest $request)//admin,manager,owner
     {
         $product = new Product;
         $product->fill($request->all());

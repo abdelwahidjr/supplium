@@ -19,6 +19,7 @@ class CreateSupplierPaymentsTable extends Migration
             $table->enum('payment_type' , ['cash' , 'credit']);
             $table->string('credit_limit')->nullable();
             $table->string('credit_period')->nullable();
+            $table->timestamp('period_renewal')->nullable();
             $table->string('payment_due_date')->nullable();
             $table->unsignedBigInteger('supplier_id');
             $table->unsignedBigInteger('created_by_user_id')->nullable();
