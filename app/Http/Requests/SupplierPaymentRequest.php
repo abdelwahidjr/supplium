@@ -30,6 +30,7 @@ class SupplierPaymentRequest extends FormRequest
             "payment_type"     => 'required|in:' . implode(',' , $this->payment_type) ,
             'credit_limit'     => 'numeric|max:1000000' ,
             "credit_period"    => 'in:' . implode(',' , $this->credit_period) ,
+            "period_renewal"    => 'required|date' ,
             'payment_due_date' => 'numeric|min:1|max:30' ,
             'supplier_id'      => 'required|exists:suppliers,id' ,
         ];
