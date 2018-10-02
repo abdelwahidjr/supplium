@@ -38,9 +38,8 @@ class OrderController extends Controller
         $msg              = '';
         $supplier_payment = SupplierPayment::where('supplier_id' , $request->supplier_id)->first();
 
-        if (is_object($supplier_payment))
+        if ($supplier_payment)
         {
-
             //if supplier payment type is credit
             if ($supplier_payment->payment_type == "credit")
             {
@@ -122,6 +121,7 @@ class OrderController extends Controller
 
                 $order = Order::find($order->id);
                 $users = $order->outlet->brand->company->user;
+
                 foreach ($users as $user)
                 {
                     if ($user->setting->notifications == 'on')
@@ -145,7 +145,7 @@ class OrderController extends Controller
         {
             //it is not object
             return response([
-                'message' => trans('main.null_entity') ,
+                'message' => "supplier payment not found" ,
             ] , 422);
 
         }

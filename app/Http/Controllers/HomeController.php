@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Notifications\OrderConfirmation;
+
 class HomeController extends Controller
 {
     public function __construct()
@@ -21,6 +24,18 @@ class HomeController extends Controller
 
     public function test()
     {
+
+        $order = Order::find('67');
+        $users = $order->outlet->brand->company->user;
+
+        foreach ($users as $user)
+        {
+            if ($user->setting->notifications == 'on')
+            {
+                $user->notify(new OrderConfirmation($order));
+
+            }
+        }
 
 
     }
