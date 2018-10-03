@@ -10,6 +10,14 @@ class ActivityLogController extends Controller
 
     public function __construct()
     {
+        $permissions = [
+            'all'    => ['all functions'] ,
+            'show'   => ['all functions'] ,
+            'create' => ['all functions'] ,
+            'edit'   => ['all functions'] ,
+            'delete' => ['all functions'] ,
+
+        ];
 
     }
 
