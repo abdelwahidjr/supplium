@@ -11,7 +11,7 @@
 |
 */
 
-Route::prefix('auth')->middleware(['cors'])->group(function ()
+Route::prefix('auth')->group(function ()
 {
     Route::post('/login' , 'UserAuthController@login');
     Route::post('/change-password' , 'UserAuthController@changePassword');
@@ -19,7 +19,7 @@ Route::prefix('auth')->middleware(['cors'])->group(function ()
     Route::post('/password/reset' , 'Auth\ResetPasswordController@reset');
 });
 
-Route::prefix('admin')->middleware(['auth:api' , 'cors' , 'role:admin'])->group(function ()
+Route::prefix('admin')->middleware(['auth:api' , 'role:admin'])->group(function ()
 {
     foreach (File::allFiles(base_path('routes/api/admin')) as $file)
     {
@@ -27,7 +27,7 @@ Route::prefix('admin')->middleware(['auth:api' , 'cors' , 'role:admin'])->group(
     }
 });
 
-Route::prefix('public')->middleware(['auth:api' , 'cors'])->group(function ()
+Route::prefix('public')->middleware(['auth:api'])->group(function ()
 {
     foreach (File::allFiles(base_path('routes/api/public')) as $file)
     {
