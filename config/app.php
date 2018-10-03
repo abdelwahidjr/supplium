@@ -164,6 +164,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class ,
         Maatwebsite\Excel\ExcelServiceProvider::class ,
         Spatie\Activitylog\ActivitylogServiceProvider::class ,
+        Barryvdh\Cors\ServiceProvider::class ,
 
     ] ,
 
