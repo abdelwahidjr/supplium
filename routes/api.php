@@ -11,7 +11,7 @@
 |
 */
 
-Route::prefix('auth')->group(function ()
+Route::prefix('auth')->middleware(['cors'])->group(function ()
 {
     Route::post('/login' , 'UserAuthController@login');
     Route::post('/change-password' , 'UserAuthController@changePassword');
