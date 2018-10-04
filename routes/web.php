@@ -11,6 +11,13 @@
 |
 */
 
+// web route
+Route::get('/{react_route?}' , function ()
+{
+    return view('frontend');
+})->where('react_route' , '[\/\w\.-]*');
+
+
 Auth::routes();
 
 Route::get('/' , 'HomeController@welcome')->name('welcome');
@@ -18,3 +25,4 @@ Route::get('/' , 'HomeController@welcome')->name('welcome');
 Route::get('/home' , 'HomeController@home')->name('home');
 
 Route::get('/test' , 'HomeController@test');
+
