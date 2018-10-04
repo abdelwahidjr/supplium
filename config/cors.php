@@ -1,8 +1,5 @@
 <?php
 
-$httpSites = explode(';' , env('FRONTEND_HTTP_URLS' , []));
-
-$allowedOrigins = array_merge($httpSites);
 
 return [
 
@@ -17,7 +14,7 @@ return [
     */
 
     'supportsCredentials'    => true ,
-    'allowedOrigins'         => $allowedOrigins ,
+    'allowedOrigins'         => ['*'] ,
     'allowedOriginsPatterns' => [] ,
     'allowedHeaders'         => ['*'] ,
     'allowedMethods'         => ['*'] ,
