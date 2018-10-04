@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 /*
 // React Web Route
 Route::get('/{react_route?}' , function ()

@@ -20,8 +20,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\TrimStrings::class ,
             \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class ,
             \App\Http\Middleware\TrustProxies::class ,
-            \Barryvdh\Cors\HandleCors::class ,
-
+            \Barryvdh\Cors\HandleCors::class,
         ];
 
     /**
@@ -67,6 +66,5 @@ class Kernel extends HttpKernel
             'role'          => \App\Http\Middleware\RoleMiddleware::class ,
             'permission'    => \App\Http\Middleware\PermissionMiddleware::class ,
             'check'         => \App\Http\Middleware\Check::class ,
-
         ];
 }

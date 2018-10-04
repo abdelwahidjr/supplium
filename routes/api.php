@@ -34,6 +34,7 @@ Route::prefix('public')->middleware(['auth:api'])->group(function ()
         require($file->getPathname());
     }
 });
+
 /*
 Route::get('/test-response' , function ()
 {
