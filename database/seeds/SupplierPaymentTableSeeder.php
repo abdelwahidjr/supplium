@@ -24,12 +24,19 @@ class  SupplierPaymentTableSeeder extends Seeder
                 $credit_period = [15 , 30 , 45 , 60 , 90];
                 $credit_period = $credit_period[array_rand($credit_period)];
 
+
+                $option = ['on' , 'off'];
+                $option = $option[array_rand($option)];
+
+
                 SupplierPayment::create([
                     'payment_type'     => $payment_type ,
                     'credit_limit'     => $payment_type == "cash" ? null : rand(10000 , 100000) ,
+                    'remaining_limit'     => $payment_type == "cash" ? null : rand(10000 , 100000) ,
                     'credit_period'    => $payment_type == "cash" ? null : $credit_period ,
                     'period_renewal'    => $payment_type == "cash" ? null : '2018-10-01 11:33:22' ,
                     'payment_due_date' => $payment_type == "cash" ? null : rand(1 , 30) ,
+                    'restrict' => $option,
                     'supplier_id'      => rand(1 , 50) ,
                 ]);
             }

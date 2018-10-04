@@ -24,6 +24,7 @@ class SupplierPayment extends Model implements LogsActivityInterface
             'supplier_id' ,
             'created_by_user_id' ,
             'updated_by_user_id' ,
+            'restrict'
         ];
 
 
