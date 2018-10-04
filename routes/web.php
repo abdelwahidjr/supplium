@@ -10,12 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/*
 // React Web Route
 Route::get('/{react_route?}' , function ()
 {
     return view('frontend');
-})->where('react_route' , '[\/\w\.-]*');
+})->where('react_route' , '[\/\w\.-]*');*/
 
 
 Auth::routes();
