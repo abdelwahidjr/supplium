@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'supportsCredentials'    => false ,
+    'supportsCredentials'    => true ,
     'allowedOrigins'         => $allowedOrigins ,
     'allowedOriginsPatterns' => [] ,
     'allowedHeaders'         => ['*'] ,
