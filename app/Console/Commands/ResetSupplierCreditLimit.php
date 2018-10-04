@@ -2,9 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\StandingOrder;
 use App\Models\SupplierPayment;
-use DateTime;
 use Illuminate\Console\Command;
 
 class ResetSupplierCreditLimit extends Command
@@ -35,19 +33,13 @@ class ResetSupplierCreditLimit extends Command
 
     public function handle()
     {
-
         $payments=SupplierPayment::where('payment_type','credit')->get();
         foreach ($payments as $payment)
         {
             $payment->remaining_limit=$payment->credit_limit;
             $payment->save();
-
-
         }
-
         //$this->info('Suppliers Credit were reset Successfully!');
-
-
     }
 
 
