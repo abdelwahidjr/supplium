@@ -120,7 +120,6 @@ class OrderController extends Controller
                         Notification::send($user, (new OrderConfirmation($order)));
                     }
                 }
-
                 return new ModelResource($order);
             } else {
                 if (!$allow) {
