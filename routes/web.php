@@ -11,7 +11,7 @@
 |
 */
 
-// web route
+// React Web Route
 Route::get('/{react_route?}' , function ()
 {
     return view('frontend');
