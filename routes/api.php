@@ -35,8 +35,15 @@ Route::prefix('public')->middleware(['auth:api'])->group(function ()
     }
 });
 
-
-
+Route::get('/test-response' , function ()
+{
+    return response()->json([
+        'user' => [
+            'fisrt_name' => 'mohamed' ,
+            'last_name'  => 'abdelwahid' ,
+        ] ,
+    ]);
+});
 
 
 
