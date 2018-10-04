@@ -34,26 +34,3 @@ Route::prefix('public')->middleware(['auth:api'])->group(function ()
         require($file->getPathname());
     }
 });
-
-/*
-Route::get('/test-response' , function ()
-{
-    return response()->json([
-        'user' => [
-            'fisrt_name' => 'mohamed' ,
-            'last_name'  => 'abdelwahid' ,
-        ] ,
-    ]);
-});*/
-
-Route::post('/test-response' , function (Request $request)
-{
-
-    return response()->json([
-        'user' => [
-            'fisrt_name' => 'mohamed' ,
-            'last_name'  => 'abdelwahid' ,
-        ] ,
-    ]);
-
-});

@@ -11,13 +11,6 @@
 |
 */
 
-/*
-// React Web Route
-Route::get('/{react_route?}' , function ()
-{
-    return view('frontend');
-})->where('react_route' , '[\/\w\.-]*');*/
-
 
 Auth::routes();
 
