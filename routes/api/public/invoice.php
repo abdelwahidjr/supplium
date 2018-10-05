@@ -13,6 +13,8 @@ Route::group(['prefix' => 'invoice'] , function ()
 
     Route::delete('/{id}' , 'InvoiceController@destroy')->where('id' , '[0-9]+');
 
+    Route::post('/pay' , 'InvoiceController@pay');
+
 });
 
 
