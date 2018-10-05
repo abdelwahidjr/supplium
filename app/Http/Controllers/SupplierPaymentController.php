@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SupplierPaymentRequest;
+use App\Http\Requests\SwitchRestrictionRequest;
 use App\Http\Resources\ModelResource;
 use App\Models\SupplierPayment;
 
@@ -108,5 +109,21 @@ class SupplierPaymentController extends Controller
             'message' => trans('main.deleted') ,
         ] , 200);
     }
+
+    public function SwitchRestriction(SwitchRestrictionRequest $request)
+    {
+
+         $payment=SupplierPayment::where('supplier_id',$request->supplier_id)->first();
+
+        $payment->restrict=$request->restrict;
+        $payment->save();
+
+
+        return response()->json([
+            'status'  => 'Success' ,
+            'message' => 'Supplier payment restriction updated successfully !' ,
+        ] , 200);
+    }
+
 
 }

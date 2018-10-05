@@ -13,6 +13,9 @@ Route::group(['prefix' => 'supplier_payment'] , function ()
 
     Route::delete('/{id}' , 'SupplierPaymentController@destroy')->where('id' , '[0-9]+');
 
+
+    Route::post('/switch-restriction' , 'SupplierPaymentController@SwitchRestriction');
+
 });
 
 
