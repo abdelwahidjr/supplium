@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ConfirmOrderRequest;
 use App\Http\Requests\OrderRequest;
 use App\Http\Resources\ModelResource;
+use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\SupplierPayment;
 use App\Notifications\OrderConfirmation;
@@ -28,8 +30,6 @@ class OrderController extends Controller
         //return ModelResource::collection((Order::with('company','setting'))->paginate(config('main.JsonResultCount')));
 
     }
-
-
 
 
     public function store(OrderRequest $request)
@@ -88,8 +88,8 @@ class OrderController extends Controller
                         if ($restrict == 'on') {
                             $allow = false;
                             $msg = trans('main.no_enough_credit_limit');
-                        }else{
-                            $allow=true;
+                        } else {
+                            $allow = true;
                         }
                     }
                 }
@@ -106,7 +106,7 @@ class OrderController extends Controller
                 $order->number = $timestamp . '-' . rand(10, 1000);
                 $order->save();
                 $order->product()->sync($products_id);
-                $supplier_payment->remaining_limit=$available_credit-$order->total_price_after_tax;
+                $supplier_payment->remaining_limit = $available_credit - $order->total_price_after_tax;
                 $supplier_payment->save();
 
                 // find order company users and send email
@@ -116,7 +116,7 @@ class OrderController extends Controller
 
                 foreach ($users as $user) {
 
-                   if ($user->setting->notifications == 'on') {
+                    if ($user->setting->notifications == 'on') {
                         Notification::send($user, (new OrderConfirmation($order)));
                     }
                 }
@@ -225,8 +225,43 @@ class OrderController extends Controller
     }
 
 
-    public function ConfirmOrder()
+    public function ConfirmOrder(ConfirmOrderRequest $request)
+
     {
+
+
+        $order=Order::find($request->order_id);
+        if ($order === null) {
+            return response([
+                'message' => trans('main.null_entity'),
+            ], 422);
+        }
+
+        if ($order->status == 'confirmed')
+        {
+            $msg='order is already confirmed !';
+        }else{
+            if ($order->deliverd_status == 'fully_delivered' ||  $order->deliverd_status == 'fully_delivered_with_bounce'){
+                //you can make confirm
+                $order->status = 'confirmed';
+                $order->save();
+                $invoice=new Invoice();
+                $invoice->amount=$order->total_price_after_tax;
+                $invoice->order_id=$request->order_id;
+                $invoice->company_id=$order->supplier->company->id;
+                $invoice->save();
+
+                $msg= 'Order was confirmed successfully .';
+            }else{
+                //you can not make confirm
+                $msg='This order is not delivered yet , so you can not confirm it . Try to contact your supplier.';
+
+            }
+        }
+
+        return response([
+            'message' => $msg,
+        ], 200);
 
     }
 }

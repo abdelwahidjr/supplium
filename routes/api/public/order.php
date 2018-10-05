@@ -2,7 +2,6 @@
 
 Route::group(['prefix' => 'order'] , function ()
 {
-
     Route::get('/all' , 'OrderController@all');
 
     Route::post('/' , 'OrderController@store');
@@ -12,6 +11,8 @@ Route::group(['prefix' => 'order'] , function ()
     Route::post('/{id}' , 'OrderController@update')->where('id' , '[0-9]+');
 
     Route::delete('/{id}' , 'OrderController@destroy')->where('id' , '[0-9]+');
+
+    Route::post('/confirm-order' , 'OrderController@ConfirmOrder');
 
 });
 
