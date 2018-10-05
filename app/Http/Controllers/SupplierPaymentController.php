@@ -109,7 +109,6 @@ class SupplierPaymentController extends Controller
         $payment->restrict = $request->restrict;
         $payment->save();
 
-
         return response()->json([
             'status' => 'Success',
             'message' => 'Supplier payment restriction updated successfully !',

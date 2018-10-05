@@ -10,6 +10,7 @@ class SupplierPaymentRequest extends FormRequest
     public $restrict_arr = ['on', 'off'];
     public $credit_period = ['15', '30', '45', '60', '90'];
 
+
     /**
      * Determine if the user is authorized to make this request.
      *

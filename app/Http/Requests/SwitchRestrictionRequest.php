@@ -8,7 +8,6 @@ class SwitchRestrictionRequest extends FormRequest
 {
     public $restrict_arr = ['on', 'off'];
 
-
     /**
      * Determine if the user is authorized to make this request.
      *
