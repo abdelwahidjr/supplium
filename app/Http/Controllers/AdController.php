@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Storage;
 class AdController extends Controller
 {
 
+    public function __construct()
+    {
+        // $this->middleware(['role:owner' , 'permission:read'])->only('all');
+    }
+
     public function all()
     {
         return ModelResource::collection(Ad::paginate(config('main.JsonResultCount')));
