@@ -41,22 +41,18 @@ class OrderController extends Controller
         $supplier_payment = SupplierPayment::where('supplier_id', $request->supplier_id)->first();
         $available_credit = $supplier_payment->remaining_limit;
 
+
         if ($supplier_payment) {
             //if supplier payment type is credit
             if ($supplier_payment->payment_type == "credit") {
 
-                //get creation date of supplier
-                // $supplier = Supplier::select('created_at')->where('id', $request->supplier_id)->first();
-                //$supplier_creation_date = date("d-m-Y", strtotime($supplier->created_at));
                 $supplier_period_renewal = $supplier_payment->period_renewal;
-
                 //get supplier credit period
                 $supplier_credit_period = $supplier_payment->credit_period;
                 //get available period for this supplier
                 $available_until = date('d-m-Y', strtotime($supplier_period_renewal . ' + ' . $supplier_credit_period . ' days'));
                 //get the current date
                 $current_date = date("d-m-Y");
-
                 //compare the current date with the available period
                 if (strtotime($current_date) > strtotime($available_until)) {
                     $allow = false;
@@ -80,10 +76,7 @@ class OrderController extends Controller
                     $order->tax_val = ($order->total_price_before_tax * $order->tax / 100);
                     //the current order total price after tax
                     $order->total_price_after_tax = (double)$order->total_price_before_tax + $order->tax_val;
-                    //the (previous) total_price_after_tax for this supplier
-                    //$previous_total_price = Order::where('supplier_id' , $request->supplier_id)->sum('total_price_after_tax');
                     //get the available credit of this supplier
-                    //$available_credit = $supplier_credit_limit - $previous_total_price;
 
                     if ($order->total_price_after_tax < $available_credit) {
                         //this supplier has available credit and can recieve more orders
@@ -98,7 +91,6 @@ class OrderController extends Controller
                         }else{
                             $allow=true;
                         }
-
                     }
                 }
             } else {
@@ -124,11 +116,10 @@ class OrderController extends Controller
 
                 foreach ($users as $user) {
 
-                   /* if ($user->setting->notifications == 'on') {
+                   if ($user->setting->notifications == 'on') {
                         Notification::send($user, (new OrderConfirmation($order)));
-                    }*/
+                    }
                 }
-
                 return new ModelResource($order);
             } else {
                 if (!$allow) {
