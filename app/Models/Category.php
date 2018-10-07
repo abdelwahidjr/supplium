@@ -15,6 +15,7 @@ class Category extends Model implements LogsActivityInterface
     protected $fillable
         = [
             'name' ,
+            'image_url',
             'created_by_user_id' ,
             'updated_by_user_id' ,
         ];

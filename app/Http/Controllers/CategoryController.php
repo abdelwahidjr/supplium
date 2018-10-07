@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\ModelResource;
 use App\Models\Category;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -29,8 +32,16 @@ class CategoryController extends Controller
 
     public function store(CategoryRequest $request)
     {
-        $category = new Category;
-        $category->fill($request->all());
+
+        $extension = $request->image_url->getClientOriginalExtension();
+        $sha1      = sha1($request->image_url->getClientOriginalName());
+        $filename  = date('Y-m-d-h-i-s') . "_" . $sha1;
+        Storage::disk('categories')->put($filename . "." . $extension , File::get($request->image_url));
+
+
+        $category = new Category();
+        $category->name=$request->name;
+        $category->image_url= 'storage/images/categories/' . $filename . "." . $extension;
         $category->created_by_user_id = $request->user()->id;
         $category->save();
 
@@ -53,7 +64,7 @@ class CategoryController extends Controller
     }
 
 
-    public function update(CategoryRequest $request , $id)
+    public function update(UpdateCategoryRequest $request , $id)
     {
         $category = Category::find($id);
         if ($category === null)
@@ -62,7 +73,32 @@ class CategoryController extends Controller
                 'message' => trans('main.null_entity') ,
             ] , 422);
         }
-        $category->update($request->all());
+
+        if ($request->name != null)
+        {
+           if (Category::where('id', '!=', $id)->where('name',$request->name)->exists()){
+               return response([
+                   'message' => 'This category name is already taken !' ,
+               ] , 200);
+           }else{
+               $category->name=$request->name;
+           }
+
+        }
+
+            //if user update image
+        if ($request->image_url != null)
+        {
+            $extension = $request->image_url->getClientOriginalExtension();
+            $sha1      = sha1($request->image_url->getClientOriginalName());
+            $filename  = date('Y-m-d-h-i-s') . "_" . $sha1;
+            Storage::disk('categories')->put($filename . "." . $extension , File::get($request->image_url));
+            //put your base url to retrieve images
+            $category->image_url = 'storage/images/categories/' . $filename . "." . $extension;
+        }
+
+
+       // $category->update($request->all());
         $category->updated_by_user_id = $request->user()->id;
         $category->save();
 
