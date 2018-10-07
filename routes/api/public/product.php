@@ -15,6 +15,8 @@ Route::group(['prefix' => 'product'] , function ()
 
     Route::post('/directory' , 'ProductController@directory');
 
+    Route::get('/sort-products/{type}/{order}' , 'ProductController@SortProducts');
+
 });
 
 
