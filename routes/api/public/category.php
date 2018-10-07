@@ -13,6 +13,9 @@ Route::group(['prefix' => 'category'] , function ()
 
     Route::delete('/{id}' , 'CategoryController@destroy')->where('id' , '[0-9]+');
 
+    Route::get('/sort-categories/{type}' , 'CategoryController@SortCategories');
+
+
 });
 
 
