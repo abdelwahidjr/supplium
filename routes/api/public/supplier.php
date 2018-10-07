@@ -15,6 +15,8 @@ Route::group(['prefix' => 'supplier'] , function ()
 
     Route::post('/directory' , 'SupplierController@directory');
 
+    Route::get('/sort-suppliers/{type}' , 'SupplierController@SortSuppliersByName');
+
 });
 
 
