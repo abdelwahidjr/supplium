@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
             'App\Console\Commands\ProceedStandingOrders' ,
             'App\Console\Commands\CancelStandingOrders' ,
             'App\Console\Commands\ResetSupplierCreditLimit' ,
+            'App\Console\Commands\InvoicesForConfirmedOrders' ,
         ];
 
     /**
@@ -44,6 +45,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('standing-orders:proceed')->dailyAt('24:00');
         $schedule->command('standing-orders:cancel')->dailyAt('24:00');
         $schedule->command('supplier-credit-limit:reset')->monthlyOn(1, '24:00');
+        $schedule->command('invoices-for-confirmed-orders:create')->dailyAt('24:00');
 
 
     }

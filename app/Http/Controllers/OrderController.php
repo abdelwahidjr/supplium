@@ -249,6 +249,8 @@ class OrderController extends Controller
                 $invoice->amount=$order->total_price_after_tax;
                 $invoice->order_id=$request->order_id;
                 $invoice->company_id=$order->supplier->company->id;
+                $invoice->paid_amount = 0;
+                $invoice->remaining_amount = $order->total_price_after_tax;
                 $invoice->save();
 
                 $msg= 'Order was confirmed successfully .';
