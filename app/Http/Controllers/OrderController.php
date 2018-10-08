@@ -97,10 +97,6 @@ class OrderController extends Controller
                             $msg = trans('main.no_enough_credit_limit');
                         } else {
                             $allow = true;
-                            $msg   = trans('main.no_enough_credit_limit');
-                        } else
-                        {
-                            $allow = true;
                         }
                     }
                 }
@@ -132,12 +128,8 @@ class OrderController extends Controller
 
                     if ($user->setting->notifications == 'on') {
                         Notification::send($user, (new OrderConfirmation($order)));
-                    if ($user->setting->notifications == 'on')
-                    {
-                        Notification::send($user , (new OrderConfirmation($order)));
                     }
                 }
-
                 return new ModelResource($order);
             } else
             {
