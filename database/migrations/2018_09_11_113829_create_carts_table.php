@@ -17,9 +17,9 @@ class CreateCartsTable extends Migration
         {
             $table->increments('id');
             $table->enum('status' , ['empty' , 'not_empty']);
-            $table->unsignedBigInteger('outlet_id');
             $table->text('notes')->nullable();
             $table->text('products'); //array
+            $table->unsignedBigInteger('outlet_id');
             $table->unsignedBigInteger('created_by_user_id')->nullable();
             $table->unsignedBigInteger('updated_by_user_id')->nullable();
 
