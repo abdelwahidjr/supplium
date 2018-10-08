@@ -23,6 +23,8 @@ class  InvoiveTableSeeder extends Seeder
 
                 Invoice::create([
                     'amount'     => $order->total_price_after_tax ,
+                    'paid_amount'     =>  0,
+                    'remaining_amount'     => $order->total_price_after_tax ,
                     'company_id' => $order->outlet->brand->company->id ,
                     'order_id'   => $order_id ,
                 ]);

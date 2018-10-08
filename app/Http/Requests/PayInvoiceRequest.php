@@ -4,8 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryRequest extends FormRequest
+class PayInvoiceRequest extends FormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -16,7 +17,6 @@ class CategoryRequest extends FormRequest
         return true;
     }
 
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,11 +24,13 @@ class CategoryRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required|string|unique:categories|max:255' ,
-            'image_url'       => 'required|mimes:jpeg,jpg,png' ,
 
+        return [
+            'invoice_id' => 'required|exists:invoices,id' ,
+            'amount' => 'required|numeric|min:1' ,
         ];
     }
+
+
 
 }

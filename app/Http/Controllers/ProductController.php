@@ -38,6 +38,29 @@ class ProductController extends Controller
     }
 
 
+    public function SortProducts($type,$order)
+    {
+        $types=['asc','desc'];
+        $orders=['name','price','sku'];
+
+        if (!in_array($type, $types)) {
+            return response([
+                'message' => 'Invalid sort type , available types are [ asc , desc ].',
+            ], 200);
+        }
+
+        else if (!in_array($order, $orders)) {
+            return response([
+                'message' => 'Invalid order by type , available types are [ name , price , sku ].',
+            ], 200);
+        }
+        $products=Product::with('category','supplier','order','cart')->orderBy($order, $type)
+            ->paginate(config('main.JsonResultCount'))->all();
+
+        return new ModelResource($products);
+    }
+
+
     public function store(ProductRequest $request)//admin,manager,owner
     {
         $product = new Product;

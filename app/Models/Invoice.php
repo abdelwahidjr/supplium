@@ -19,6 +19,8 @@ class Invoice extends Model implements LogsActivityInterface
             'amount' ,
             'company_id' ,
             'order_id' ,
+            'paid_amount',
+            'remaining_amount',
             'created_by_user_id' ,
             'updated_by_user_id' ,
         ];

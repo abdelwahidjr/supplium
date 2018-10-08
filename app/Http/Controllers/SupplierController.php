@@ -30,6 +30,20 @@ class SupplierController extends Controller
 
     }
 
+    public function SortSuppliersByName($type)
+    {
+        $types=['asc','desc'];
+        if (!in_array($type, $types)) {
+            return response([
+                'message' => 'Invalid sort type , available types are [ asc , desc ].',
+            ], 200);
+        }
+        $suppliers=Supplier::with('supplier_payment','company','brand','order','product')->orderBy('name', $type)
+            ->paginate(config('main.JsonResultCount'))->all();
+
+        return new ModelResource($suppliers);
+    }
+
 
     public function store(SupplierRequest $request)
     {

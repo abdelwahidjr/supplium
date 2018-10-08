@@ -17,6 +17,7 @@ class CreateCategoriesTable extends Migration
         {
             $table->increments('id');
             $table->string('name');
+            $table->string('image_url');
             $table->unsignedBigInteger('created_by_user_id')->nullable();
             $table->unsignedBigInteger('updated_by_user_id')->nullable();
 

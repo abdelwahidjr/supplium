@@ -21,6 +21,8 @@ class CategoriesTableSeeder extends Seeder
             {
                 Category::create([
                     'name' => $faker->name ,
+                    'image_url' => 'storage/images/ads/2018-10-07-07-35-46_6aef23e637348db1003df5011a9075bafbafe7eb.jpg' ,
+
                 ]);
             }
         }

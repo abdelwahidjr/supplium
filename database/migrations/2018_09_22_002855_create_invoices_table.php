@@ -17,6 +17,8 @@ class CreateInvoicesTable extends Migration
         {
             $table->increments('id');
             $table->decimal('amount' , 9 , 2);
+            $table->decimal('paid_amount' , 9 , 2);
+            $table->decimal('remaining_amount' , 9 , 2);
             $table->unsignedBigInteger('company_id');
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('created_by_user_id')->nullable();
