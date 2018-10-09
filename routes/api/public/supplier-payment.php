@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['prefix' => 'supplier_payment'] , function ()
+Route::group(['prefix' => 'supplier-payment'] , function ()
 {
 
     Route::get('/all' , 'SupplierPaymentController@all');

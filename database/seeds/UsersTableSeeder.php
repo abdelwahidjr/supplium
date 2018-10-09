@@ -33,10 +33,10 @@ class UsersTableSeeder extends Seeder
     public function systemUsersSeeding()
     {
         $users  = [
-            'abdelwahid' ,
+            'admin' ,
         ];
         $emails = [
-            'm.abdelwahid@madad.sa' ,
+            'admin@supplium.co' ,
         ];
 
         foreach (range(0 , 0) as $i)
@@ -44,7 +44,7 @@ class UsersTableSeeder extends Seeder
             User::create([
                 'name'     => $users[$i] ,
                 'email'    => $emails[$i] ,
-                'password' => Hash::make('00001111') ,
+                'password' => Hash::make('secret') ,
             ]);
         }
     }

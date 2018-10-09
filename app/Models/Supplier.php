@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\LogsActivity;
 use Spatie\Activitylog\LogsActivityInterface;
 
 class Supplier extends Model implements LogsActivityInterface
 {
     use LogsActivity;
+    use  Notifiable;
+
 
     protected $guarded = ['id'];
 

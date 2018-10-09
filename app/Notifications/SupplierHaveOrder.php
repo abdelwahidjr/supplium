@@ -6,15 +6,14 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class OrderConfirmation extends Notification
+class SupplierHaveOrder extends Notification
 {
     use Queueable;
 
-    public $order;
 
-    public function __construct($order)
+    public function __construct()
     {
-        $this->order = $order;
+
     }
 
 
@@ -29,16 +28,9 @@ class OrderConfirmation extends Notification
 
         //Auth::user()->notify(new OrderConfirmation($order));
 
-        $confirm_url = url('/order/confirm/' . $this->order);
-        $cancel_url  = url('/order/cancel/' . $this->order);
-
         return (new MailMessage)
-            ->subject(' Order Confirmation')
-            ->markdown('mail.order.comfirm' , [
-                '$confirm_url' => $confirm_url ,
-                'cancel_url'   => $cancel_url ,
-                'order'        => $this->order ,
-            ]);
+            ->subject(' You have a new order')
+            ->markdown('mail.order.supplier_new_order' , []);
 
     }
 

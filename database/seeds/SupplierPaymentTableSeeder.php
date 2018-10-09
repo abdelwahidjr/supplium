@@ -16,7 +16,7 @@ class  SupplierPaymentTableSeeder extends Seeder
         {
             foreach (range(1 , 50) as $index)
             {
-                $current_date = date("d-m-Y h:i:s");
+                $current_date = date("Y-m-d");
 
                 $payment_type = ['cash' , 'credit'];
                 $payment_type = $payment_type[array_rand($payment_type)];
@@ -32,7 +32,7 @@ class  SupplierPaymentTableSeeder extends Seeder
                     'credit_limit'     => $payment_type == "cash" ? null : rand(10000 , 100000) ,
                     'remaining_limit'  => $payment_type == "cash" ? null : rand(10000 , 100000) ,
                     'credit_period'    => $payment_type == "cash" ? null : $credit_period ,
-                    'period_renewal'   => $payment_type == "cash" ? null : '2018-10-01 11:33:22' ,
+                    'period_renewal'   => $payment_type == "cash" ? null : $current_date ,
                     'payment_due_date' => $payment_type == "cash" ? null : rand(1 , 30) ,
                     'restrict'         => $option ,
                     'supplier_id'      => rand(1 , 50) ,

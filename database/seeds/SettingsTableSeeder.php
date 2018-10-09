@@ -12,15 +12,15 @@ class SettingsTableSeeder extends Seeder
      */
     public function run()
     {
-        $state        = ['on' , 'off'];
-        $notification = $state[array_rand($state)];
+        // $state        = ['on' , 'off'];
+        // $notification = $state[array_rand($state)];
 
         if (app()->environment() !== 'production' && App::runningInConsole())
         {
             foreach (range(1 , 50) as $index)
             {
                 Setting::create([
-                    'notifications' => $notification ,
+                    'notifications' => 'on' ,
                     'user_id'       => rand(1 , 50) ,
                 ]);
             }

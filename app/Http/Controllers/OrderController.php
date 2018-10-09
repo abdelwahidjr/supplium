@@ -7,8 +7,10 @@ use App\Http\Requests\OrderRequest;
 use App\Http\Resources\ModelResource;
 use App\Models\Invoice;
 use App\Models\Order;
+use App\Models\Supplier;
 use App\Models\SupplierPayment;
 use App\Notifications\OrderConfirmation;
+use App\Notifications\SupplierHaveOrder;
 use DateTime;
 use Notification;
 
@@ -34,6 +36,7 @@ class OrderController extends Controller
 
     public function store(OrderRequest $request)
     {
+
         // order status on creation should be pending
 
         $order            = new Order;
@@ -94,8 +97,9 @@ class OrderController extends Controller
                         if ($restrict == 'on')
                         {
                             $allow = false;
-                            $msg = trans('main.no_enough_credit_limit');
-                        } else {
+                            $msg   = trans('main.no_enough_credit_limit');
+                        } else
+                        {
                             $allow = true;
                         }
                     }
@@ -109,9 +113,9 @@ class OrderController extends Controller
             if ($allow)
             {
                 $today                     = new DateTime();
-                $timestamp                 = $today->format('His');//
+                $timestamp                 = $today->format('His');
                 $order->created_by_user_id = $request->user()->id;
-                //there is unknown varaible ($order->number)
+
                 $order->number = $timestamp . '-' . rand(10 , 1000);
                 $order->save();
                 $order->product()->sync($products_id);
@@ -125,11 +129,16 @@ class OrderController extends Controller
 
                 foreach ($users as $user)
                 {
-
-                    if ($user->setting->notifications == 'on') {
-                        Notification::send($user, (new OrderConfirmation($order)));
+                    if ($user->setting->notifications == 'on')
+                    {
+                        Notification::send($user , (new OrderConfirmation($order)));
                     }
                 }
+
+                $supplier = Supplier::find($request->supplier_id);
+
+                Notification::send($supplier , (new SupplierHaveOrder()));
+
                 return new ModelResource($order);
             } else
             {
@@ -245,44 +254,47 @@ class OrderController extends Controller
 
 
     public function ConfirmOrder(ConfirmOrderRequest $request)
-
     {
 
 
-        $order=Order::find($request->order_id);
-        if ($order === null) {
+        $order = Order::find($request->order_id);
+        if ($order === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
         if ($order->status == 'confirmed')
         {
-            $msg='order is already confirmed !';
-        }else{
-            if ($order->deliverd_status == 'fully_delivered' ||  $order->deliverd_status == 'fully_delivered_with_bounce'){
+            $msg = 'order is already confirmed !';
+        } else
+        {
+            if ($order->deliverd_status == 'fully_delivered' || $order->deliverd_status == 'fully_delivered_with_bounce')
+            {
                 //you can make confirm
                 $order->status = 'confirmed';
                 $order->save();
-                $invoice=new Invoice();
-                $invoice->amount=$order->total_price_after_tax;
-                $invoice->order_id=$request->order_id;
-                $invoice->company_id=$order->supplier->company->id;
-                $invoice->paid_amount = 0;
+                $invoice                   = new Invoice();
+                $invoice->amount           = $order->total_price_after_tax;
+                $invoice->order_id         = $request->order_id;
+                $invoice->company_id       = $order->supplier->company->id;
+                $invoice->paid_amount      = 0;
                 $invoice->remaining_amount = $order->total_price_after_tax;
                 $invoice->save();
 
-                $msg= 'Order was confirmed successfully .';
-            }else{
+                $msg = 'Order was confirmed successfully .';
+            } else
+            {
                 //you can not make confirm
-                $msg='This order is not delivered yet , so you can not confirm it . Try to contact your supplier.';
+                $msg = 'This order is not delivered yet , so you can not confirm it . Try to contact your supplier.';
 
             }
         }
 
         return response([
-            'message' => $msg,
-        ], 200);
+            'message' => $msg ,
+        ] , 200);
 
     }
 }

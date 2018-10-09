@@ -21,7 +21,7 @@ class CreateSupplierPaymentsTable extends Migration
             $table->string('remaining_limit')->nullable();
             $table->enum('restrict' , ['on' , 'off']);
             $table->string('credit_period')->nullable();
-            $table->timestamp('period_renewal')->nullable();
+            $table->date('period_renewal')->nullable();
             $table->string('payment_due_date')->nullable();
             $table->unsignedBigInteger('supplier_id');
             $table->unsignedBigInteger('created_by_user_id')->nullable();
