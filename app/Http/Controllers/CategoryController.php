@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Requests\UpdateSupplierDirectoryRequest;
 use App\Http\Resources\ModelResource;
 use App\Models\Category;
 use Illuminate\Support\Facades\File;
@@ -76,7 +77,7 @@ class CategoryController extends Controller
     }
 
 
-    public function update(UpdateCategoryRequest $request, $id)
+    public function update(UpdateSupplierDirectoryRequest $request, $id)
     {
         $category = Category::find($id);
         if ($category === null) {

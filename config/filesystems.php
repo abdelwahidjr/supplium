@@ -66,6 +66,17 @@ return [
             'root'       => storage_path('app/public/images/categories') ,
             'url'        => env('APP_URL') . '/storage' ,
             'visibility' => 'public' ,
+        ] , 'supplier_directories' => [
+            'driver'     => 'local' ,
+            'root'       => storage_path('app/public/images/supplier_directories') ,
+            'url'        => env('APP_URL') . '/storage' ,
+            'visibility' => 'public' ,
+        ] ,
+     'product_directories' => [
+            'driver'     => 'local' ,
+            'root'       => storage_path('app/public/images/product_directories') ,
+            'url'        => env('APP_URL') . '/storage' ,
+            'visibility' => 'public' ,
         ] ,
 
         's3' => [

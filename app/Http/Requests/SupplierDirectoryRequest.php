@@ -25,7 +25,7 @@ class SupplierDirectoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'file' => 'required|mimes:csv,ods,xls,xlsx' ,
+            'file' => 'required|mimes:csv,ods,xls,xlsx',
         ];
     }
 
