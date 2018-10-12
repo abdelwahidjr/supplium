@@ -27,7 +27,7 @@ class StandingOrderController extends Controller
     }
 
 
-    public function store(StandingOrderRequest $request)
+   /* public function store(StandingOrderRequest $request)
     {
         // first create order and don't save it
         // untill craete standing Order then complete order
@@ -40,7 +40,7 @@ class StandingOrderController extends Controller
         return new ModelResource($standing_order);
 
 
-    }
+    }*/
 
 
     public function show($id)
@@ -58,7 +58,7 @@ class StandingOrderController extends Controller
     }
 
 
-    public function update(StandingOrderRequest $request , $id)
+   /* public function update(StandingOrderRequest $request , $id)
     {
         $standing_order = StandingOrder::find($id);
 
@@ -73,7 +73,7 @@ class StandingOrderController extends Controller
         $standing_order->save();
 
         return new ModelResource($standing_order);
-    }
+    }*/
 
 
     public function destroy($id)

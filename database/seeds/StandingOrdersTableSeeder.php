@@ -33,13 +33,14 @@ class StandingOrdersTableSeeder extends Seeder
                 $repeated_period = ['1 week' , '2 week' , '3 week' , '4 week'];
                 $repeated_period = $repeated_period[array_rand($repeated_period)];
 
+
                 StandingOrder::create([
-                    'name'            => $faker->word ,
-                    'status'          => $status ,
-                    'start_date'      => $faker->dateTimeInInterval($startDate = 'now' , $interval = '+ ' . rand(1 , 50) . ' days') ,
-                    'end_date'        => $faker->dateTimeInInterval($startDate = 'now' , $interval = '+ ' . rand(100 , 200) . ' days') ,
-                    'repeated_days'   => [$rand_day1 , $rand_day2 , $rand_day3 , $rand_day4] ,
-                    'repeated_period' => $repeated_period ,
+                    'standing_order_name'            => $faker->word ,
+                    'standing_order_status'          => $status ,
+                    'standing_order_start_date'      => $faker->dateTimeInInterval($startDate = 'now' , $interval = '+ ' . rand(1 , 50) . ' days') ,
+                    'standing_order_end_date'        => $faker->dateTimeInInterval($startDate = 'now' , $interval = '+ ' . rand(100 , 200) . ' days') ,
+                    'standing_order_repeated_days'   => [$rand_day1 , $rand_day2 , $rand_day3 , $rand_day4] ,
+                    'standing_order_repeated_period' => $repeated_period ,
                 ]);
             }
         }

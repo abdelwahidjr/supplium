@@ -7,11 +7,14 @@ use App\Http\Requests\OrderRequest;
 use App\Http\Resources\ModelResource;
 use App\Models\Invoice;
 use App\Models\Order;
+use App\Models\StandingOrder;
 use App\Models\Supplier;
 use App\Models\SupplierPayment;
 use App\Notifications\OrderConfirmation;
 use App\Notifications\SupplierHaveOrder;
 use DateTime;
+use function GuzzleHttp\Psr7\str;
+use Illuminate\Support\Facades\Validator;
 use Notification;
 
 class OrderController extends Controller
@@ -37,6 +40,24 @@ class OrderController extends Controller
     public function store(OrderRequest $request)
     {
 
+        if ($request->type=='standing'){
+
+            $validator = Validator::make($request->all(), [
+                'standing_order_name'            => 'required' ,
+                'standing_order_status'          => 'required' ,
+                'standing_order_repeated_days'   => 'required' ,
+                'standing_order_repeated_days.*' => 'required' ,
+                'standing_order_repeated_period' => 'required' ,
+                'standing_order_start_date'      => 'required' ,
+                'standing_order_end_date' => 'required',
+            ]);
+
+            if ($validator->fails()){
+                return $validator->errors();
+            }
+
+        }
+
         // order status on creation should be pending
 
         $order            = new Order;
@@ -49,7 +70,6 @@ class OrderController extends Controller
             //if supplier payment type is credit
             if ($supplier_payment->payment_type == "credit")
             {
-
                 $supplier_period_renewal = $supplier_payment->period_renewal;
                 //get supplier credit period
                 $supplier_credit_period = $supplier_payment->credit_period;
@@ -112,6 +132,16 @@ class OrderController extends Controller
 
             if ($allow)
             {
+
+                if ($request->type=='standing'){
+                    $standing_order = new StandingOrder();
+                    $standing_order->fill($request->all());
+                    $standing_order->created_by_user_id = $request->user()->id;
+                    $standing_order->save();
+                    $order->standing_order_id=$standing_order->id;
+                }
+
+
                 $today                     = new DateTime();
                 $timestamp                 = $today->format('His');
                 $order->created_by_user_id = $request->user()->id;
@@ -121,6 +151,7 @@ class OrderController extends Controller
                 $order->product()->sync($products_id);
                 $supplier_payment->remaining_limit = $available_credit - $order->total_price_after_tax;
                 $supplier_payment->save();
+
 
                 // find order company users and send email
 
@@ -138,6 +169,7 @@ class OrderController extends Controller
                 $supplier = Supplier::find($request->supplier_id);
 
                 Notification::send($supplier , (new SupplierHaveOrder()));
+
 
                 return new ModelResource($order);
             } else
@@ -180,6 +212,26 @@ class OrderController extends Controller
 
     public function update(OrderRequest $request , $id)
     {
+
+
+        if ($request->type=='standing'){
+
+            $validator = Validator::make($request->all(), [
+                'standing_order_name'            => 'required' ,
+                'standing_order_status'          => 'required' ,
+                'standing_order_repeated_days'   => 'required' ,
+                'standing_order_repeated_days.*' => 'required' ,
+                'standing_order_repeated_period' => 'required' ,
+                'standing_order_start_date'      => 'required' ,
+                'standing_order_end_date' => 'required',
+            ]);
+
+            if ($validator->fails()){
+                return $validator->errors();
+            }
+
+        }
+
         $products    = [];
         $products_id = [];
 
@@ -197,6 +249,22 @@ class OrderController extends Controller
                 'message' => trans('main.edit_not_allowed') ,
             ] , 422);
         }
+
+        if ($request->type=='standing') {
+            $standing_order=StandingOrder::find($order->standing_order_id);
+            if ($standing_order === null)
+            {
+                return response([
+                    'message' => 'This order is not standing order.',
+                ] , 422);
+            }else{
+                $standing_order->update($request->all());
+                $standing_order->updated_by_user_id = $request->user()->id;
+                $standing_order->save();
+            }
+        }
+
+
 
         $order->update($request->all());
 

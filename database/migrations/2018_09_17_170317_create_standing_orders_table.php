@@ -15,13 +15,14 @@ class CreateStandingOrdersTable extends Migration
     {
         Schema::create('standing_orders' , function (Blueprint $table)
         {
+
             $table->increments('id');
-            $table->string('name');
-            $table->enum('status' , ['active' , 'expired']);
-            $table->date('start_date');
-            $table->date('end_date')->nullable();
-            $table->text('repeated_days'); //array
-            $table->enum('repeated_period' , ['1 week' , '2 week' , '3 week' , '4 week']);
+            $table->string('standing_order_name');
+            $table->enum('standing_order_status' , ['active' , 'expired']);
+            $table->date('standing_order_start_date');
+            $table->date('standing_order_end_date')->nullable();
+            $table->text('standing_order_repeated_days'); //array
+            $table->enum('standing_order_repeated_period' , ['1 week' , '2 week' , '3 week' , '4 week']);
             $table->unsignedBigInteger('created_by_user_id')->nullable();
             $table->unsignedBigInteger('updated_by_user_id')->nullable();
 

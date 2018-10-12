@@ -14,18 +14,20 @@ class StandingOrder extends Model implements LogsActivityInterface
 
     protected $fillable
         = [
-            'name' ,
-            'status' ,
-            'start_date' ,
-            'end_date' ,
-            'repeated_days' ,
-            'repeated_period' ,
+            'standing_order_name' ,
+            'standing_order_status' ,
+            'standing_order_start_date' ,
+            'standing_order_end_date' ,
+            'standing_order_repeated_days' ,
+            'standing_order_repeated_period' ,
             'created_by_user_id' ,
             'updated_by_user_id' ,
         ];
-    protected $casts
+
+
+   protected $casts
         = [
-            'repeated_days' => 'array' ,
+            'standing_order_repeated_days' => 'array' ,
         ];
 
     public function getActivityDescriptionForEvent($eventName)
