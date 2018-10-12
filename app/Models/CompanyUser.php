@@ -10,8 +10,6 @@ class CompanyUser extends Model implements LogsActivityInterface
 {
     use LogsActivity;
 
-    use LogsActivity;
-
     protected $table = 'company_user';
 
     protected $guarded = ['id'];

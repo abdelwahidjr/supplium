@@ -14,7 +14,7 @@
 Route::prefix('auth')->group(function ()
 {
     Route::post('/login' , 'UserAuthController@login');
-    Route::post('/change-password' , 'UserAuthController@changePassword');
+    Route::post('/change-password' , 'UserAuthController@ChangeMyPassword');
     Route::post('/password/email' , 'Auth\ForgotPasswordController@getResetToken');;
     Route::post('/password/reset' , 'Auth\ResetPasswordController@reset');
 });
