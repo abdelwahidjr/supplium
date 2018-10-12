@@ -132,9 +132,9 @@ class OrderController extends Controller
 
             if ($allow)
             {
-
+                $standing_order = new StandingOrder();
                 if ($request->type=='standing'){
-                    $standing_order = new StandingOrder();
+
                     $standing_order->fill($request->all());
                     $standing_order->created_by_user_id = $request->user()->id;
                     $standing_order->save();
@@ -171,7 +171,14 @@ class OrderController extends Controller
                 Notification::send($supplier , (new SupplierHaveOrder()));
 
 
-                return new ModelResource($order);
+
+
+                return response([
+                    'order' => $order,
+                    'standard order' => $standing_order,
+                ], 200);
+
+               /* return new ModelResource($order);*/
             } else
             {
                 if ( ! $allow)
@@ -250,6 +257,7 @@ class OrderController extends Controller
             ] , 422);
         }
 
+        $standing_order=new StandingOrder();
         if ($request->type=='standing') {
             $standing_order=StandingOrder::find($order->standing_order_id);
             if ($standing_order === null)
@@ -288,8 +296,11 @@ class OrderController extends Controller
 
         $order->product()->sync($products_id);
 
-        return new ModelResource($order);
 
+        return response([
+            'order' => $order,
+            'standard order' => $standing_order,
+        ], 200);
     }
 
 
