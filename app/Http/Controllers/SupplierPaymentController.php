@@ -105,7 +105,9 @@ class SupplierPaymentController extends Controller
 
     public function SwitchRestriction(SwitchRestrictionRequest $request)
     {
+
         $payment = SupplierPayment::where('supplier_id', $request->supplier_id)->first();
+
         $payment->restrict = $request->restrict;
         $payment->save();
 

@@ -26,7 +26,7 @@ class SwitchRestrictionRequest extends FormRequest
     public function rules()
     {
         return [
-            'supplier_id' => 'required|exists:supplier_payment,id' ,
+            'supplier_id' => 'required|exists:supplier_payment,supplier_id' ,
             'restrict' => 'required|in:' . implode(',', $this->restrict_arr),
         ];
     }
