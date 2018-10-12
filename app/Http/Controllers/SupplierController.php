@@ -8,7 +8,10 @@ use App\Http\Resources\ModelResource;
 use App\Models\Category;
 use App\Models\Company;
 use App\Models\Supplier;
+use App\Models\SupplierPayment;
 use DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 
 class SupplierController extends Controller
@@ -47,12 +50,33 @@ class SupplierController extends Controller
 
     public function store(SupplierRequest $request)
     {
+        $response_arr=[];
         $supplier = new Supplier;
+
+
+
         $supplier->fill($request->all());
         $supplier->created_by_user_id = $request->user()->id;
         $supplier->save();
 
-        return new ModelResource($supplier);
+        $supplier_payment = new SupplierPayment();
+        $supplier_payment->supplier_id=$supplier->id;
+        if ($request->input('payment_type') == 'cash') {
+            $supplier_payment->payment_type = $request->input('payment_type');
+            $supplier_payment->created_by_user_id = $request->user()->id;
+            $supplier_payment->save();
+        } elseif ($request->input('payment_type') == 'credit') {
+            $supplier_payment->fill($request->all());
+            $supplier_payment->created_by_user_id = $request->user()->id;
+            $supplier_payment->save();
+        }
+
+
+        return response([
+            'supplier' => $supplier,
+            'supplier payment' => $supplier_payment,
+        ], 200);
+
     }
 
 
@@ -71,8 +95,34 @@ class SupplierController extends Controller
     }
 
 
-    public function update(SupplierRequest $request , $id)
+    public function update(Request $request,$id)
     {
+         $directory_option = ['on' , 'off'];
+         $payment_type = ['cash' , 'credit'];
+         $restrict_arr = ['on' , 'off'];
+         $credit_period = ['15' , '30' , '45' , '60' , '90'];
+
+        $validator = Validator::make($request->all(), [
+            "name"             => 'string|max:255' ,
+            'email'            => 'unique:suppliers,email,'.$id.'|max:255' ,
+            "phone"            => 'string|max:255' ,
+            'address'          => 'string|max:255' ,
+            'directory_option' => 'in:' . implode(',' , $directory_option) ,
+            'category_id'      => 'exists:categories,id' ,
+            'company_id'       => 'exists:companies,id' ,
+            "payment_type"     => 'in:' . implode(',' , $payment_type) ,
+            'credit_limit'     => 'numeric|max:1000000' ,
+            'remaining_limit'  => 'numeric|max:1000000' ,
+            "credit_period"    => 'in:' . implode(',' , $credit_period) ,
+            "period_renewal"   => 'date' ,
+            'payment_due_date' => 'numeric|min:1|max:30' ,
+            'restrict'         => 'in:' . implode(',' , $restrict_arr) ,
+        ]);
+
+        if ($validator->fails()){
+            return $validator->errors();
+        }
+
         $supplier = Supplier::find($id);
         if ($supplier === null)
         {
@@ -84,8 +134,24 @@ class SupplierController extends Controller
         $supplier->updated_by_user_id = $request->user()->id;
         $supplier->save();
 
-        return new ModelResource($supplier);
-    }
+
+        $supplier_payment=SupplierPayment::where('supplier_id',$supplier->id)->first();
+
+        if ($request->input('payment_type') == 'cash') {
+            $supplier_payment->payment_type = $request->input('payment_type');
+            $supplier_payment->updated_by_user_id = $request->user()->id;
+            $supplier_payment->save();
+        } elseif ($request->input('payment_type') == 'credit') {
+            $supplier_payment->update($request->all());
+            $supplier_payment->updated_by_user_id = $request->user()->id;
+            $supplier_payment->save();
+        }
+
+
+        return response([
+            'supplier' => $supplier,
+            'supplier payment' => $supplier_payment,
+        ], 200);    }
 
 
     public function destroy($id)

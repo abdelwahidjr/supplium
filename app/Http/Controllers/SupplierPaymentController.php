@@ -27,7 +27,7 @@ class SupplierPaymentController extends Controller
     }
 
 
-    public function store(SupplierPaymentRequest $request)
+   /* public function store(SupplierPaymentRequest $request)
     {
         $supplier_payment = new SupplierPayment;
 
@@ -45,7 +45,7 @@ class SupplierPaymentController extends Controller
         $supplier_payment = SupplierPayment::where('id', $supplier_payment->id)->get();
 
         return new ModelResource($supplier_payment);
-    }
+    }*/
 
 
     public function show($id)
@@ -62,7 +62,7 @@ class SupplierPaymentController extends Controller
     }
 
 
-    public function update(SupplierPaymentRequest $request, $id)
+   /* public function update(SupplierPaymentRequest $request, $id)
     {
         $supplier_payment = SupplierPayment::find($id);
         if ($supplier_payment === null) {
@@ -84,7 +84,7 @@ class SupplierPaymentController extends Controller
 
         return new ModelResource($supplier_payment);
 
-    }
+    }*/
 
 
     public function destroy($id)
