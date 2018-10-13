@@ -87,7 +87,7 @@ class InvoiceController extends Controller
 
         }
 
-        if ($order->deliverd_status == 'fully_delivered' || $order->deliverd_status == 'fully_delivered_with_bounce') {
+        if ($order->deliverd_status == 'fully_delivered' || $order->deliverd_status == 'fully_delivered_with_bonus') {
             return response([
                 'message' => "order should be deliverd",
             ], 422);

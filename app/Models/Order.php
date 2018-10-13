@@ -18,7 +18,7 @@ class Order extends Model implements LogsActivityInterface
             'products' ,
             'scheduled_on' ,
             'status' ,
-            'deliverd_status' ,
+            'delivery_status' ,
             'tax' ,
             'tax_val' ,
             'total_price_before_tax' ,

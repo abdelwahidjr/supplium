@@ -20,7 +20,8 @@ class CreateOrdersTable extends Migration
             $table->text('products'); /*array*/
             $table->text('scheduled_on')->nullable(); /*array*/
             $table->enum('status' , ['pending' , 'confirmed']);
-            $table->enum('deliverd_status' , ['fully_delivered' , 'fully_delivered_with_bounce' , 'partially_delivered' , 'not_deliverd']);
+            //fix typo of enum
+            $table->enum('delivery_status' , ['fully_delivered' , 'fully_delivered_with_bonus' , 'partially_delivered' , 'not_delivered']);
             $table->decimal('tax' , 4 , 2);
             $table->integer('total_qty');
             $table->decimal('total_price_before_tax' , 9 , 2);

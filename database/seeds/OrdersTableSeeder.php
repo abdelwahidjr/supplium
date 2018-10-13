@@ -47,7 +47,7 @@ class OrdersTableSeeder extends Seeder
                     'products'               => json_encode($products) ,
                     'scheduled_on'           => null ,
                     'status'                 => $status ,
-                    'deliverd_status'        => "not_deliverd" ,
+                    'delivery_status'        => "not_delivered" ,
                     'tax'                    => $tax_rate ,
                     'tax_val'                => $tax_val ,
                     'total_price_before_tax' => $price ,

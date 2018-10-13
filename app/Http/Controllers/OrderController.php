@@ -25,7 +25,6 @@ class OrderController extends Controller
 
     }
 
-
     public function all()
     {
         // all
@@ -132,9 +131,9 @@ class OrderController extends Controller
 
             if ($allow)
             {
-                $standing_order = new StandingOrder();
-                if ($request->type=='standing'){
 
+                if ($request->type=='standing'){
+                    $standing_order = new StandingOrder();
                     $standing_order->fill($request->all());
                     $standing_order->created_by_user_id = $request->user()->id;
                     $standing_order->save();
@@ -172,13 +171,11 @@ class OrderController extends Controller
 
 
 
-
                 return response([
                     'order' => $order,
                     'standard order' => $standing_order,
                 ], 200);
 
-               /* return new ModelResource($order);*/
             } else
             {
                 if ( ! $allow)
@@ -257,7 +254,6 @@ class OrderController extends Controller
             ] , 422);
         }
 
-        $standing_order=new StandingOrder();
         if ($request->type=='standing') {
             $standing_order=StandingOrder::find($order->standing_order_id);
             if ($standing_order === null)
@@ -296,11 +292,8 @@ class OrderController extends Controller
 
         $order->product()->sync($products_id);
 
+        return new ModelResource($order);
 
-        return response([
-            'order' => $order,
-            'standard order' => $standing_order,
-        ], 200);
     }
 
 
@@ -321,6 +314,7 @@ class OrderController extends Controller
             $products_id[$k] = $v['id'];
         }
 
+
         $order->product()->detach($products_id);
 
         $order->delete();
@@ -334,6 +328,7 @@ class OrderController extends Controller
 
     public function ConfirmOrder(ConfirmOrderRequest $request)
     {
+//['fully_delivered' , 'fully_delivered_with_bonus' , 'partially_delivered' , 'not_delivered']
 
 
         $order = Order::find($request->order_id);
@@ -349,7 +344,7 @@ class OrderController extends Controller
             $msg = 'order is already confirmed !';
         } else
         {
-            if ($order->deliverd_status == 'fully_delivered' || $order->deliverd_status == 'fully_delivered_with_bounce')
+            if ($order->deliverd_status == 'fully_delivered' || $order->deliverd_status == 'fully_delivered_with_bonus')
             {
                 //you can make confirm
                 $order->status = 'confirmed';
@@ -366,7 +361,7 @@ class OrderController extends Controller
             } else
             {
                 //you can not make confirm
-                $msg = 'This order is not delivered yet , so you can not confirm it . Try to contact your supplier.';
+                $msg = 'Sorry , you can not confirm this order because order is not delivered yet and order delivery is a must to confirm it. try to contact your supplier about delivery.';
 
             }
         }

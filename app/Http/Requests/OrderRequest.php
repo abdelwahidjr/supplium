@@ -22,11 +22,10 @@ class OrderRequest extends FormRequest
     public $deliverd_status
         = [
             'fully_delivered' ,
-            'fully_delivered_with_bounce' ,
+            'fully_delivered_with_bonus' ,
             'partially_delivered' ,
-            'not_deliverd' ,
+            'not_delivered' ,
         ];
-
 
 
     public $standing_order_status = ['active' , 'expired'];
@@ -59,13 +58,13 @@ class OrderRequest extends FormRequest
             'scheduled_on'     => 'array' ,
             'scheduled_on.*'   => 'date_format:"Y-m-d"' ,
             'status'           => 'required|string|in:' . implode(',' , $this->status) ,
-            'deliverd_status'  => 'required|string|in:' . implode(',' , $this->deliverd_status) ,
+            'delivery_status'  => 'required|string|in:' . implode(',' , $this->deliverd_status) ,
             'tax'              => 'required|regex:/^\d{0,2}\.\d{0,2}?$/' ,
             'notes'            => 'required|string|max:1000' ,
             'outlet_id'        => 'required|exists:outlets,id' ,
             'supplier_id'      => 'required|exists:suppliers,id' ,
             //after merging standing order
-            //type attributeto check if order is normal or standing
+            //type attribute to check if order is normal or standing
             'type' => 'required|in:' . implode(',' , $this->types),
             'standing_order_name'            => 'string|max:255' ,
             'standing_order_status'          => 'string|in:' . implode(',' , $this->standing_order_status) ,
@@ -84,7 +83,7 @@ class OrderRequest extends FormRequest
             "tax.regex"              => "max decimal number is 99.99 - decimal(4,2)" ,
             "products.*.price.regex" => "max decimal number is 999999.99 - decimal(8,2)" ,
             "status.in"              => "avilable status ['pending', 'confirmed']" ,
-            "deliverd_status.in"     => "avilable deliverd status ['fully delivered', 'fully delivered + bounce', 'partially delivered', 'not deliverd']" ,
+            "deliverd_status.in"     => "avilable deliverd status  ['fully_delivered' , 'fully_delivered_with_bonus' , 'partially_delivered' , 'not_delivered']" ,
             "standing_order_repeated_days.*.in" => "avilable days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']" ,
             "standing_order_status.in"          => "avilable status = ['active', 'expired']" ,
             "type.in"          => "avilable types = ['normal', 'standing']" ,
