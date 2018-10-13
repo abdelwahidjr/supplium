@@ -72,6 +72,15 @@ class UserController extends Controller
         $user->updated_by_user_id = $request->user()->id;
         $user->save();
 
+        $company_ids = [];
+
+        foreach ($user->company as $k => $v)
+        {
+            $company_ids[$k] = $v['id'];
+        }
+
+
+        $user->company()->sync($company_ids);
         return new ModelResource($user);
     }
 
@@ -85,6 +94,16 @@ class UserController extends Controller
                 'message' => trans('main.null_entity') ,
             ] , 422);
         }
+
+        $company_ids = [];
+
+        foreach ($user->company as $k => $v)
+        {
+            $company_ids[$k] = $v['id'];
+        }
+
+
+        $user->company()->detach($company_ids);
         $user->delete();
 
         return response()->json([

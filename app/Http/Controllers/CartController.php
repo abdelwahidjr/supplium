@@ -64,6 +64,17 @@ class CartController extends Controller
         $cart->updated_by_user_id = $request->user()->id;
         $cart->save();
 
+        $product_ids = [];
+
+        foreach ($cart->product as $k => $v)
+        {
+            $product_ids[$k] = $v['id'];
+        }
+
+
+        $cart->product()->sync($product_ids);
+
+
         return new ModelResource($cart);
     }
 
@@ -77,6 +88,18 @@ class CartController extends Controller
                 'message' => trans('main.null_entity') ,
             ] , 422);
         }
+
+        $product_ids = [];
+
+        foreach ($cart->product as $k => $v)
+        {
+            $product_ids[$k] = $v['id'];
+        }
+
+
+        $cart->product()->detach($product_ids);
+
+
         $cart->delete();
 
         return response()->json([

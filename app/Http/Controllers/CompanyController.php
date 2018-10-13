@@ -49,6 +49,7 @@ class CompanyController extends Controller
             ] , 422);
         }
 
+
         return new ModelResource($Company);
     }
 
@@ -64,7 +65,17 @@ class CompanyController extends Controller
         }
         $company->update($request->all());
         $company->updated_by_user_id = $request->user()->id;
+        $user_ids = [];
+
+        foreach ($company->user as $k => $v)
+        {
+            $user_ids[$k] = $v['id'];
+        }
+
+
+        $company->user()->sync($user_ids);
         $company->save();
+
 
         return new ModelResource($company);
     }
@@ -79,6 +90,18 @@ class CompanyController extends Controller
                 'message' => trans('main.null_entity') ,
             ] , 422);
         }
+
+
+        $user_ids = [];
+
+        foreach ($company->user as $k => $v)
+        {
+            $user_ids[$k] = $v['id'];
+        }
+
+
+        $company->user()->detach($user_ids);
+
         $company->delete();
 
         return response()->json([

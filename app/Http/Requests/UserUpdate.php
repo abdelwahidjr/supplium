@@ -25,7 +25,7 @@ class UserUpdate extends FormRequest
     {
         return [
             'name'  => 'max:255' ,
-            'eamil' => 'unique:users|max:255' ,
+            'email' => 'unique:users|max:255' ,
         ];
     }
 }

@@ -124,6 +124,16 @@ class BrandController extends Controller
         $brand->updated_by_user_id = $request->user()->id;
         $brand->save();
 
+        $supplier_ids = [];
+
+        foreach ($brand->supplier as $k => $v)
+        {
+            $supplier_ids[$k] = $v['id'];
+        }
+
+
+        $brand->supplier()->sync($supplier_ids);
+
         return new ModelResource($brand);
     }
 
@@ -137,6 +147,20 @@ class BrandController extends Controller
                 'message' => trans('main.null_entity') ,
             ] , 422);
         }
+
+
+
+        $supplier_ids = [];
+
+        foreach ($brand->supplier as $k => $v)
+        {
+            $supplier_ids[$k] = $v['id'];
+        }
+
+
+        $brand->supplier()->detach($supplier_ids);
+
+
         $brand->delete();
 
         return response()->json([

@@ -147,6 +147,16 @@ class SupplierController extends Controller
             $supplier_payment->save();
         }
 
+        $brand_ids = [];
+
+        foreach ($supplier->brand as $k => $v)
+        {
+            $brand_ids[$k] = $v['id'];
+        }
+
+
+        $supplier->brand()->sync($brand_ids);
+
 
         return response([
             'supplier' => $supplier,
@@ -163,6 +173,20 @@ class SupplierController extends Controller
                 'message' => trans('main.null_entity') ,
             ] , 422);
         }
+
+
+
+        $brand_ids = [];
+
+        foreach ($supplier->brand as $k => $v)
+        {
+            $brand_ids[$k] = $v['id'];
+        }
+
+
+        $supplier->brand()->detach($brand_ids);
+
+
         $supplier->delete();
 
         return response()->json([
