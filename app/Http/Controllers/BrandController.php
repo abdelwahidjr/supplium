@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BrandRequest;
+use App\Http\Requests\UpdateBrandRequest;
 use App\Http\Resources\ModelResource;
 use App\Models\Brand;
 use App\Models\Company;
@@ -96,7 +97,7 @@ class BrandController extends Controller
     }
 
 
-    public function update(BrandRequest $request , $id)
+    public function update(UpdateBrandRequest $request , $id)
     {
         $brand = Brand::find($id);
         if ($brand === null)
@@ -105,6 +106,20 @@ class BrandController extends Controller
                 'message' => trans('main.null_entity') ,
             ] , 422);
         }
+
+
+        if ($request->name != null) {
+            if (Brand::where('id', '!=', $id)->where('name', $request->name)->exists()) {
+                return response([
+                    'message' => 'This brand name is already taken !',
+                ], 200);
+            } else {
+                $brand->name = $request->name;
+            }
+
+        }
+
+
         $brand->update($request->all());
         $brand->updated_by_user_id = $request->user()->id;
         $brand->save();
