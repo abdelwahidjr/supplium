@@ -287,6 +287,9 @@ class SupplierController extends Controller
     public function web_all()
     {
 
+        $name = 'sampa';
+
+        dd($name);
 
     }
 
