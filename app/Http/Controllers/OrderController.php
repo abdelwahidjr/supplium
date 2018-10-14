@@ -13,7 +13,6 @@ use App\Models\SupplierPayment;
 use App\Notifications\OrderConfirmation;
 use App\Notifications\SupplierHaveOrder;
 use DateTime;
-use function GuzzleHttp\Psr7\str;
 use Illuminate\Support\Facades\Validator;
 use Notification;
 
@@ -39,19 +38,21 @@ class OrderController extends Controller
     public function store(OrderRequest $request)
     {
 
-        if ($request->type=='standing'){
+        if ($request->type == 'standing')
+        {
 
-            $validator = Validator::make($request->all(), [
+            $validator = Validator::make($request->all() , [
                 'standing_order_name'            => 'required' ,
                 'standing_order_status'          => 'required' ,
                 'standing_order_repeated_days'   => 'required' ,
                 'standing_order_repeated_days.*' => 'required' ,
                 'standing_order_repeated_period' => 'required' ,
                 'standing_order_start_date'      => 'required' ,
-                'standing_order_end_date' => 'required',
+                'standing_order_end_date'        => 'required' ,
             ]);
 
-            if ($validator->fails()){
+            if ($validator->fails())
+            {
                 return $validator->errors();
             }
 
@@ -132,14 +133,14 @@ class OrderController extends Controller
             if ($allow)
             {
 
-                if ($request->type=='standing'){
+                if ($request->type == 'standing')
+                {
                     $standing_order = new StandingOrder();
                     $standing_order->fill($request->all());
                     $standing_order->created_by_user_id = $request->user()->id;
                     $standing_order->save();
-                    $order->standing_order_id=$standing_order->id;
+                    $order->standing_order_id = $standing_order->id;
                 }
-
 
                 $today                     = new DateTime();
                 $timestamp                 = $today->format('His');
@@ -150,7 +151,6 @@ class OrderController extends Controller
                 $order->product()->sync($products_id);
                 $supplier_payment->remaining_limit = $available_credit - $order->total_price_after_tax;
                 $supplier_payment->save();
-
 
                 // find order company users and send email
 
@@ -169,12 +169,10 @@ class OrderController extends Controller
 
                 Notification::send($supplier , (new SupplierHaveOrder()));
 
-
-
                 return response([
-                    'order' => $order,
-                    'standard order' => $standing_order,
-                ], 200);
+                    'order'          => $order ,
+                    'standard order' => $standing_order ,
+                ] , 200);
 
             } else
             {
@@ -218,19 +216,21 @@ class OrderController extends Controller
     {
 
 
-        if ($request->type=='standing'){
+        if ($request->type == 'standing')
+        {
 
-            $validator = Validator::make($request->all(), [
+            $validator = Validator::make($request->all() , [
                 'standing_order_name'            => 'required' ,
                 'standing_order_status'          => 'required' ,
                 'standing_order_repeated_days'   => 'required' ,
                 'standing_order_repeated_days.*' => 'required' ,
                 'standing_order_repeated_period' => 'required' ,
                 'standing_order_start_date'      => 'required' ,
-                'standing_order_end_date' => 'required',
+                'standing_order_end_date'        => 'required' ,
             ]);
 
-            if ($validator->fails()){
+            if ($validator->fails())
+            {
                 return $validator->errors();
             }
 
@@ -254,21 +254,21 @@ class OrderController extends Controller
             ] , 422);
         }
 
-        if ($request->type=='standing') {
-            $standing_order=StandingOrder::find($order->standing_order_id);
+        if ($request->type == 'standing')
+        {
+            $standing_order = StandingOrder::find($order->standing_order_id);
             if ($standing_order === null)
             {
                 return response([
-                    'message' => 'This order is not standing order.',
+                    'message' => 'This order is not standing order.' ,
                 ] , 422);
-            }else{
+            } else
+            {
                 $standing_order->update($request->all());
                 $standing_order->updated_by_user_id = $request->user()->id;
                 $standing_order->save();
             }
         }
-
-
 
         $order->update($request->all());
 
@@ -314,7 +314,6 @@ class OrderController extends Controller
             $products_id[$k] = $v['id'];
         }
 
-
         $order->product()->detach($products_id);
 
         $order->delete();
@@ -329,7 +328,6 @@ class OrderController extends Controller
     public function ConfirmOrder(ConfirmOrderRequest $request)
     {
 //['fully_delivered' , 'fully_delivered_with_bonus' , 'partially_delivered' , 'not_delivered']
-
 
         $order = Order::find($request->order_id);
         if ($order === null)
@@ -361,7 +359,8 @@ class OrderController extends Controller
             } else
             {
                 //you can not make confirm
-                $msg = 'Sorry , you can not confirm this order because order is not delivered yet and order delivery is a must to confirm it. try to contact your supplier about delivery.';
+                $msg
+                    = 'Sorry , you can not confirm this order because order is not delivered yet and order delivery is a must to confirm it. try to contact your supplier about delivery.';
 
             }
         }
