@@ -23,6 +23,10 @@ class SupplierController extends Controller
     }
 
 
+    ##################################################
+    # API Functions
+    ##################################################
+
     public function all()
     {
         // all
@@ -273,5 +277,55 @@ class SupplierController extends Controller
             'message'       => "file columns ['name','email','phone','address','category_name','company_name']" ,
             'message:error' => "empty data" ,
         ] , 422);
+    }
+
+
+    ##################################################
+    # Web Functions
+    ##################################################
+
+    public function web_all()
+    {
+
+
+    }
+
+
+    public function web_create()
+    {
+
+
+    }
+
+    public function web_store(Request $request)
+    {
+
+
+    }
+
+
+    public function web_show($id)
+    {
+
+    }
+
+
+    public function web_edit($id)
+    {
+
+
+    }
+
+
+    public function web_update(Request $request , $id)
+    {
+
+    }
+
+
+    public function web_destroy($id)
+    {
+
+
     }
 }
