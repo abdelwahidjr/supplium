@@ -35,13 +35,14 @@ class SupplierController extends Controller
 
     public function SortSuppliersByName($type)
     {
-        $types=['asc','desc'];
-        if (!in_array($type, $types)) {
+        $types = ['asc' , 'desc'];
+        if ( ! in_array($type , $types))
+        {
             return response([
-                'message' => 'Invalid sort type , available types are [ asc , desc ].',
-            ], 200);
+                'message' => 'Invalid sort type , available types are [ asc , desc ].' ,
+            ] , 200);
         }
-        $suppliers=Supplier::with('supplier_payment','company','brand','order','product')->orderBy('name', $type)
+        $suppliers = Supplier::with('supplier_payment' , 'company' , 'brand' , 'order' , 'product')->orderBy('name' , $type)
             ->paginate(config('main.JsonResultCount'))->all();
 
         return new ModelResource($suppliers);
@@ -50,32 +51,31 @@ class SupplierController extends Controller
 
     public function store(SupplierRequest $request)
     {
-        $response_arr=[];
-        $supplier = new Supplier;
-
-
+        $response_arr = [];
+        $supplier     = new Supplier;
 
         $supplier->fill($request->all());
         $supplier->created_by_user_id = $request->user()->id;
         $supplier->save();
 
-        $supplier_payment = new SupplierPayment();
-        $supplier_payment->supplier_id=$supplier->id;
-        if ($request->input('payment_type') == 'cash') {
-            $supplier_payment->payment_type = $request->input('payment_type');
+        $supplier_payment              = new SupplierPayment();
+        $supplier_payment->supplier_id = $supplier->id;
+        if ($request->input('payment_type') == 'cash')
+        {
+            $supplier_payment->payment_type       = $request->input('payment_type');
             $supplier_payment->created_by_user_id = $request->user()->id;
             $supplier_payment->save();
-        } elseif ($request->input('payment_type') == 'credit') {
+        } elseif ($request->input('payment_type') == 'credit')
+        {
             $supplier_payment->fill($request->all());
             $supplier_payment->created_by_user_id = $request->user()->id;
             $supplier_payment->save();
         }
 
-
         return response([
-            'supplier' => $supplier,
-            'supplier payment' => $supplier_payment,
-        ], 200);
+            'supplier'         => $supplier ,
+            'supplier payment' => $supplier_payment ,
+        ] , 200);
 
     }
 
@@ -95,16 +95,16 @@ class SupplierController extends Controller
     }
 
 
-    public function update(Request $request,$id)
+    public function update(Request $request , $id)
     {
-         $directory_option = ['on' , 'off'];
-         $payment_type = ['cash' , 'credit'];
-         $restrict_arr = ['on' , 'off'];
-         $credit_period = ['15' , '30' , '45' , '60' , '90'];
+        $directory_option = ['on' , 'off'];
+        $payment_type     = ['cash' , 'credit'];
+        $restrict_arr     = ['on' , 'off'];
+        $credit_period    = ['15' , '30' , '45' , '60' , '90'];
 
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->all() , [
             "name"             => 'string|max:255' ,
-            'email'            => 'unique:suppliers,email,'.$id.'|max:255' ,
+            'email'            => 'unique:suppliers,email,' . $id . '|max:255' ,
             "phone"            => 'string|max:255' ,
             'address'          => 'string|max:255' ,
             'directory_option' => 'in:' . implode(',' , $directory_option) ,
@@ -119,7 +119,8 @@ class SupplierController extends Controller
             'restrict'         => 'in:' . implode(',' , $restrict_arr) ,
         ]);
 
-        if ($validator->fails()){
+        if ($validator->fails())
+        {
             return $validator->errors();
         }
 
@@ -134,14 +135,15 @@ class SupplierController extends Controller
         $supplier->updated_by_user_id = $request->user()->id;
         $supplier->save();
 
+        $supplier_payment = SupplierPayment::where('supplier_id' , $supplier->id)->first();
 
-        $supplier_payment=SupplierPayment::where('supplier_id',$supplier->id)->first();
-
-        if ($request->input('payment_type') == 'cash') {
-            $supplier_payment->payment_type = $request->input('payment_type');
+        if ($request->input('payment_type') == 'cash')
+        {
+            $supplier_payment->payment_type       = $request->input('payment_type');
             $supplier_payment->updated_by_user_id = $request->user()->id;
             $supplier_payment->save();
-        } elseif ($request->input('payment_type') == 'credit') {
+        } elseif ($request->input('payment_type') == 'credit')
+        {
             $supplier_payment->update($request->all());
             $supplier_payment->updated_by_user_id = $request->user()->id;
             $supplier_payment->save();
@@ -154,14 +156,13 @@ class SupplierController extends Controller
             $brand_ids[$k] = $v['id'];
         }
 
-
         $supplier->brand()->sync($brand_ids);
 
-
         return response([
-            'supplier' => $supplier,
-            'supplier payment' => $supplier_payment,
-        ], 200);    }
+            'supplier'         => $supplier ,
+            'supplier payment' => $supplier_payment ,
+        ] , 200);
+    }
 
 
     public function destroy($id)
@@ -174,8 +175,6 @@ class SupplierController extends Controller
             ] , 422);
         }
 
-
-
         $brand_ids = [];
 
         foreach ($supplier->brand as $k => $v)
@@ -183,9 +182,7 @@ class SupplierController extends Controller
             $brand_ids[$k] = $v['id'];
         }
 
-
         $supplier->brand()->detach($brand_ids);
-
 
         $supplier->delete();
 
