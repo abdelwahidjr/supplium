@@ -11,7 +11,6 @@
 |
 */
 
-
 Auth::routes();
 
 Route::get('/' , 'HomeController@welcome')->name('welcome');
@@ -20,7 +19,7 @@ Route::get('/home' , 'HomeController@home')->name('home');
 
 Route::get('/test' , 'HomeController@test');
 
-Route::prefix('admin')->middleware(['role:admin'])->group(function ()
+Route::prefix('admin')->group(function ()
 {
     foreach (File::allFiles(base_path('routes/web/admin')) as $file)
     {
