@@ -287,7 +287,7 @@ class SupplierController extends Controller
     public function web_all()
     {
 
-        return view('');
+        return view('test');
 
     }
 
