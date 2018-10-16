@@ -14,12 +14,16 @@ class AdController extends Controller
 
     public function __construct()
     {
-        // $this->middleware(['role:owner' , 'permission:read'])->only('all');
+
     }
 
     public function all()
     {
+        // all
         return ModelResource::collection(Ad::paginate(config('main.JsonResultCount')));
+
+        // all with relations
+        //return ModelResource::collection((Brand::with('brand','setting'))->paginate(config('main.JsonResultCount')));
 
     }
 
@@ -34,18 +38,6 @@ class AdController extends Controller
         $extension = $request->image->getClientOriginalExtension();
         $sha1      = sha1($request->image->getClientOriginalName());
         $filename  = date('Y-m-d-h-i-s') . "_" . $sha1;
-
-        /*note that i created :
-        'ads' => [
-            'driver'     => 'local' ,
-            'root'       => storage_path('app/public/images/ads') ,
-            'url'        => env('APP_URL') . '/storage' ,
-            'visibility' => 'public' ,
-                ]
-
-        in filesystems.php file to to assign a folder for ads .
-        remove this comment after reading it .
-        */
 
         Storage::disk('ads')->put($filename . "." . $extension , File::get($request->image));
         $ad       = new Ad();
