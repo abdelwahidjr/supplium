@@ -28,7 +28,6 @@ class  SuppliersTableSeeder extends Seeder
                     'email'            => $faker->email ,
                     'phone'            => $faker->phoneNumber ,
                     'address'          => $faker->address ,
-                    'directory_option' => $option ,
                     'category_id'      => rand(1 , 50) ,
                     'company_id'       => rand(1 , 50) ,
                 ]);

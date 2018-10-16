@@ -17,7 +17,6 @@ class Product extends Model implements LogsActivityInterface
             'name' ,
             'unit' ,
             'price' ,
-            'directory_option' ,
             'supplier_id' ,
             'category_id' ,
             'cart_id' ,

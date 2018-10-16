@@ -20,10 +20,9 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->enum('unit' , ['kg' , 'liter' , 'packet' , 'bucket' , 'case' , 'piece' , 'box' , 'gallon']);
             $table->decimal('price' , 8 , 2);
-            $table->enum('directory_option' , ['on' , 'off'])->default('off');
             $table->unsignedBigInteger('supplier_id');
             $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('cart_id');
+            $table->unsignedBigInteger('cart_id')->nullable();
             $table->unsignedBigInteger('created_by_user_id')->nullable();
             $table->unsignedBigInteger('updated_by_user_id')->nullable();
 

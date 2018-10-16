@@ -197,7 +197,6 @@ class ProductController extends Controller
                     'price'            => $value->price ,
                     'supplier_id'      => $supplier->id ,
                     'category_id'      => $category->id ,
-                    'directory_option' => 'on' ,
                 ];
             }
 

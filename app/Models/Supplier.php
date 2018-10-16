@@ -21,7 +21,6 @@ class Supplier extends Model implements LogsActivityInterface
             'email' ,
             'phone' ,
             'address' ,
-            'directory_option' ,
             'category_id' ,
             'company_id' ,
             'created_by_user_id' ,
