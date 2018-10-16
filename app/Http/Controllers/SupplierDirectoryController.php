@@ -29,27 +29,28 @@ class SupplierDirectoryController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(StoreSupplierDirectoryRequest $request)
     {
         $extension = $request->image->getClientOriginalExtension();
-        $sha1 = sha1($request->image->getClientOriginalName());
-        $filename = date('Y-m-d-h-i-s') . "_" . $sha1;
-        Storage::disk('supplier_directories')->put($filename . "." . $extension, File::get($request->image));
+        $sha1      = sha1($request->image->getClientOriginalName());
+        $filename  = date('Y-m-d-h-i-s') . "_" . $sha1;
+        Storage::disk('supplier_directories')->put($filename . "." . $extension , File::get($request->image));
 
-        $supplierDirectory = new SupplierDirectory();
-        $supplierDirectory->segment = $request->segment;
-        $supplierDirectory->name = $request->name;
-        $supplierDirectory->logo = 'storage/images/supplier_directories/' . $filename . "." . $extension;
-        $supplierDirectory->contact_person = $request->contact_person;
-        $supplierDirectory->position = $request->position;
-        $supplierDirectory->phone_number = $request->phone_number;
-        $supplierDirectory->mobile_number = $request->mobile_number;
-        $supplierDirectory->email = $request->email;
-        $supplierDirectory->website = $request->website;
-        $supplierDirectory->address = $request->address;
-        $supplierDirectory->operation_areas = $request->operation_areas;
+        $supplierDirectory                     = new SupplierDirectory();
+        $supplierDirectory->segment            = $request->segment;
+        $supplierDirectory->name               = $request->name;
+        $supplierDirectory->logo               = 'storage/images/supplier_directories/' . $filename . "." . $extension;
+        $supplierDirectory->contact_person     = $request->contact_person;
+        $supplierDirectory->position           = $request->position;
+        $supplierDirectory->phone_number       = $request->phone_number;
+        $supplierDirectory->mobile_number      = $request->mobile_number;
+        $supplierDirectory->email              = $request->email;
+        $supplierDirectory->website            = $request->website;
+        $supplierDirectory->address            = $request->address;
+        $supplierDirectory->operation_areas    = $request->operation_areas;
         $supplierDirectory->created_by_user_id = $request->user()->id;
         $supplierDirectory->save();
 
@@ -60,15 +61,17 @@ class SupplierDirectoryController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\SupplierDirectory $supplierDirectory
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         $supplier_directory = SupplierDirectory::find($id);
-        if ($supplier_directory === null) {
+        if ($supplier_directory === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
         return new ModelResource($supplier_directory);
@@ -78,47 +81,56 @@ class SupplierDirectoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request      $request
      * @param  \App\Models\SupplierDirectory $supplierDirectory
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSupplierDirectoryRequest $request, $id)
+    public function update(UpdateSupplierDirectoryRequest $request , $id)
     {
 
         $supplier_directory = SupplierDirectory::find($id);
-        if ($supplier_directory === null) {
+        if ($supplier_directory === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
-        if ($request->name != null) {
-            if (SupplierDirectory::where('id', '!=', $id)->where('name', $request->name)->exists()) {
+        if ($request->name != null)
+        {
+            if (SupplierDirectory::where('id' , '!=' , $id)->where('name' , $request->name)->exists())
+            {
                 return response([
-                    'message' => 'This name is already taken !',
-                ], 200);
-            } else {
+                    'message' => 'This name is already taken !' ,
+                ] , 200);
+            } else
+            {
                 $supplier_directory->name = $request->name;
             }
 
         }
 
-        if ($request->email != null) {
-            if (SupplierDirectory::where('id', '!=', $id)->where('email', $request->email)->exists()) {
+        if ($request->email != null)
+        {
+            if (SupplierDirectory::where('id' , '!=' , $id)->where('email' , $request->email)->exists())
+            {
                 return response([
-                    'message' => 'This email is already taken !',
-                ], 200);
-            } else {
+                    'message' => 'This email is already taken !' ,
+                ] , 200);
+            } else
+            {
                 $supplier_directory->email = $request->email;
             }
 
         }
         //if user update image
-        if ($request->image != null) {
+        if ($request->image != null)
+        {
             $extension = $request->image->getClientOriginalExtension();
-            $sha1 = sha1($request->image->getClientOriginalName());
-            $filename = date('Y-m-d-h-i-s') . "_" . $sha1;
-            Storage::disk('supplier_directories')->put($filename . "." . $extension, File::get($request->image));
+            $sha1      = sha1($request->image->getClientOriginalName());
+            $filename  = date('Y-m-d-h-i-s') . "_" . $sha1;
+            Storage::disk('supplier_directories')->put($filename . "." . $extension , File::get($request->image));
             //put your base url to retrieve images
             $supplier_directory->logo = 'storage/images/supplier_directories/' . $filename . "." . $extension;
         }
@@ -134,65 +146,75 @@ class SupplierDirectoryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\SupplierDirectory $supplierDirectory
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $supplier_directory = SupplierDirectory::find($id);
-        if ($supplier_directory === null) {
+        if ($supplier_directory === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
         $supplier_directory->delete();
+
         return response()->json([
-            'status' => 'Success',
-            'message' => trans('main.deleted'),
-        ], 200);
+            'status'  => 'Success' ,
+            'message' => trans('main.deleted') ,
+        ] , 200);
     }
 
     /**
      * @param SupplierDirectoryRequest $request
+     *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function directory(SupplierDirectoryRequest $request)
     {
-        $error_messages=[];
-        $path = $request->file->getRealPath();
-        $data = Excel::load($path, function ($reader) {
+        $error_messages = [];
+        $path           = $request->file->getRealPath();
+        $data           = Excel::load($path , function ($reader)
+        {
         })->get();
 
-        if (!empty($data) && $data->count()) {
-            foreach ($data as $key => $value) {
+        if ( ! empty($data) && $data->count())
+        {
+            foreach ($data as $key => $value)
+            {
 
 
-                if (SupplierDirectory::where('name', $value->supplier_name)->exists() ){
-                    array_push($error_messages,'This name '.$value->supplier_name.' is already taken !');
+                if (SupplierDirectory::where('name' , $value->supplier_name)->exists())
+                {
+                    array_push($error_messages , 'This name ' . $value->supplier_name . ' is already taken !');
 
-                }
-                 else if ( SupplierDirectory::where('email', $value->e_mail)->exists()){
-                     array_push($error_messages,'This email '.$value->e_mail.' is already taken !');
+                } else
+                {
+                    if (SupplierDirectory::where('email' , $value->e_mail)->exists())
+                    {
+                        array_push($error_messages , 'This email ' . $value->e_mail . ' is already taken !');
 
-                 }else{
+                    } else
+                    {
 
-                    $insert[] = [
-                        'segment' => $value->segment,
-                        'name' => $value->supplier_name,
-                        'logo' => $value->logo,
-                        'contact_person' => $value->contact_person,
-                        'position' => $value->position,
-                        'phone_number' => $value->phone_number,
-                        'mobile_number' => $value->mobile_number,
-                        'email' => $value->e_mail,
-                        'website' => $value->website,
-                        'address' => $value->address,
-                        'operation_areas' => $value->operation_areas,
-                    ];
+                        $insert[] = [
+                            'segment'         => $value->segment ,
+                            'name'            => $value->supplier_name ,
+                            'logo'            => $value->logo ,
+                            'contact_person'  => $value->contact_person ,
+                            'position'        => $value->position ,
+                            'phone_number'    => $value->phone_number ,
+                            'mobile_number'   => $value->mobile_number ,
+                            'email'           => $value->e_mail ,
+                            'website'         => $value->website ,
+                            'address'         => $value->address ,
+                            'operation_areas' => $value->operation_areas ,
+                        ];
+                    }
                 }
             }
-
-
 
             if ( ! empty($insert))
             {
@@ -200,7 +222,7 @@ class SupplierDirectoryController extends Controller
 
                 return response([
                     'message:success' => "suppliers records stored successfully ! . Note that some of records may be not stored so check if there is any errors in response ." ,
-                    'message:error' => $error_messages,
+                    'message:error'   => $error_messages ,
                 ] , 200);
 
             } else
@@ -213,7 +235,7 @@ class SupplierDirectoryController extends Controller
         }
 
         return response([
-            'message' => "file columns ['segment' 
+            'message'       => "file columns ['segment' 
             ,'name' ,
              'logo' ,
             'contact_person' ,
@@ -224,25 +246,28 @@ class SupplierDirectoryController extends Controller
             'website',
             'address',
             'operation_areas',
-             ]",
-            'message:error' => "Empty data",
-        ], 422);
+             ]" ,
+            'message:error' => "Empty data" ,
+        ] , 422);
     }
 
     /**
      * @param $type
+     *
      * @return ModelResource|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function SortSupplierDirectories($type)
     {
-        $types=['asc','desc'];
-        if (!in_array($type, $types)) {
+        $types = ['asc' , 'desc'];
+        if ( ! in_array($type , $types))
+        {
             return response([
-                'message' => 'Invalid sort type , available types are [ asc , desc ].',
-            ], 200);
+                'message' => 'Invalid sort type , available types are [ asc , desc ].' ,
+            ] , 200);
         }
-        $directories=SupplierDirectory::orderBy('name', $type)
+        $directories = SupplierDirectory::orderBy('name' , $type)
             ->paginate(config('main.JsonResultCount'))->all();
+
         return new ModelResource($directories);
     }
 

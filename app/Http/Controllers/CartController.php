@@ -71,9 +71,7 @@ class CartController extends Controller
             $product_ids[$k] = $v['id'];
         }
 
-
         $cart->product()->sync($product_ids);
-
 
         return new ModelResource($cart);
     }
@@ -96,9 +94,7 @@ class CartController extends Controller
             $product_ids[$k] = $v['id'];
         }
 
-
         $cart->product()->detach($product_ids);
-
 
         $cart->delete();
 

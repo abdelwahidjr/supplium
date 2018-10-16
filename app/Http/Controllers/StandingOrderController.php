@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StandingOrderRequest;
 use App\Http\Resources\ModelResource;
 use App\Models\StandingOrder;
 
@@ -27,21 +26,20 @@ class StandingOrderController extends Controller
     }
 
 
-   /* public function store(StandingOrderRequest $request)
-    {
-        // first create order and don't save it
-        // untill craete standing Order then complete order
+    /* public function store(StandingOrderRequest $request)
+     {
+         // first create order and don't save it
+         // untill craete standing Order then complete order
 
-        $standing_order = new StandingOrder;
-        $standing_order->fill($request->all());
-        $standing_order->created_by_user_id = $request->user()->id;
-        $standing_order->save();
+         $standing_order = new StandingOrder;
+         $standing_order->fill($request->all());
+         $standing_order->created_by_user_id = $request->user()->id;
+         $standing_order->save();
 
-        return new ModelResource($standing_order);
+         return new ModelResource($standing_order);
 
 
-    }*/
-
+     }*/
 
     public function show($id)
     {
@@ -58,23 +56,22 @@ class StandingOrderController extends Controller
     }
 
 
-   /* public function update(StandingOrderRequest $request , $id)
-    {
-        $standing_order = StandingOrder::find($id);
+    /* public function update(StandingOrderRequest $request , $id)
+     {
+         $standing_order = StandingOrder::find($id);
 
-        if ($standing_order === null)
-        {
-            return response([
-                'message' => trans('main.null_entity') ,
-            ] , 422);
-        }
-        $standing_order->update($request->all());
-        $standing_order->updated_by_user_id = $request->user()->id;
-        $standing_order->save();
+         if ($standing_order === null)
+         {
+             return response([
+                 'message' => trans('main.null_entity') ,
+             ] , 422);
+         }
+         $standing_order->update($request->all());
+         $standing_order->updated_by_user_id = $request->user()->id;
+         $standing_order->save();
 
-        return new ModelResource($standing_order);
-    }*/
-
+         return new ModelResource($standing_order);
+     }*/
 
     public function destroy($id)
     {

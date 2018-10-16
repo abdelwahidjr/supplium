@@ -79,8 +79,8 @@ class UserController extends Controller
             $company_ids[$k] = $v['id'];
         }
 
-
         $user->company()->sync($company_ids);
+
         return new ModelResource($user);
     }
 
@@ -101,7 +101,6 @@ class UserController extends Controller
         {
             $company_ids[$k] = $v['id'];
         }
-
 
         $user->company()->detach($company_ids);
         $user->delete();

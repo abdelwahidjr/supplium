@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
-use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Requests\UpdateSupplierDirectoryRequest;
 use App\Http\Resources\ModelResource;
 use App\Models\Category;
@@ -33,14 +32,16 @@ class CategoryController extends Controller
 
     public function SortCategories($type)
     {
-        $types=['asc','desc'];
-        if (!in_array($type, $types)) {
+        $types = ['asc' , 'desc'];
+        if ( ! in_array($type , $types))
+        {
             return response([
-                'message' => 'Invalid sort type , available types are [ asc , desc ].',
-            ], 200);
+                'message' => 'Invalid sort type , available types are [ asc , desc ].' ,
+            ] , 200);
         }
-        $categories=Category::with('product')->orderBy('name', $type)
+        $categories = Category::with('product')->orderBy('name' , $type)
             ->paginate(config('main.JsonResultCount'))->all();
+
         return new ModelResource($categories);
     }
 
@@ -48,14 +49,13 @@ class CategoryController extends Controller
     {
 
         $extension = $request->image_url->getClientOriginalExtension();
-        $sha1 = sha1($request->image_url->getClientOriginalName());
-        $filename = date('Y-m-d-h-i-s') . "_" . $sha1;
-        Storage::disk('categories')->put($filename . "." . $extension, File::get($request->image_url));
+        $sha1      = sha1($request->image_url->getClientOriginalName());
+        $filename  = date('Y-m-d-h-i-s') . "_" . $sha1;
+        Storage::disk('categories')->put($filename . "." . $extension , File::get($request->image_url));
 
-
-        $category = new Category();
-        $category->name = $request->name;
-        $category->image_url = 'storage/images/categories/' . $filename . "." . $extension;
+        $category                     = new Category();
+        $category->name               = $request->name;
+        $category->image_url          = 'storage/images/categories/' . $filename . "." . $extension;
         $category->created_by_user_id = $request->user()->id;
         $category->save();
 
@@ -67,46 +67,51 @@ class CategoryController extends Controller
     {
         $category = Category::with('product')->find($id);
 
-        if ($category === null) {
+        if ($category === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
         return new ModelResource($category);
     }
 
 
-    public function update(UpdateSupplierDirectoryRequest $request, $id)
+    public function update(UpdateSupplierDirectoryRequest $request , $id)
     {
         $category = Category::find($id);
-        if ($category === null) {
+        if ($category === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
-        if ($request->name != null) {
-            if (Category::where('id', '!=', $id)->where('name', $request->name)->exists()) {
+        if ($request->name != null)
+        {
+            if (Category::where('id' , '!=' , $id)->where('name' , $request->name)->exists())
+            {
                 return response([
-                    'message' => 'This category name is already taken !',
-                ], 200);
-            } else {
+                    'message' => 'This category name is already taken !' ,
+                ] , 200);
+            } else
+            {
                 $category->name = $request->name;
             }
 
         }
 
         //if user update image
-        if ($request->image_url != null) {
+        if ($request->image_url != null)
+        {
             $extension = $request->image_url->getClientOriginalExtension();
-            $sha1 = sha1($request->image_url->getClientOriginalName());
-            $filename = date('Y-m-d-h-i-s') . "_" . $sha1;
-            Storage::disk('categories')->put($filename . "." . $extension, File::get($request->image_url));
+            $sha1      = sha1($request->image_url->getClientOriginalName());
+            $filename  = date('Y-m-d-h-i-s') . "_" . $sha1;
+            Storage::disk('categories')->put($filename . "." . $extension , File::get($request->image_url));
             //put your base url to retrieve images
             $category->image_url = 'storage/images/categories/' . $filename . "." . $extension;
         }
-
 
         // $category->update($request->all());
         $category->updated_by_user_id = $request->user()->id;
@@ -119,16 +124,17 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category = Category::find($id);
-        if ($category === null) {
+        if ($category === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
         $category->delete();
 
         return response()->json([
-            'status' => 'Success',
-            'message' => trans('main.deleted'),
-        ], 200);
+            'status'  => 'Success' ,
+            'message' => trans('main.deleted') ,
+        ] , 200);
     }
 }

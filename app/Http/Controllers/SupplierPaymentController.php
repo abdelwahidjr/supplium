@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SupplierPaymentRequest;
 use App\Http\Requests\SwitchRestrictionRequest;
 use App\Http\Resources\ModelResource;
 use App\Models\SupplierPayment;
@@ -27,94 +26,94 @@ class SupplierPaymentController extends Controller
     }
 
 
-   /* public function store(SupplierPaymentRequest $request)
-    {
-        $supplier_payment = new SupplierPayment;
+    /* public function store(SupplierPaymentRequest $request)
+     {
+         $supplier_payment = new SupplierPayment;
 
-        if ($request->input('payment_type') == 'cash') {
-            $supplier_payment->payment_type = $request->input('payment_type');
-            $supplier_payment->supplier_id = $request->input('supplier_id');
-            $supplier_payment->created_by_user_id = $request->user()->id;
-            $supplier_payment->save();
-        } elseif ($request->input('payment_type') == 'credit') {
-            $supplier_payment->fill($request->all());
-            $supplier_payment->created_by_user_id = $request->user()->id;
-            $supplier_payment->save();
-        }
+         if ($request->input('payment_type') == 'cash') {
+             $supplier_payment->payment_type = $request->input('payment_type');
+             $supplier_payment->supplier_id = $request->input('supplier_id');
+             $supplier_payment->created_by_user_id = $request->user()->id;
+             $supplier_payment->save();
+         } elseif ($request->input('payment_type') == 'credit') {
+             $supplier_payment->fill($request->all());
+             $supplier_payment->created_by_user_id = $request->user()->id;
+             $supplier_payment->save();
+         }
 
-        $supplier_payment = SupplierPayment::where('id', $supplier_payment->id)->get();
+         $supplier_payment = SupplierPayment::where('id', $supplier_payment->id)->get();
 
-        return new ModelResource($supplier_payment);
-    }*/
-
+         return new ModelResource($supplier_payment);
+     }*/
 
     public function show($id)
     {
         $supplier_payment = SupplierPayment::with('supplier')->find($id);
 
-        if ($supplier_payment === null) {
+        if ($supplier_payment === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
 
         return new ModelResource($supplier_payment);
     }
 
 
-   /* public function update(SupplierPaymentRequest $request, $id)
-    {
-        $supplier_payment = SupplierPayment::find($id);
-        if ($supplier_payment === null) {
-            return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
-        }
+    /* public function update(SupplierPaymentRequest $request, $id)
+     {
+         $supplier_payment = SupplierPayment::find($id);
+         if ($supplier_payment === null) {
+             return response([
+                 'message' => trans('main.null_entity'),
+             ], 422);
+         }
 
-        if ($request->input('payment_type') == 'cash') {
-            $supplier_payment->payment_type = $request->input('payment_type');
-            $supplier_payment->supplier_id = $request->input('supplier_id');
-            $supplier_payment->updated_by_user_id = $request->user()->id;
-            $supplier_payment->save();
-        } elseif ($request->input('payment_type') == 'credit') {
-            $supplier_payment->update($request->all());
-            $supplier_payment->updated_by_user_id = $request->user()->id;
-            $supplier_payment->save();
-        }
+         if ($request->input('payment_type') == 'cash') {
+             $supplier_payment->payment_type = $request->input('payment_type');
+             $supplier_payment->supplier_id = $request->input('supplier_id');
+             $supplier_payment->updated_by_user_id = $request->user()->id;
+             $supplier_payment->save();
+         } elseif ($request->input('payment_type') == 'credit') {
+             $supplier_payment->update($request->all());
+             $supplier_payment->updated_by_user_id = $request->user()->id;
+             $supplier_payment->save();
+         }
 
-        return new ModelResource($supplier_payment);
+         return new ModelResource($supplier_payment);
 
-    }*/
-
+     }*/
 
     public function destroy($id)
     {
         $supplier_payment = SupplierPayment::find($id);
-        if ($supplier_payment === null) {
+        if ($supplier_payment === null)
+        {
             return response([
-                'message' => trans('main.null_entity'),
-            ], 422);
+                'message' => trans('main.null_entity') ,
+            ] , 422);
         }
         $supplier_payment->delete();
 
         return response()->json([
-            'status' => 'Success',
-            'message' => trans('main.deleted'),
-        ], 200);
+            'status'  => 'Success' ,
+            'message' => trans('main.deleted') ,
+        ] , 200);
     }
 
     public function SwitchRestriction(SwitchRestrictionRequest $request)
     {
 
-        $payment = SupplierPayment::where('supplier_id', $request->supplier_id)->first();
+        $payment = SupplierPayment::where('supplier_id' , $request->supplier_id)->first();
 
         $payment->restrict = $request->restrict;
         $payment->save();
 
         return response()->json([
-            'status' => 'Success',
-            'message' => 'Supplier payment restriction updated successfully !',
-        ], 200);
+            'status'  => 'Success' ,
+            'message' => 'Supplier payment restriction updated successfully !' ,
+        ] , 200);
     }
 
 

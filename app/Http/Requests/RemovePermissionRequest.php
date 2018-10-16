@@ -25,8 +25,8 @@ class RemovePermissionRequest extends FormRequest
     public function rules()
     {
         return [
-            'role_name' => 'required|exists:roles,name' ,
-            'permission_name' => 'required|exists:permissions,name'
+            'role_name'       => 'required|exists:roles,name' ,
+            'permission_name' => 'required|exists:permissions,name',
 
         ];
     }

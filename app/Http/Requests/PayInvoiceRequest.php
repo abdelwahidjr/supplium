@@ -27,10 +27,9 @@ class PayInvoiceRequest extends FormRequest
 
         return [
             'invoice_id' => 'required|exists:invoices,id' ,
-            'amount' => 'required|numeric|min:1' ,
+            'amount'     => 'required|numeric|min:1' ,
         ];
     }
-
 
 
 }

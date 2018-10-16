@@ -25,8 +25,8 @@ class UpdateCategoryRequest extends FormRequest
     public function rules()
     {
         return [//required|exists:companies,id
-            'name' => 'string|max:255',
-            'image_url'       => 'mimes:jpeg,jpg,png',
+                'name'      => 'string|max:255' ,
+                'image_url' => 'mimes:jpeg,jpg,png' ,
 
         ];
     }

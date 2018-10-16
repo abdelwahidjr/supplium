@@ -38,23 +38,26 @@ class ProductController extends Controller
     }
 
 
-    public function SortProducts($type,$order)
+    public function SortProducts($type , $order)
     {
-        $types=['asc','desc'];
-        $orders=['name','price','sku'];
+        $types  = ['asc' , 'desc'];
+        $orders = ['name' , 'price' , 'sku'];
 
-        if (!in_array($type, $types)) {
+        if ( ! in_array($type , $types))
+        {
             return response([
-                'message' => 'Invalid sort type , available types are [ asc , desc ].',
-            ], 200);
+                'message' => 'Invalid sort type , available types are [ asc , desc ].' ,
+            ] , 200);
+        } else
+        {
+            if ( ! in_array($order , $orders))
+            {
+                return response([
+                    'message' => 'Invalid order by type , available types are [ name , price , sku ].' ,
+                ] , 200);
+            }
         }
-
-        else if (!in_array($order, $orders)) {
-            return response([
-                'message' => 'Invalid order by type , available types are [ name , price , sku ].',
-            ], 200);
-        }
-        $products=Product::with('category','supplier','order','cart')->orderBy($order, $type)
+        $products = Product::with('category' , 'supplier' , 'order' , 'cart')->orderBy($order , $type)
             ->paginate(config('main.JsonResultCount'))->all();
 
         return new ModelResource($products);
@@ -107,8 +110,8 @@ class ProductController extends Controller
             $cart_ids[$k] = $v['id'];
         }
 
-
         $product->cart()->sync($cart_ids);
+
         return new ModelResource($product);
     }
 
@@ -129,7 +132,6 @@ class ProductController extends Controller
         {
             $cart_ids[$k] = $v['id'];
         }
-
 
         $product->cart()->detach($cart_ids);
 

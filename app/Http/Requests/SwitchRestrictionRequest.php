@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class SwitchRestrictionRequest extends FormRequest
 {
-    public $restrict_arr = ['on', 'off'];
+    public $restrict_arr = ['on' , 'off'];
 
     /**
      * Determine if the user is authorized to make this request.
@@ -27,14 +27,14 @@ class SwitchRestrictionRequest extends FormRequest
     {
         return [
             'supplier_id' => 'required|exists:supplier_payment,supplier_id' ,
-            'restrict' => 'required|in:' . implode(',', $this->restrict_arr),
+            'restrict'    => 'required|in:' . implode(',' , $this->restrict_arr) ,
         ];
     }
 
     public function messages()
     {
         return [
-            "restrict.in" => "avilable restriction types ['on','off']",
+            "restrict.in" => "avilable restriction types ['on','off']" ,
         ];
     }
 

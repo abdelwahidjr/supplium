@@ -51,9 +51,9 @@ class SupplierRequest extends FormRequest
     {
         return [
             "directory_option.in" => "avilable options ['on', 'off']" ,
-            "payment_type.in"  => "avilable payment_type ['cash', 'credit']" ,
-            "credit_period.in" => "avilable credit_period ['15', '30', '45', '60', '90']" ,
-            "restrict.in"      => "avilable restriction types ['on','off']" ,
+            "payment_type.in"     => "avilable payment_type ['cash', 'credit']" ,
+            "credit_period.in"    => "avilable credit_period ['15', '30', '45', '60', '90']" ,
+            "restrict.in"         => "avilable restriction types ['on','off']" ,
         ];
     }
 

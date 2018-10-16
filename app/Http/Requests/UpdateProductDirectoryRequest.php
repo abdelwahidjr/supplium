@@ -8,8 +8,8 @@ class UpdateProductDirectoryRequest extends FormRequest
 {
 
 
-    public $units = ['GM', 'KG'];
-    public $units_of_sale = ['GM', 'CRT'];
+    public $units = ['GM' , 'KG'];
+    public $units_of_sale = ['GM' , 'CRT'];
 
 
     /**
@@ -32,21 +32,21 @@ class UpdateProductDirectoryRequest extends FormRequest
     {
 
         return [
-            "segment" => 'string|max:255',
-            "category" => 'string|max:255',
-            "sub_category" => 'string|max:255',
-            "supplier" => 'string|max:255',
-            "brand" => 'string|max:255',
-            'sku'         => 'string|max:255' ,
-            "describtion" => 'string|max:255',
-            "type" => 'string|max:255',
-            "quantity" => 'numeric|min:0',
-            "unit_price"       => 'numeric|min:0' ,
+            "segment"      => 'string|max:255' ,
+            "category"     => 'string|max:255' ,
+            "sub_category" => 'string|max:255' ,
+            "supplier"     => 'string|max:255' ,
+            "brand"        => 'string|max:255' ,
+            'sku'          => 'string|max:255' ,
+            "describtion"  => 'string|max:255' ,
+            "type"         => 'string|max:255' ,
+            "quantity"     => 'numeric|min:0' ,
+            "unit_price"   => 'numeric|min:0' ,
             "weight"       => 'numeric|min:0' ,
-            "unit" => 'in:' . implode(',', $this->units),
-            "case_price" => 'numeric|min:0',
-            "origin" => 'string|max:255',
-            "unit_of_sale" => 'in:' . implode(',', $this->units_of_sale),
+            "unit"         => 'in:' . implode(',' , $this->units) ,
+            "case_price"   => 'numeric|min:0' ,
+            "origin"       => 'string|max:255' ,
+            "unit_of_sale" => 'in:' . implode(',' , $this->units_of_sale) ,
         ];
     }
 

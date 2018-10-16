@@ -199,7 +199,7 @@ class OrderController extends Controller
 
     public function show($id)
     {
-        $order = Order::with('outlet' , 'product' , 'standing_order' , 'invoice')->find($id);
+        $order = Order::with('outlet' , 'standing_order' , 'invoice' , 'product' , 'product.supplier')->find($id);
 
         if ($order === null)
         {

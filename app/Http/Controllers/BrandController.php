@@ -107,18 +107,19 @@ class BrandController extends Controller
             ] , 422);
         }
 
-
-        if ($request->name != null) {
-            if (Brand::where('id', '!=', $id)->where('name', $request->name)->exists()) {
+        if ($request->name != null)
+        {
+            if (Brand::where('id' , '!=' , $id)->where('name' , $request->name)->exists())
+            {
                 return response([
-                    'message' => 'This brand name is already taken !',
-                ], 200);
-            } else {
+                    'message' => 'This brand name is already taken !' ,
+                ] , 200);
+            } else
+            {
                 $brand->name = $request->name;
             }
 
         }
-
 
         $brand->update($request->all());
         $brand->updated_by_user_id = $request->user()->id;
@@ -130,7 +131,6 @@ class BrandController extends Controller
         {
             $supplier_ids[$k] = $v['id'];
         }
-
 
         $brand->supplier()->sync($supplier_ids);
 
@@ -148,8 +148,6 @@ class BrandController extends Controller
             ] , 422);
         }
 
-
-
         $supplier_ids = [];
 
         foreach ($brand->supplier as $k => $v)
@@ -157,9 +155,7 @@ class BrandController extends Controller
             $supplier_ids[$k] = $v['id'];
         }
 
-
         $brand->supplier()->detach($supplier_ids);
-
 
         $brand->delete();
 
