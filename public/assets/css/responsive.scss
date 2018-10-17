@@ -1,0 +1,88 @@
+@media (min-width: 1200px)
+{
+    .container {
+        max-width: 1280px;
+    }
+    #content {
+
+        width:calc(100% - 250px);
+        &.active
+        {
+            width:100%;
+        }
+    }
+}
+
+@media(max-width:1199px){
+
+    .timeline-point, .timeline{
+        &:after, &:before{
+            display: none;
+        }
+    }
+    .scrollerchat{
+        .in, .out{
+            width: 100% !important;
+        }
+    }
+    .redial-process{
+        width: 220px;
+        height: 220px;
+        .redial-middle-bar {
+            width: 150px;
+            height: 150px;
+        }
+    }
+    .circles-text{font-size: 14px !important;}
+    .wrapper{ 
+        display: block;     
+        padding: 0px;
+        #sidebar{
+            float: left;
+        }
+        .card{
+            .redial-brd-right{ border: 0px;}
+        }
+        #content{ padding: 0px;}
+    }
+    .profile-menu{
+        .nav-pills{ border-bottom:  1px solid #e6e6e6 !important;}
+    }
+}
+@media(max-width:991px){
+    .wrapper{ 
+        padding: 0 15px;
+        #sidebar{
+            float: none;
+            -webkit-transform: translateX(-300px);
+            transform: translateX(-300px);
+            position: fixed;
+            top: 10%;
+            z-index: 99;
+        }
+    }
+    #sidebar.active {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+        margin-left: 0px;
+    }
+}
+
+@media (max-width: 767px) {
+    .profile-header{
+        .profile-avatar{
+            top: 15px;
+            width: 150px;
+        }
+    }
+}    
+@media (max-width: 576px) {
+    .wizard {
+        .connecting-line{
+            display: none;
+        }
+    }
+    #accordion1, #accordion2{
+        h6{font-size: 13px;}
+    }
+}

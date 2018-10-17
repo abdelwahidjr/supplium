@@ -1,0 +1,833 @@
+/*===  
+    1. Accordian Css 
+    2. Form Css
+    3. Breadcrumb Css
+    4. Counter Css
+    5. Tabs Css
+    7. Timeline Css
+    8. Scroll Css
+    9. Checkbox & Radio Css
+    10. Table Css
+    11. Progress Bar Css
+    12. Dropzone Css
+    13. Date Picker Css
+    14. Google Map
+    15. Form-Wizard Css
+    16. Sweet Alert Css
+    17. Font Style Css
+    18. Font Weight Css
+    19. Font Color Css
+    20. Latter Spacing Css
+    21. Buttons Size Css
+    22. Buttons Color Css
+    23. Border Color Css
+    24. Border Radius Css
+    25. Box Shadow Css
+    26. Pagination Css
+    27. Pagination Css
+    28. Social Icon Css
+    29. From-Wizard Css
+    30. Pagination Css
+    31. Google Map Css
+    32. Icons Css
+    33. Models Css
+    34. Price Table Css
+===*/
+
+/*======================== Selection Css ===============================*/
+::selection {
+    background-color: $primary;
+    color: $white;
+}
+/*======================== Blockquote Css ===============================*/
+.blockquote {
+    &:before{
+        content: "\f0b1";
+        font-family: "IcoFont" !important;
+        position: absolute;
+        left: 8px;
+        font-size: 30px;
+        color: $white;
+    }
+}
+/*======================== Main Content  Css ===============================*/
+#content {
+    padding: 0px 0 0 20px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    width:100%;
+    
+}
+.card{ border-radius: 10px;}
+.rounded-top{ 
+    border-top-right-radius: 10px !important;
+    border-top-left-radius: 10px !important;
+}
+.rounded-bottom{
+    border-bottom-right-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+}
+.card-body {
+    overflow: hidden;
+    overflow-x: inherit; 
+}
+/*======================== Form Css ===============================*/
+.form-control {
+    height: 42px;
+    border-radius: 0px;
+    border-color: $border-light;
+    color: $body-color;
+    transition: .2s ease-out; 
+    padding: .5rem 1.2rem;
+    font-size: 0.875rem;
+    &:focus{
+        border-color: $border-light;
+        box-shadow: none;
+    }
+}
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  transition: all 0.3s ease; }
+
+input:focus::-webkit-input-placeholder, textarea:focus::-webkit-input-placeholder {
+  opacity: 0;
+}
+textarea.form-control{ 
+    height: 115px !important;
+}
+.form-control-lg{
+    padding: .5rem 1rem !important;
+    font-size: 1.25rem !important;
+}
+.form-control-sm{
+    height: 32px !important;
+}
+select[multiple], select[size] {
+    height: auto;
+}
+/*======================== Page Top To Bottom Css ===============================*/
+.scrollup {
+    width: 46px;
+    height: 46px;
+    position: fixed;
+    bottom: 30px;
+    right: 16px;
+    display: none;
+    z-index: 999;
+    i{    line-height: 2em;}
+}
+/*======================== Breadcrumb Css ===============================*/
+.breadcrumb{
+    .breadcrumb-item.active, .breadcrumb-item+.breadcrumb-item::before{
+        color: $body-color;
+    }
+}
+/*======================== Counter Css ===============================*/
+/*.fact-box1{
+    .counter_number{
+        &:after{
+            content: "k";
+            padding-left: 5px;
+        }
+    }
+}
+.fact-box2{
+    .counter_number{
+        &:after{
+            content: "%";
+            padding-left: 5px;
+        }
+    }
+}*/
+/*======================== Header Title Css ===============================*/
+.header-title{
+    &:before{
+        content: "";
+        position: absolute;
+        left: 0px;
+        width: 5px;
+        height: 5px;
+        background: $primary;
+        border-radius: 50px;
+        top: 13px;
+    }
+}
+
+/*======================== Tabs Css ===============================*/
+.nav-tabs{
+     border-color: $border-light;
+    .nav-link{
+        border-bottom: solid 2px transparent;
+        &:hover{ border-color: transparent;}
+    }
+    .nav-link.active{
+        color: $dark;
+        border-color: $primary;
+        font-weight: 600;
+    }
+}
+.nav-pills{
+    .nav-link.active, .nav-link:hover, .show>.nav-link{
+        color: $dark !important;
+        background-color: transparent;
+    }
+    .nav-item{
+        .nav-link{
+            &:before{
+                content: "";
+                height: 44px;
+                width: 1px;
+                position: absolute;
+                right: 0px;
+                background-color: #e6e6e6;
+                top: 0;
+            } 
+        }
+        &:last-child .nav-link:before { display: none; }
+    }
+}
+/*======================== Editable Table Css ===============================*/
+.jsgrid-header-row {
+    th {
+        color: $primary !important;
+    }
+}
+/*======================== Timeline Css ===============================*/
+.timeline{
+    &:after{
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 2px;
+        width: 3px;
+        height: 100%;
+        border-right: 3px solid $border-light;
+    }
+}
+.timeline-point{
+    &:after{
+        content: ""; 
+        position: absolute;
+        left: 104%;
+        width: 11px;
+        height: 11px;
+        top: 38px;
+        background: $sky-info;
+        border-radius: 50px;
+        z-index: 1;
+    }
+    &:before{
+        content: "";
+        width: 5px;
+        height: 5px;
+        position: absolute;
+        left: 105%;
+        background: #e6e6e6;
+        border-radius: 50px;
+        top: 41px;
+        z-index: 9;
+    }
+}
+.timeline-point2{
+    &:after{
+        left: -18px;
+    }
+    &:before{
+        left: -15px;
+    }
+}   
+.list-inline{
+    .list-inline-item{
+        .counter-box{
+            &:after{
+                content: ""; 
+                position: absolute;
+                right: -29px;
+                top: 0;
+                background: url(../images/dots.png) center no-repeat;
+                width: 3px;
+                height: 60px;
+            }
+        }
+        &:last-child .counter-box:after { display: none; }
+    }
+}
+/*======================== Chat Css ===============================*/
+.scrollerchat{
+    .in{
+        .media-body{
+            background-color: #6f729b;
+            border-top-right-radius: 0px !important;
+            padding: 15px;
+        }
+    }
+    .out{
+        .media-body{
+            background-color: #f8f7fd;
+            border-top-left-radius:  0px !important;
+            padding: 15px;
+        }
+    }
+}
+/*======================== Checkbox & Radio Css ===============================*/
+[type=radio]+label, [type=checkbox]+label {
+    position: relative;
+    padding-left: 25px;
+    cursor: pointer;
+}
+[type=radio], [type=checkbox] {
+    position: absolute;
+    left: -9999px;
+    visibility: hidden;
+}
+[type=checkbox]+label:before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 0;
+    width: 17px;
+    height: 17px;
+    z-index: 0;
+    border: 1.5px solid #e6e6e6;
+    transition: .2s;
+}
+[type=checkbox]:checked+label:before {
+    top: 3px;
+    left: 0;
+    width: 10px;
+    height: 17px;
+    border-width: 2px;
+    border-color: transparent $primary $primary transparent;
+    -webkit-transform: rotate(40deg);
+    transform-origin: 100% 100%;
+}
+.text-muted{
+    color: #bababa !important;
+}
+/*======================== Inbox Css ===============================*/
+.inbox{
+    a{
+        &:hover .form-group, &:hover .text-muted, &:hover label.redial-dark {
+            background-color: $primary;
+            color: $white !important;
+            [type=checkbox]:checked + label:before{
+               border-color: transparent #fff #fff transparent;
+            }
+        }
+        
+    }
+}
+/*======================== Table Css ===============================*/
+.table-sm {
+    td, th{
+        font-size: 12px;
+    }
+}
+.table{  
+    span{ color: #b5b5b5;}
+    td{ vertical-align: middle;}
+    td, th{ border-color: $border-light !important;}
+}
+.table-dark{ td, th{ border-color: transparent !important;} }
+#user, .page-grid{
+    .thead-light th{ 
+        border: 0px; 
+        background-color: #f2f2f2;
+    }
+}
+.table-hover {
+    tbody tr:hover{ background-color: $secondry;}
+    tbody th:hover{ border-color: $secondry !important;}
+}
+.table thead td, .table thead th{ border-bottom: 0px !important; }
+.table-striped tbody tr:nth-of-type(odd){ 
+    background-color: $secondry;
+}
+/*======================== Progress Css ===============================*/
+.barfiller, .barfiller2{
+    width: 100%;
+    height: 5px;
+    background: #dadada;
+    .fill{
+        display: block;
+        position: relative;
+        width: 0px;
+        height: 100%;
+        background: -webkit-linear-gradient(0deg, rgba(0,176,52,1) 0%, rgba(58,95,216,1) 51%, rgba(165,62,186,1) 100%) !important;
+    }
+    .tipWrap{
+        display: none;
+    }
+    .tip{
+        padding: 5px;
+        margin-top: -8px;
+        line-height: 10px;
+        margin-left: 25px;
+        color: $white;
+        left: 0px;
+        position: absolute;
+        z-index: 2;
+        background: $primary;
+    }
+}
+/*======================== Followers Css ===============================*/
+.redial-followers{
+    h5{
+       width: 25px;
+        height: 25px;
+        line-height: 1.2em; 
+    }
+}
+
+/*======================== Circle Process Css ===============================*/
+.circles-text {
+    font-size: 20px !important;
+    color: $primary;
+    font-weight: 700;
+}
+.circles-decimals{ display: none;}
+
+/*======================== Date Picker Css ===============================*/
+.date {
+    a:hover{
+        border-color: transparent !important;
+        color: $white !important;
+        background-color: #2e5aef;
+    }
+}
+/*======================== Table Proccess Css ===============================*/
+.table{
+    .therm{
+        height: 10px !important; 
+        background-color: #e1e1e1 !important;
+        border-radius: 0px;
+        .inner-therm {
+            background: -webkit-linear-gradient(0deg, rgba(0,176,52,1) 0%, rgba(58,95,216,1) 51%, rgba(165,62,186,1) 100%) !important;
+            span{
+                display: none;
+            }
+        }
+    }
+}
+/*========================  Viewed Products Css ===============================*/
+.view{
+    width: 40px;
+    height: 35px;
+    line-height: 16px;
+    &:before{
+        content: "";
+        position: absolute;
+        left: 0;
+        left: -6px;
+        border-top: 7px solid transparent;
+        border-bottom: 7px solid transparent;
+        border-right: 7px solid $primary;
+        top: 11px;
+    }
+}
+/*========================  Map Css ===============================*/
+.percentCount {
+    margin-top: -29px;
+    color: $dark;
+    font-weight: 700;
+}
+.therm{
+    height: 5px !important; 
+    border-radius: 5px;
+    background-color: $primary !important;
+    .inner-therm {
+        background-color: #00b034 !important;
+    }
+}
+#world-map{
+    height: 350px !important;
+    .jvectormap-zoomin, .jvectormap-zoomout{
+        position: relative;
+        top: -60px;
+        width: 18px;
+        height: 18px;
+        background: $primary;
+        text-align: center;
+        line-height: 18px;
+        color: #fff;
+        margin-bottom: 3px;
+        cursor: pointer;
+    }
+}
+
+/*========================  User Profile Page Css ===============================*/
+.profile-header{
+    .profile-avatar{
+        top: 50px;
+    }
+}
+.page-social{
+    a{
+        i{
+            width: 27px;
+            height: 27px; 
+        }
+    }
+}
+.user-status{
+    width: 11px;
+    height: 11px;
+    background-color: $success;
+    position: absolute;
+    right: 20px;
+    bottom: 0;
+}
+.portfolio-box{
+    .post-btn{
+        cursor: pointer;  
+    } 
+    .form-control{ font-size: 12px;}
+}
+
+/*========================  Form Wizard Page Css ===============================*/
+.wizard, .wizard2{
+    .round-tab{
+        i{
+            width: 50px;
+            height: 50px;
+            background-color: $dark;
+            border: 2px solid $dark;
+            font-size: 1.25rem;
+            line-height: 45px;
+            text-align: center !important;
+            top: 15px;
+            z-index: 99;
+            margin-bottom: 18px !important;
+        }
+    }
+    .nav-link{
+        &:hover{ color: $dark !important;}
+    }
+    .nav-link.active{
+        i{
+            background-color: $white;
+            border-color: $primary;
+            color: $primary !important;
+        }
+    }
+    .connecting-line{
+        height: 2px;
+        background: $dark;
+        position: absolute;
+        width: 99%;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        top: 40%;
+        z-index: 1;
+    }
+}
+.wizard2{
+    .round-tab{
+        i{
+            background-color: $white;
+            border: 2px solid $white;
+        }
+    }
+    .nav-link{
+        &:hover{ color: $dark !important;}
+    }
+    .nav-link.active{
+        i{
+            background-color: $primary;
+            border-color: $white;
+            color: $white !important;
+        }
+    }
+    .connecting-line{ background-color: $white;}
+    .form-control{ color: $white !important;}
+}
+/*========================  Form Tab Css ===============================*/
+.form-tab, .form-tab2{
+    .nav {
+        .nav-link.active{
+            background-color: $primary;
+            color: #a6baff;
+            h1,h6{ color: $white;}
+            &:after{
+                content: "";
+                position: absolute;
+                right: -20px;
+                border-top: 33px solid transparent;
+                border-bottom: 32px solid transparent;
+                border-left: 22px solid $primary;
+                top: 0px;
+            }
+        }
+    }
+}
+.form-tab2{
+   .media-body{ color: #a6baff;}
+    h1,h6,{ color: $white !important;}
+    .nav-link.active{
+        background-color: $white !important;
+        .media-body{ color: #878787;}
+        h1,h6{ color: $dark !important;}
+        &:after{
+            content: "";
+            border-left: 22px solid #fff !important;
+        }
+    }
+    .form-control{ color: $white !important;}
+}
+/*========================  Accordian Css ===============================*/
+#accordion{
+    [aria-expanded="true"] {
+       background-color: $primary;
+       color: $white; 
+       border-color: $primary !important;
+    }
+    a{
+        &.collapsed:after{
+            content: "\f105";
+        }
+        &:after{   
+           font-family: 'FontAwesome';
+           content: "\f107";
+           float: right;
+        }  
+    }
+    .card-body{ 
+        border-top: none !important;
+        border: solid 1px $border-light;
+    }
+}
+#accordion2{
+    a{
+        line-height: 50px;
+        &.collapsed:after{
+            content: "\f067";
+        }
+        &:after{   
+            font-family: 'FontAwesome';
+            content: "\f068";
+            float: left;
+            width: 50px;
+            margin-right: 15px;
+            text-align: center;
+            background-color: $primary;
+            color: $white;
+        }  
+    }
+    .card-body{ 
+        border-top: none !important;
+        border: solid 1px $border-light;
+    }
+}
+/*========================  Alert Popover Css ===============================*/
+.sweet-alert{
+    .sa-button-container {
+        margin-top: 13px;
+        padding: 13px 0px 0px;
+        text-align: right;
+    }
+    h2{margin-top: 45px;}
+    .lead {
+        font-size: 1rem;
+    }
+}
+/*========================  Pagination Css ===============================*/
+.pagination{
+    .page-item.active .page-link{
+        background-color: $primary;
+        border-color: $primary;
+    }
+    .page-link{ 
+        color: $dark;
+        border-color: $border-light;
+    }
+}
+.btn-search{
+    i{
+       top: 15px;
+    }
+}
+/*========================  Blog Post Css ===============================*/
+.btn-tags{
+    a{
+        transition: all 0.3s ease;
+        border-width: 2px !important;
+        &:hover{
+            border-color: $primary !important;
+            color: $primary;
+        }
+    }
+}
+/*========================  Buttons Dropdown Css ===============================*/
+.dropdown-toggle {
+    padding-left: 10px;
+}
+.dropdown-item{
+    border-bottom: solid 1px $border-light;
+    padding: 10px 15px;
+    &:active{
+        background-color: #f8f9fa;
+        color: $dark;
+    }
+} 
+/*======================== Dropzone Css ===============================*/
+#dropzone [type="file"], .dropzone [type="file"]  {
+  cursor: pointer;
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 80px;
+}
+.dropzone [type="file"]{ width: 20px !important;}
+.redial-process{
+    width: 271px;
+    height: 271px;
+    background: -webkit-gradient(linear, left bottom, right top, color-stop(15%, rgba(58,95,216,1)), color-stop(100%, rgba(255,255,255,1)));
+    .redial-middle-bar {
+        width: 195px;
+        height: 195px;
+        background-color: $white;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 40px;
+    }
+}
+.dropzone{
+    min-height: 150px;
+    border: 2px dashed;
+    padding: 20px 20px;
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center;
+}
+.dropzone .dz-message { margin: 2em 0; }
+.dropzone-primary{
+    background: rgba(46,90,239,.07);
+    color: #2e5aef;
+    border-color: #2e5aef
+}
+.dropzone-danger{
+    background: rgba(220,53,69,.07);
+    color: #dc3545;
+    border-color: #dc3545
+}
+.dropzone-success{
+    background: rgba(40,169,69,.07);
+    color: #28a745;
+    border-color: #28a745
+}
+.dropzone-info{
+    background: rgba(23,162,184,.07);
+    color: #17a2b8;
+    border-color: #17a2b8
+}
+
+/*======================== Form Inline Css ===============================*/
+.popover-body{ padding: 0px;}            
+.editable-click, a.editable-click, a.editable-click:hover {
+    text-decoration: none;
+    color: #2e5aef;
+}
+.popover-header {
+    font-size: 14px;
+    background-color: transparent;
+    border-bottom: 0px;
+}
+/*======================== Form Text Editor Css ===============================*/
+.note-editor{
+    .caret{ display: none;}
+}
+.has-error{
+    .help-block{     color: #dc3545;}
+}
+/*======================== Google Map Css ===============================*/
+#markermap {
+    min-height: 400px !important;
+}
+
+.bd-example-row{
+    span{
+        background-color: $secondry;
+        display: block;
+        line-height: 50px;
+        text-align: center;
+    }
+}
+/*======================== Icons Css ===============================*/
+.custom-tabs, .custom-tabs2{
+    .nav-tabs{
+        .nav-link{
+            border-bottom: 0px;
+            font-weight: 600;
+        }
+        .nav-link.active{
+            border-color: $border-light;
+        }
+    }
+}
+.custom-tabs2{
+    .nav-tabs{
+        border-color: transparent;
+        .nav-link{
+            background-color: $secondry-light;
+        }
+        .nav-link.active{ background-color: $white; }
+    }
+    .tab-content{    margin-top: -1px;}
+}
+/*======================== Mail Compass Css ===============================*/
+.badge-primary{background-color: $primary;}
+.inbox-nav{
+    .badge{ margin-top: 13px;}
+    a{
+        transition: all .3s ease;
+        &:hover{
+            background-color: $secondry-light;
+        }
+    }
+    
+}
+.table-inbox{
+    .table{
+       tbody td{ border-top: solid 1px $border-light !important;}
+    }
+    [type=checkbox] + label:before{ top: -5px;}
+}
+/*======================== Models Css ===============================*/
+.modal-dialog{ max-width: 100%;}
+.modal-lg { width: 800px !important; }
+.modal-sm { width: 300px !important; }
+.close{
+    &:focus{ outline: 0;}
+}
+/*======================== Price Table Css ===============================*/
+.pricing-table{
+    .price-tag {
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        transition: all .3s ease;
+        font-size: 2rem;
+    }
+    &:hover .price-tag, &:hover .price-header, &:hover .price-header2{
+        background-color: $primary;
+        border-color: $primary !important;
+        color: $white;
+    }
+    .price-header2{transition: all .3s ease;}
+    &:hover .price-header h4, &:hover .price-header2 h1{ color: $white;}
+    .price-header {
+        clip-path: polygon(50% 0%, 100% 0, 100% 1%, 50% 100%, 0 1%, 0 0);
+        background-color: $secondry;
+        transition: all .3s ease;
+    }
+    
+}
+.progress-bar.progress-bar-striped.active {
+    -webkit-animation: progress-bar-stripes 2s linear infinite;
+    -o-animation: progress-bar-stripes 2s linear infinite;
+    animation: progress-bar-stripes 2s linear infinite;
+}

@@ -1,0 +1,44 @@
+  /*
+* 	Owl Carousel Owl Demo Theme 
+*	v1.3.3
+*/
+.owl-pagination{ margin-top: 30px;}
+.owl-controls{
+	margin-top: 0px !important;
+}
+.owl-theme .owl-controls .owl-buttons div{
+    opacity: 1;
+}
+.owl-buttons {
+    height: 0;
+}
+.owl-theme .owl-prev, .owl-theme .owl-next{    
+    background-color: transparent !important;
+    margin: 0;
+    padding: 0;
+    display: inline;
+}
+.owl-theme .owl-prev:before{
+    content: "\f053";
+    font: normal normal normal 14px/1 FontAwesome;
+    position: absolute;
+    top: 40%;
+    background-color: #fff;
+    left: 0px;
+    width:40px;
+    height: 40px;
+    line-height: 40px;
+    color: #1b1b1b;
+}
+.owl-theme .owl-next:after{
+    content: "\f054";
+    font: normal normal normal 14px/1 FontAwesome;
+    position: absolute;
+    top: 40%;
+    background-color: #fff;
+    right: 0px;
+    width:40px;
+    height: 40px;
+    line-height: 40px;
+    color: #1b1b1b;
+}

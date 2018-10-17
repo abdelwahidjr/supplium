@@ -1,0 +1,49 @@
+#example_length {
+    float: left;
+}
+div.dataTables_wrapper div.dataTables_length select {
+    width: 100px;
+    height: 42px;
+    border: solid 1px #e6e6e6;
+    margin: 0px 6px;
+}
+div.dataTables_wrapper div.dataTables_filter {
+    text-align: right
+}
+div.dataTables_wrapper div.dataTables_filter input {
+    margin-left: 0.5em;
+    height: 42px;
+    border: solid 1px #e6e6e6;
+    color: #676767;
+    transition: .2s ease-out;
+    padding: .5rem 1.2rem;
+}
+div.dataTables_wrapper div.dataTables_filter input:focus,
+div.dataTables_wrapper div.dataTables_length select
+{     outline: 0;}
+#example_info, #example_paginate{
+    text-align: center;
+    margin: 15px 0px;
+}
+table.dataTable thead>tr>th:active,
+table.dataTable thead>tr>td:active {
+    outline: none
+}
+.paginate_button {
+    padding: .5rem .75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #676767;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+@media screen and (max-width: 767px) {
+    #example_length,  div.dataTables_wrapper div.dataTables_filter{
+        float: none;
+        text-align: center;
+        margin: 10px 0px;
+    }
+    #example_wrapper {
+        overflow-x: auto;
+    }
+}
