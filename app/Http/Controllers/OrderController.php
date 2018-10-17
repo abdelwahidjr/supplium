@@ -435,6 +435,7 @@ class OrderController extends Controller
     {
 
         $company_id = Auth::user()->company[0]->id;
+
         $company    = Company::find($company_id);
 
         if ($company != null)
