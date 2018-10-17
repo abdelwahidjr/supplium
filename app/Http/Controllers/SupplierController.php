@@ -82,7 +82,15 @@ class SupplierController extends Controller
 
         foreach ($products as $product)
         {
-            Product::create($product);
+            Product::create([
+                'sku'         => $product['sku'] ,
+                'name'        => $product['name'] ,
+                'unit'        => $product['unit'] ,
+                'price'       => $product['price'] ,
+                'category_id' => $product['category_id'] ,
+                'cart_id'     => $product['cart_id'] ,
+                'supplier_id' => $supplier->id ,
+            ]);
         }
 
         return response([
