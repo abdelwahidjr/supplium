@@ -13,7 +13,7 @@
                             </div>
                             <div class="redial-divider"></div>
                             <div class="card-body py-4 text-center">
-                                <img src="dist/images/logo-v2.png" alt="" class="img-fluid mb-4">
+                                <h3 class="center-block">Supplium</h3>
                                 <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
                                     @csrf
 

@@ -171,6 +171,7 @@
 </div>
 <!-- End header-->
 
+{{--
 
 <!-- Main-content Top bar-->
 <div class="redial-relative mt-80">
@@ -210,16 +211,17 @@
 </div>
 <!-- End Main-content Top bar-->
 
+--}}
 
 
 
 
 <!-- main-content-->
-<div class="wrapper">
+<div class="wrapper redial-relative mt-80" style="padding-top: 20px">
     <nav id="sidebar" class="card redial-border-light px-2 mb-4">
         <div class="sidebar-scrollarea">
             <ul class="metismenu list-unstyled mb-0" id="menu">
-                <li><a href="{{route('home')}}"><i class="fa fa-dashboard pr-1"></i> Dashboard</a></li>
+                <li><a href="{{route('dashboard')}}"><i class="fa fa-dashboard pr-1"></i> Dashboard</a></li>
                 <li>
                     <a class="has-arrow" href="#" data-toggle="collapse" aria-expanded="false"><i class="icofont icofont-shopping-cart pr-1"></i> Orders</a>
                     <ul class="collapse list-unstyled">

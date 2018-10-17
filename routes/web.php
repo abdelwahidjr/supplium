@@ -13,9 +13,9 @@
 
 Auth::routes();
 
-Route::get('/' , 'HomeController@welcome')->name('welcome');
+Route::get('/' , 'HomeController@home')->name('dashboard');
 
-Route::get('/home' , 'HomeController@home')->name('home');
+Route::get('/dashboard' , 'HomeController@home')->name('dashboard');
 
 Route::get('/test' , 'HomeController@test');
 
@@ -27,7 +27,7 @@ Route::prefix('admin')->group(function ()
     }
 });
 
-Route::prefix('public')->group(function ()
+Route::prefix('dashboard')->group(function ()
 {
     foreach (File::allFiles(base_path('routes/web/public')) as $file)
     {
