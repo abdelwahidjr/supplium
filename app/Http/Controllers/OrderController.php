@@ -20,6 +20,7 @@ use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Notification;
+use Request;
 
 class OrderController extends Controller
 {
@@ -28,6 +29,7 @@ class OrderController extends Controller
     {
 
     }
+
 
     public function all()
     {
@@ -332,8 +334,6 @@ class OrderController extends Controller
 
     public function ConfirmOrder(ConfirmOrderRequest $request)
     {
-//['fully_delivered' , 'fully_delivered_with_bonus' , 'partially_delivered' , 'not_delivered']
-
         $order = Order::find($request->order_id);
         if ($order === null)
         {
@@ -390,9 +390,9 @@ class OrderController extends Controller
         $total_items     = 0;
         $total_suppliers = 0;
 
-        $company_id = Auth::user()->company[0]->id;
+        $company = Auth::user()->company()->first();
 
-        $company = Company::find($company_id);
+        $company_id = $company->id;
 
         if ($company != null)
         {
@@ -426,54 +426,51 @@ class OrderController extends Controller
             'order_count'     => $order_count ,
             'total_purchases' => $total_purchases ,
             'total_items'     => $total_items ,
-            'total_suppliers' => $total_suppliers,
+            'total_suppliers' => $total_suppliers ,
         ]);
     }
 
 
-    public function company_standing_orders_web(){
+    public function company_standing_orders_web()
+    {
 
-
-
-        $company_id=Auth::user()->company[0]->id;
-        $company = Company::find($company_id);
-        if ($company != null) {
-            $brand_id_array = [];
+        $company_id = Auth::user()->company[0]->id;
+        $company    = Company::find($company_id);
+        if ($company != null)
+        {
+            $brand_id_array  = [];
             $outlet_id_array = [];
-            $brands = Brand::where('company_id', $company_id)->get();
+            $brands          = Brand::where('company_id' , $company_id)->get();
 
-            foreach ($brands as $brand) {
-                array_push($brand_id_array, $brand->id);
+            foreach ($brands as $brand)
+            {
+                array_push($brand_id_array , $brand->id);
             }
 
-            $outlets = Outlet::whereIn('brand_id', $brand_id_array)->get();
+            $outlets = Outlet::whereIn('brand_id' , $brand_id_array)->get();
 
-            foreach ($outlets as $outlet) {
-                array_push($outlet_id_array, $outlet->id);
+            foreach ($outlets as $outlet)
+            {
+                array_push($outlet_id_array , $outlet->id);
             }
 
             $standing_orders_ids = [];
 
-            $orders = Order::select('standing_order_id')->whereIn('outlet_id', $outlet_id_array)->get();
+            $orders = Order::select('standing_order_id')->whereIn('outlet_id' , $outlet_id_array)->get();
 
-            foreach ($orders as $order) {
+            foreach ($orders as $order)
+            {
 
-                if ($order->standing_order_id != null) {
-                    array_push($standing_orders_ids, $order->standing_order_id);
+                if ($order->standing_order_id != null)
+                {
+                    array_push($standing_orders_ids , $order->standing_order_id);
 
                 }
             }
-            $standing_orders = StandingOrder::whereIn('id', $standing_orders_ids)->get();
-           /* foreach ($standing_orders as $x)
-            {
-                dump($x->standing_order_repeated_period);
+            $standing_orders = StandingOrder::whereIn('id' , $standing_orders_ids)->get();
 
-            }
-            die();*/
-
-            return view('dashboard.orders.standing', ['standing_orders' => $standing_orders]);
+            return view('dashboard.orders.standing' , ['standing_orders' => $standing_orders]);
         }
-
 
 
     }
@@ -484,6 +481,7 @@ class OrderController extends Controller
 
 
     }
+
 
     public function web_store(Request $request)
     {

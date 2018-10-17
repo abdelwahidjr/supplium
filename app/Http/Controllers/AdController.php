@@ -43,7 +43,6 @@ class AdController extends Controller
         $ad       = new Ad();
         $ad->name = $filename;
 
-        //put your base url to retrieve images
         $ad->url = 'storage/images/ads/' . $filename . "." . $extension;
         $ad->fill($request->all());
         $ad->created_by_user_id = $request->user()->id;
