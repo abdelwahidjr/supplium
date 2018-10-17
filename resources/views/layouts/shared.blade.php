@@ -223,7 +223,7 @@
                 <li>
                     <a class="has-arrow" href="#" data-toggle="collapse" aria-expanded="false"><i class="icofont icofont-shopping-cart pr-1"></i> Orders</a>
                     <ul class="collapse list-unstyled">
-                        <li><a href="{{route('home')}}">Order History</a></li>
+                        <li><a href="{{route('order.history')}}">Order History</a></li>
                         <li><a href="{{route('order.standing')}}">Standing Orders</a></li>
 
                     </ul>

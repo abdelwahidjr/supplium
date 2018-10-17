@@ -3,8 +3,9 @@
 Route::group(['prefix' => 'order'], function () {
 
 
-    Route::get('/history', 'OrderController@web_all');
+/*    Route::get('/history', 'OrderController@web_all');*/
     Route::get('/standing',   [ 'as' => 'order.standing', 'uses' => 'OrderController@company_standing_orders_web']);
+    Route::get('/history',   [ 'as' => 'order.history', 'uses' => 'OrderController@web_all']);
 
 /*
     Route::get('/all', 'OrderController@all');
