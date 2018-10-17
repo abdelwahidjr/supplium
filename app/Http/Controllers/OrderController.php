@@ -384,84 +384,90 @@ class OrderController extends Controller
     public function web_all()
     {
 
-        $order_count =0;
+        $order_count     = 0;
         $total_purchases = 0;
-        $total_items = 0;
+        $total_items     = 0;
         $total_suppliers = 0;
 
+        $company_id = Auth::user()->company->id;
+        $company    = Company::find($company_id);
+        if ($company != null)
+        {
+            $brand_id_array  = [];
+            $outlet_id_array = [];
+            $brands          = Brand::where('company_id' , $company_id)->get();
 
-         $company_id=Auth::user()->company->id;
-         $company = Company::find($company_id);
-         if ($company != null)
-         {
-             $brand_id_array  = [];
-             $outlet_id_array = [];
-             $brands          = Brand::where('company_id' , $company_id)->get();
+            foreach ($brands as $brand)
+            {
+                array_push($brand_id_array , $brand->id);
+            }
 
-             foreach ($brands as $brand)
-             {
-                 array_push($brand_id_array , $brand->id);
-             }
+            $outlets = Outlet::whereIn('brand_id' , $brand_id_array)->get();
 
-             $outlets = Outlet::whereIn('brand_id' , $brand_id_array)->get();
+            foreach ($outlets as $outlet)
+            {
+                array_push($outlet_id_array , $outlet->id);
+            }
 
-             foreach ($outlets as $outlet)
-             {
-                 array_push($outlet_id_array , $outlet->id);
-             }
+            $order_count       = Order::whereIn('outlet_id' , $outlet_id_array)->count();
+            $total_purchases   = Order::whereIn('outlet_id' , $outlet_id_array)->sum('total_price_after_tax');
+            $total_items       = Order::whereIn('outlet_id' , $outlet_id_array)->where('status' , 'confirmed')->sum('total_qty');
+            $supplier_id_array = BrandSupplier::select('supplier_id')->whereIn('brand_id' , $brand_id_array)->get();
+            $total_suppliers   = count($supplier_id_array);
+            $previous_orders   = Order::with('supplier')->whereIn('outlet_id' , $outlet_id_array)->get();
 
+        }
 
-             $order_count = Order::whereIn('outlet_id' , $outlet_id_array)->count();
-             $total_purchases = Order::whereIn('outlet_id' , $outlet_id_array)->sum('total_price_after_tax');
-             $total_items = Order::whereIn('outlet_id' , $outlet_id_array)->where('status' , 'confirmed')->sum('total_qty');
-             $supplier_id_array = BrandSupplier::select('supplier_id')->whereIn('brand_id' , $brand_id_array)->get();
-             $total_suppliers = count($supplier_id_array);
-             $previous_orders=Order::with('supplier')->whereIn('outlet_id',$outlet_id_array)->get();
-
-         }
-
-
-
-
-        return view('dashboard.orders.history',['previous_orders'=>$previous_orders,'order_count'=>$order_count,'total_purchases'=>$total_purchases,'total_items'=>$total_items,'total_suppliers'=>$total_suppliers]);
+        return view('dashboard.orders.history' , [
+            'previous_orders' => $previous_orders ,
+            'order_count'     => $order_count ,
+            'total_purchases' => $total_purchases ,
+            'total_items'     => $total_items ,
+            'total_suppliers' => $total_suppliers ,
+        ]);
     }
 
 
-    public function company_standing_orders_web(){
+    public function company_standing_orders_web()
+    {
 
-        $company_id=Auth::user()->company->id;
-        $company = Company::find($company_id);
-        if ($company != null) {
-            $brand_id_array = [];
+        $company_id = Auth::user()->company->id;
+        $company    = Company::find($company_id);
+        if ($company != null)
+        {
+            $brand_id_array  = [];
             $outlet_id_array = [];
-            $brands = Brand::where('company_id', $company_id)->get();
+            $brands          = Brand::where('company_id' , $company_id)->get();
 
-            foreach ($brands as $brand) {
-                array_push($brand_id_array, $brand->id);
+            foreach ($brands as $brand)
+            {
+                array_push($brand_id_array , $brand->id);
             }
 
-            $outlets = Outlet::whereIn('brand_id', $brand_id_array)->get();
+            $outlets = Outlet::whereIn('brand_id' , $brand_id_array)->get();
 
-            foreach ($outlets as $outlet) {
-                array_push($outlet_id_array, $outlet->id);
+            foreach ($outlets as $outlet)
+            {
+                array_push($outlet_id_array , $outlet->id);
             }
 
             $standing_orders_ids = [];
 
-            $orders = Order::select('standing_order_id')->whereIn('outlet_id', $outlet_id_array)->get();
+            $orders = Order::select('standing_order_id')->whereIn('outlet_id' , $outlet_id_array)->get();
 
-            foreach ($orders as $order) {
+            foreach ($orders as $order)
+            {
 
-                if ($order->standing_order_id != null) {
-                    array_push($standing_orders_ids, $order->standing_order_id);
+                if ($order->standing_order_id != null)
+                {
+                    array_push($standing_orders_ids , $order->standing_order_id);
 
                 }
             }
-            $standing_orders = StandingOrder::whereIn('id', $standing_orders_ids)->get();
+            $standing_orders = StandingOrder::whereIn('id' , $standing_orders_ids)->get();
 
-            return view('dashboard.orders.standing', ['standing_orders' => $standing_orders]);
+            return view('dashboard.orders.standing' , ['standing_orders' => $standing_orders]);
         }
-
 
 
     }
