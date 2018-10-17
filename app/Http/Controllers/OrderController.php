@@ -333,8 +333,6 @@ class OrderController extends Controller
 
     public function ConfirmOrder(ConfirmOrderRequest $request)
     {
-//['fully_delivered' , 'fully_delivered_with_bonus' , 'partially_delivered' , 'not_delivered']
-
         $order = Order::find($request->order_id);
         if ($order === null)
         {
@@ -460,12 +458,6 @@ class OrderController extends Controller
                 }
             }
             $standing_orders = StandingOrder::whereIn('id', $standing_orders_ids)->get();
-           /* foreach ($standing_orders as $x)
-            {
-                dump($x->standing_order_repeated_period);
-
-            }
-            die();*/
 
             return view('dashboard.orders.standing', ['standing_orders' => $standing_orders]);
         }
