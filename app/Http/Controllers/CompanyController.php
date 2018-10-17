@@ -40,7 +40,7 @@ class CompanyController extends Controller
     public function show($id)
     {
 
-        $Company = Company::with('brand' , 'user' , 'supplier' , 'invoice' , 'plan')->find($id);
+        $Company = Company::with('brand' , 'users' , 'supplier' , 'invoice' , 'plan')->find($id);
 
         if ($Company === null)
         {
@@ -64,14 +64,14 @@ class CompanyController extends Controller
         }
         $company->update($request->all());
         $company->updated_by_user_id = $request->user()->id;
-        $user_ids                    = [];
+       /* $user_ids                    = [];
 
         foreach ($company->user as $k => $v)
         {
             $user_ids[$k] = $v['id'];
         }
 
-        $company->user()->sync($user_ids);
+        $company->user()->sync($user_ids);*/
         $company->save();
 
         return new ModelResource($company);
@@ -88,14 +88,14 @@ class CompanyController extends Controller
             ] , 422);
         }
 
-        $user_ids = [];
+      /*  $user_ids = [];
 
         foreach ($company->user as $k => $v)
         {
             $user_ids[$k] = $v['id'];
         }
 
-        $company->user()->detach($user_ids);
+        $company->user()->detach($user_ids);*/
 
         $company->delete();
 

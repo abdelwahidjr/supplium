@@ -58,11 +58,29 @@
                                 </div>
 
 
+
                                 <div class="form-group">
 
                                     <input id="password-confirm" type="password" class="form-control"
                                            name="password_confirmation" placeholder="Confirm Password" required>
                                 </div>
+
+
+                                <div class="form-group">
+                                    <input id="company_id" type="number"
+                                           class="form-control{{ $errors->has('company_id') ? ' is-invalid' : '' }}"
+                                           name="company_id" value="{{ old('company_id') }}" placeholder="Company Id" required>
+
+                                    @if ($errors->has('company_id'))
+                                        <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $errors->first('company_id') }}</strong>
+                                      </span>
+                                    @endif
+
+                                </div>
+
+
+
                                 <button type="submit" class="btn btn-primary btn-md redial-rounded-circle-50 btn-block">
                                     {{ __('Register') }}
                                 </button>

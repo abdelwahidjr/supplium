@@ -26,6 +26,7 @@ class User extends Authenticatable implements LogsActivityInterface
             'name' ,
             'email' ,
             'password' ,
+            'company_id' ,
             'created_by_user_id' ,
             'updated_by_user_id' ,
         ];
@@ -110,9 +111,11 @@ class User extends Authenticatable implements LogsActivityInterface
     }
 
 
+
+
     public function company()
     {
-        return $this->belongsToMany(Company::class)->withTimestamps();
+        return $this->belongsTo(Company::class);
     }
 
     public function setting()

@@ -16,6 +16,7 @@ class UserUpdate extends FormRequest
         return true;
     }
 
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -26,6 +27,8 @@ class UserUpdate extends FormRequest
         return [
             'name'  => 'max:255' ,
             'email' => 'unique:users|max:255' ,
+            'company_id' => 'required|exists:companies,id' ,
+
         ];
     }
 }

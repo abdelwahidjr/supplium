@@ -16,6 +16,7 @@ class UserAddMember extends FormRequest
         return true;
     }
 
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -26,6 +27,7 @@ class UserAddMember extends FormRequest
         return [
             'name'       => 'required|max:255' ,
             'email'      => 'required|unique:users|max:255' ,
+            'company_id' => 'required|exists:companies,id' ,
             'password'   => 'required|min:6|confirmed' ,
             'user_role'  => 'required|string' ,
             'company_id' => 'required|exists:companies,id' ,
