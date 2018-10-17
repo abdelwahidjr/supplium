@@ -9,6 +9,7 @@ use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\Outlet;
 use App\Models\Supplier;
+use Illuminate\Support\Facades\Auth;
 
 class CogsController extends Controller
 {
@@ -196,6 +197,7 @@ class CogsController extends Controller
      */
     public function TopSuplierPurchases($id)
     {
+
         $company_id = $id;
 
         if ( ! Company::find($id))
@@ -290,7 +292,7 @@ class CogsController extends Controller
 
             $total_amount_of_month = Invoice::whereMonth('invoices.created_at' , date('m' , strtotime(strval($i) . ' month')))
                 ->where('invoices.company_id' , $company_id)->sum('invoices.amount');
-            $orders                = Invoice::select('invoices.amount' , 'orders.created_at' , 'orders.status' , 'orders.deliverd_status')
+            $orders                = Invoice::select('invoices.amount' , 'orders.created_at' , 'orders.status' , 'orders.delivery_status')
                 ->join('orders' , 'invoices.order_id' , '=' , 'orders.id')
                 ->whereMonth('invoices.created_at' , date('m' , strtotime(strval($i) . ' month')))->where('invoices.company_id' , $company_id)->get();
 
@@ -482,6 +484,133 @@ class CogsController extends Controller
         return response()->json([
             'Purchases by Supplier' => $filtered_repositroy ,
         ]);
+
+    }
+
+
+
+    ##################################################
+    # Web Functions
+    ##################################################
+
+    public function web_all()
+    {
+
+        $order_count =0;
+        $total_purchases = 0;
+        $total_items = 0;
+        $total_suppliers = 0;
+
+
+        $company_id=Auth::user()->company[0]->id;
+        $company = Company::find($company_id);
+        if ($company != null)
+        {
+            $brand_id_array  = [];
+            $outlet_id_array = [];
+            $brands          = Brand::where('company_id' , $company_id)->get();
+
+            foreach ($brands as $brand)
+            {
+                array_push($brand_id_array , $brand->id);
+            }
+
+            $outlets = Outlet::whereIn('brand_id' , $brand_id_array)->get();
+
+            foreach ($outlets as $outlet)
+            {
+                array_push($outlet_id_array , $outlet->id);
+            }
+
+
+            $order_count = Order::whereIn('outlet_id' , $outlet_id_array)->count();
+            $total_purchases = Order::whereIn('outlet_id' , $outlet_id_array)->sum('total_price_after_tax');
+            $total_items = Order::whereIn('outlet_id' , $outlet_id_array)->where('status' , 'confirmed')->sum('total_qty');
+            $supplier_id_array = BrandSupplier::select('supplier_id')->whereIn('brand_id' , $brand_id_array)->get();
+            $total_suppliers = count($supplier_id_array);
+
+
+            $order_supplier_id = [];
+
+            foreach ($supplier_id_array as $supplier_id)
+            {
+
+                array_push($order_supplier_id , $supplier_id->supplier_id);
+            }
+
+            $total_supplier_purchases = [];
+
+            for ($i = 0; $i < count($supplier_id_array); $i++)
+            {
+                $supplier_name          = Supplier::select('name')->where('id' , $supplier_id_array[$i]->supplier_id)->first();
+                $supplier_purchases_sum = Order::where('supplier_id' , $supplier_id_array[$i]->supplier_id)->whereIn('outlet_id' , $outlet_id_array)
+                    ->sum('total_price_after_tax');
+
+                $item['name'] = $supplier_name->name;
+                $item['sum']  = $supplier_purchases_sum;
+
+                array_push($total_supplier_purchases , $item);
+
+            }
+
+            //to sort array of suppliers depending on puerchases from max to min
+            array_multisort(array_column($total_supplier_purchases , 'sum') , SORT_DESC , $total_supplier_purchases);
+
+            /*dump($total_supplier_purchases);
+            die();*/
+        }
+
+
+
+
+        return view('dashboard.cogs.cogs',['order_count'=>$order_count,'total_purchases'=>$total_purchases,'total_items'=>$total_items,'total_suppliers'=>$total_suppliers,'total_supplier_purchases'=>$total_supplier_purchases]);
+    }
+
+
+    public function company_standing_orders_web(){
+
+
+
+
+
+    }
+
+
+    public function web_create()
+    {
+
+
+    }
+
+    public function web_store(Request $request)
+    {
+
+
+    }
+
+
+    public function web_show($id)
+    {
+
+    }
+
+
+    public function web_edit($id)
+    {
+
+
+    }
+
+
+    public function web_update(Request $request , $id)
+    {
+
+    }
+
+
+    public function web_destroy($id)
+    {
+
 
     }
 

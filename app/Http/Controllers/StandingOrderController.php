@@ -89,4 +89,6 @@ class StandingOrderController extends Controller
             'message' => trans('main.deleted') ,
         ] , 200);
     }
+
+
 }
