@@ -111,6 +111,8 @@ class User extends Authenticatable implements LogsActivityInterface
     }
 
 
+
+
     public function company()
     {
         return $this->belongsTo(Company::class);

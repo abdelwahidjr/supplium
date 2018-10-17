@@ -23,6 +23,7 @@ class OrderHistoryController extends Controller
      */
     public function TotalOrders($id)
     {
+
         $company_id = $id;
 
         if ( ! Company::find($id))

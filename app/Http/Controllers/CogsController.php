@@ -501,7 +501,6 @@ class CogsController extends Controller
         $total_items = 0;
         $total_suppliers = 0;
 
-
         $company_id=Auth::user()->company->id;
         $company = Company::find($company_id);
         if ($company != null)

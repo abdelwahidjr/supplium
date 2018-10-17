@@ -430,8 +430,6 @@ class OrderController extends Controller
 
     public function company_standing_orders_web(){
 
-
-
         $company_id=Auth::user()->company->id;
         $company = Company::find($company_id);
         if ($company != null) {

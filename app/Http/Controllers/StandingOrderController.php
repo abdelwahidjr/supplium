@@ -15,6 +15,7 @@ class StandingOrderController extends Controller
     }
 
 
+
     public function all()
     {
         // all

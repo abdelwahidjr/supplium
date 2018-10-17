@@ -40,6 +40,7 @@ class UsersTableSeeder extends Seeder
             'admin@supplium.co' ,
         ];
 
+
         foreach (range(0 , 0) as $i)
         {
             User::create([
