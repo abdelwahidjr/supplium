@@ -61,9 +61,9 @@ class Company extends Model implements LogsActivityInterface
         return $this->hasMany(Brand::class);
     }
 
-    public function user()
+    public function users()
     {
-        return $this->belongsToMany(User::class)->withTimestamps();
+        return $this->hasMany(User::class);
     }
 
     public function supplier()

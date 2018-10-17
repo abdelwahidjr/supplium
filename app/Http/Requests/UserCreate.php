@@ -25,6 +25,7 @@ class UserCreate extends FormRequest
     {
         return [
             'name'     => 'required|max:255' ,
+            'company_id' => 'required|exists:companies,id' ,
             'email'    => 'required|unique:users|max:255' ,
             'password' => 'required|min:6|confirmed' ,
         ];

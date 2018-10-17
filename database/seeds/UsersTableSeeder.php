@@ -24,6 +24,7 @@ class UsersTableSeeder extends Seeder
                 User::create([
                     'name'     => $faker->name ,
                     'email'    => $faker->email ,
+                    'company_id' => rand(1 , 50),
                     'password' => Hash::make('secret') ,
                 ]);
             }
@@ -44,6 +45,7 @@ class UsersTableSeeder extends Seeder
             User::create([
                 'name'     => $users[$i] ,
                 'email'    => $emails[$i] ,
+                'company_id' => rand(1 , 50),
                 'password' => Hash::make('secret') ,
             ]);
         }

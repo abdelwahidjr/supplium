@@ -72,14 +72,14 @@ class UserController extends Controller
         $user->updated_by_user_id = $request->user()->id;
         $user->save();
 
-        $company_ids = [];
+     /*   $company_ids = [];
 
         foreach ($user->company as $k => $v)
         {
             $company_ids[$k] = $v['id'];
         }
 
-        $user->company()->sync($company_ids);
+        $user->company()->sync($company_ids);*/
 
         return new ModelResource($user);
     }
@@ -95,14 +95,14 @@ class UserController extends Controller
             ] , 422);
         }
 
-        $company_ids = [];
+        /*$company_ids = [];
 
         foreach ($user->company as $k => $v)
         {
             $company_ids[$k] = $v['id'];
         }
 
-        $user->company()->detach($company_ids);
+        $user->company()->detach($company_ids);*/
         $user->delete();
 
         return response()->json([
@@ -136,9 +136,9 @@ class UserController extends Controller
         $user->save();
 
         $company_id = $request->input('company_id');
-        $company    = Company::find($company_id);
+/*        $company    = Company::find($company_id);
 
-        $user->company()->sync($company);
+        $user->company()->sync($company);*/
 
         $role = $request->input('user_role');
 

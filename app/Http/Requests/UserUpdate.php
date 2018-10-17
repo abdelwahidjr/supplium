@@ -26,6 +26,8 @@ class UserUpdate extends FormRequest
         return [
             'name'  => 'max:255' ,
             'email' => 'unique:users|max:255' ,
+            'company_id' => 'required|exists:companies,id' ,
+
         ];
     }
 }

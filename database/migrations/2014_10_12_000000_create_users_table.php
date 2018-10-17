@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('company_id');
             $table->unsignedBigInteger('created_by_user_id')->nullable();
             $table->unsignedBigInteger('updated_by_user_id')->nullable();
             $table->rememberToken();
