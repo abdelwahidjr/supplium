@@ -14,6 +14,9 @@
     <link href="{{ asset('dist/css/plugins.min.css') }}" rel="stylesheet">
     <!--main Css-->
     <link href="{{ asset('dist/css/main.min.css') }}" rel="stylesheet">
+{{--
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+--}}
 
 </head>
 <body>
@@ -227,6 +230,7 @@
                     <ul class="collapse list-unstyled">
                         <li><a href="{{route('order.history')}}">Order History</a></li>
                         <li><a href="{{route('order.standing')}}">Standing Orders</a></li>
+                        <li><a href="{{route('order.new')}}">New Order</a></li>
 
                     </ul>
                 </li>
@@ -253,6 +257,9 @@
 <!-- jQuery -->
 <script src="{{ asset('dist/js/plugins.min.js') }}"></script>
 <script src="{{ asset('dist/js/common.js') }}"></script>
+{{--
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+--}}
 @yield('extra')
 
 </body>
