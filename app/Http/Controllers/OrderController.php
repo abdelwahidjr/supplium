@@ -6,7 +6,6 @@ use App\Http\Requests\ConfirmOrderRequest;
 use App\Http\Requests\OrderRequest;
 use App\Http\Resources\ModelResource;
 use App\Models\Brand;
-use App\Models\BrandSupplier;
 use App\Models\Company;
 use App\Models\Invoice;
 use App\Models\Order;
@@ -149,7 +148,7 @@ class OrderController extends Controller
                 // find order company users and send email
 
                 $order = Order::find($order->id);
-                $users = $order->outlet->brand->company->user;
+                $users = $order->outlet->brand->company->users;
 
                 foreach ($users as $user) {
                     if ($user->setting->notifications == 'on') {
@@ -427,8 +426,16 @@ class OrderController extends Controller
         if ($company != null) {
 
             $suppliers = Supplier::where('company_id', $company_id)->get();
+            $brand_id_array = [];
+            $brands = Brand::where('company_id', $company_id)->get();
 
-            return view('dashboard.orders.new', ['suppliers' => $suppliers]);
+            foreach ($brands as $brand) {
+                array_push($brand_id_array, $brand->id);
+            }
+
+            $outlets = Outlet::whereIn('brand_id', $brand_id_array)->get();
+
+            return view('dashboard.orders.new', ['suppliers' => $suppliers, 'outlets' => $outlets]);
         }
 
     }
@@ -436,16 +443,19 @@ class OrderController extends Controller
     public function web_test()
     {
         $company_id = Auth::user()->company->id;
+        dump($company_id);
         $company = Company::find($company_id);
         if ($company !== null) {
-            $supplier_ids = [];
-            $suppliers = Supplier::select('id')->where('company_id', $company_id)->get();
-            foreach ($suppliers as $supplier) {
-                array_push($supplier_ids, $supplier->id);
+            $brand_id_array = [];
+            $brands = Brand::where('company_id', $company_id)->get();
+
+            foreach ($brands as $brand) {
+                array_push($brand_id_array, $brand->id);
             }
 
-            $products = Product::whereIn('supplier_id', $supplier_ids)->get();
-            dump($products);
+            $outlets = Outlet::whereIn('brand_id', $brand_id_array)->get();
+
+            dump($outlets);
             die();
         }
 
@@ -456,8 +466,7 @@ class OrderController extends Controller
     {
         $company_id = Auth::user()->company->id;
         $company = Company::find($company_id);
-        if ($supplier_id==0)
-        {
+        if ($supplier_id == 0) {
             if ($company !== null) {
                 $supplier_ids = [];
                 $suppliers = Supplier::select('id')->where('company_id', $company_id)->get();
@@ -475,8 +484,7 @@ class OrderController extends Controller
 
                 return response()->json($products);
             }
-        }
-        else{
+        } else {
             $products = Product::where('supplier_id', $supplier_id)->get();
 
             return response()->json($products);
@@ -484,8 +492,151 @@ class OrderController extends Controller
 
     }
 
-    public function web_store(Request $request)
+    public function web_store(OrderRequest $request)
     {
+
+
+        /*      if ($request->type == 'standing') {
+
+                  $validator = Validator::make($request->all(), [
+                      'standing_order_name' => 'required',
+                      'standing_order_status' => 'required',
+                      'standing_order_repeated_days' => 'required',
+                      'standing_order_repeated_days.*' => 'required',
+                      'standing_order_repeated_period' => 'required',
+                      'standing_order_start_date' => 'required',
+                      'standing_order_end_date' => 'required',
+                  ]);
+
+                  if ($validator->fails()) {
+                      return response([
+                          'message' => "check data because it is invalid",
+                      ]);
+                      //return $validator->errors();
+                  }
+
+              }*/
+
+        // order status on creation should be pending
+
+        $order = new Order;
+        $msg = '';
+        $supplier_payment = SupplierPayment::where('supplier_id', $request->supplier_id)->first();
+        $available_credit = $supplier_payment->remaining_limit;
+
+        if ($supplier_payment) {
+            //if supplier payment type is credit
+            if ($supplier_payment->payment_type == "credit") {
+                $supplier_period_renewal = $supplier_payment->period_renewal;
+                //get supplier credit period
+                $supplier_credit_period = $supplier_payment->credit_period;
+                //get available period for this supplier
+                $available_until = date('d-m-Y', strtotime($supplier_period_renewal . ' + ' . $supplier_credit_period . ' days'));
+                //get the current date
+                $current_date = date("d-m-Y");
+                //compare the current date with the available period
+                if (strtotime($current_date) > strtotime($available_until)) {
+                    $allow = false;
+                    //no_enough_credit_period
+                    //$msg='this supplier has no enough credit period to deliver this request.';
+                    $msg = trans('main.no_enough_credit_period');
+
+                } else {
+                    //check credit if the supplier has available credit period
+                    $products = [];
+                    $products_id = [];
+                    $order->fill($request->all());
+                    foreach ($request->products as $k => $v) {
+                        $products[$k] = $v;
+                        $products_id[$k] = $v['id'];
+
+                        $order->total_qty += $v['qty'];
+                        $order->total_price_before_tax += ($v['qty'] * $v['price']);
+                    }
+
+                    $order->tax_val = ($order->total_price_before_tax * $order->tax / 100);
+                    //the current order total price after tax
+                    $order->total_price_after_tax = (double)$order->total_price_before_tax + $order->tax_val;
+                    //get the available credit of this supplier
+
+                    if ($order->total_price_after_tax < $available_credit) {
+                        //this supplier has available credit and can recieve more orders
+                        $allow = true;
+                    } else {
+                        //$msg='this supplier has no enough credit to deliver this request.';
+                        //check if restrict is on or off
+                        $restrict = $supplier_payment->restrict;
+                        if ($restrict == 'on') {
+                            $allow = false;
+                            $msg = trans('main.no_enough_credit_limit');
+                        } else {
+                            $allow = true;
+                        }
+                    }
+                }
+            } else {
+                //payment type is cash not credit
+                $allow = true;
+            }
+
+            if ($allow) {
+
+                if ($request->type == 'standing') {
+                    $standing_order = new StandingOrder();
+                    $standing_order->fill($request->all());
+                    $standing_order->created_by_user_id = $request->user()->id;
+                    $standing_order->save();
+                    $order->standing_order_id = $standing_order->id;
+                }
+
+                $today = new DateTime();
+                $timestamp = $today->format('His');
+                $order->created_by_user_id = Auth::id();
+
+                $order->number = $timestamp . '-' . rand(10, 1000);
+                $order->save();
+                $order->product()->sync($products_id);
+                $supplier_payment->remaining_limit = $available_credit - $order->total_price_after_tax;
+                $supplier_payment->save();
+
+                // find order company users and send email
+
+                $order = Order::find($order->id);
+                $users = $order->outlet->brand->company->users;
+
+                foreach ($users as $user) {
+                    if ($user->setting->notifications == 'on') {
+                        Notification::send($user, (new OrderConfirmation($order)));
+                    }
+                }
+
+                $supplier = Supplier::find($request->supplier_id);
+
+                Notification::send($supplier, (new SupplierHaveOrder()));
+
+                //success
+                /* return response([
+                     'order' => $order,
+                     'standard order' => $standing_order,
+                 ]);*/
+                return response([
+                    'message' => "order was success",
+                ]);
+            } else {
+                if (!$allow) {
+                    //return the reason of not allowing submitting this order
+                    return response([
+                        'message' => $msg,
+                    ]);
+                }
+            }
+        } else {
+            //it is not object
+            return response([
+                'message' => "supplier payment not found",
+            ]);
+
+        }
 
 
     }

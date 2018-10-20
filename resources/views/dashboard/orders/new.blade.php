@@ -178,6 +178,7 @@
                                                                 <th>supplier</th>
                                                                 <th>quantity</th>
                                                                 <th>total</th>
+                                                                <th>manage</th>
 
                                                             </tr>
                                                             </thead>
@@ -190,6 +191,7 @@
                                                                 <th>supplier</th>
                                                                 <th>quantity</th>
                                                                 <th>total</th>
+                                                                <th>manage</th>
 
                                                             </tr>
                                                             </tfoot>
@@ -359,7 +361,7 @@
 
             <div class="sa-placeholder"></div>
             <div class="sa-fix"></div>
-        </div><div class="sa-icon sa-custom" style="display: none;"></div><h4>Order was added to your Card!</h4>
+        </div><div class="sa-icon sa-custom" style="display: none;"></div><h4 style="margin-top: 10px" id="popup-message"></h4>
         <div class="sa-button-container">
             <button class="cancel btn btn-lg btn-default" tabindex="2" style="display: none;">Cancel</button>
             <div class="sa-confirm-button-container">
@@ -372,10 +374,107 @@
         </div></div>
 
     <!--end model -->
+
+
+
+
+     <!--start danager model-->
+    <div id="danger-model" class="sweet-alert  hidden" tabindex="-1" data-custom-class="" data-has-cancel-button="false" data-has-confirm-button="true" data-allow-outside-click="false" data-has-done-function="false" data-animation="pop" data-timer="null" style="display: block; margin-top: -181px;"><div class="sa-icon sa-error animateErrorIcon" style="display: block;">
+      <span class="sa-x-mark animateXMark">
+        <span class="sa-line sa-left"></span>
+        <span class="sa-line sa-right"></span>
+      </span>
+        </div><div class="sa-icon sa-warning" style="display: none;">
+            <span class="sa-body"></span>
+            <span class="sa-dot"></span>
+        </div><div class="sa-icon sa-info" style="display: none;"></div><div class="sa-icon sa-success" style="display: none;">
+            <span class="sa-line sa-tip"></span>
+            <span class="sa-line sa-long"></span>
+
+            <div class="sa-placeholder"></div>
+            <div class="sa-fix"></div>
+        </div><div class="sa-icon sa-custom" style="display: none;"></div><h2 style="margin-top: 15px;" id="danger-msg"></h2>
+        <div class="form-group">
+            <input type="text" class="form-control" tabindex="3" placeholder="">
+            <span class="sa-input-error help-block">
+        <span class="glyphicon glyphicon-exclamation-sign"></span> <span class="sa-help-text">Not valid</span>
+      </span>
+        </div><div class="sa-button-container">
+            <button class="cancel btn btn-lg btn-default" tabindex="2" style="display: none;">Cancel</button>
+            <div class="sa-confirm-button-container">
+                <button id="hide-btn" class="confirm btn btn-lg btn-danger" tabindex="1" style="display: inline-block;">OK</button><div class="la-ball-fall">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div></div>
+    <!--end danager model-->
+
+
+
+
+    <!-- Launch Demo Modal -->
+    <div class="modal fade" id="demoModal" tabindex="-1" role="dialog" aria-labelledby="demoModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content redial-border-light">
+                <div class="modal-header redial-border-light">
+                    <h5 class="modal-title pt-2" id="exampleModalLabel">Complete order details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="card-body">
+                            <form id="model-form" onsubmit="return false;">
+                                <div class="form-group">
+                                    <label class="redial-font-weight-600">Notes</label>
+                                    <input id="order-notes" type="text" class="form-control" placeholder="Enter Notes" required/>
+                                </div>
+                                <div class="form-group">
+                                    <label class="redial-font-weight-600">Tax</label>
+                                    <input id="order-tax" type="number" class="form-control" value="0" placeholder="Order tax" required/>
+                                </div>
+
+
+                                    <div class="form-group">
+                                        <label class="redial-font-weight-600">Select Outlet</label>
+
+                                        <select id="outlet-select" class="form-control select2" required>
+                                            @foreach($outlets as $outlet)
+                                                <option value="{{$outlet->id}}">{{$outlet->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                <div class="redial-divider my-4"></div>
+                                <button  id="submit" class="btn btn-primary btn-xs">Submit</button>
+                                <div class="progress mb-3 redial-bg-secondry">
+                                    <div id="progress-id" class="progress-bar progress-bar-striped active redial-bg-primary" role="progressbar" style="width: 0px;margin-top: 5px;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer redial-border-light">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--End Launch Demo Modal -->
+
+
+
+
 @endsection
 
 @section('extra')
 
+    <!-- provide the csrf token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <script src="{{ asset('js/new_order.js') }}"></script>
 

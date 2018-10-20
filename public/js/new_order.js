@@ -5,6 +5,21 @@ $(document).ready(function () {
         return numStr.test(n.toString());
     }
 
+    function showPopUp(msg) {
+        $('#mymodel').addClass('showSweetAlert');
+        $('#popup-message').html(msg);
+        $('#mymodel').removeClass('hidden');
+        $('#mymodel').modal('show');
+
+    }
+
+    function showDangerPopUp(msg) {
+        $('#danger-model').addClass('showSweetAlert');
+        $('#danger-msg').html(msg);
+        $('#danger-model').removeClass('hidden');
+        $('#danger-model').modal('show');
+
+    }
     //get products of all suppliers
     getProductsBySupplierId("0");
 
@@ -73,11 +88,18 @@ $(document).ready(function () {
                         //alert(sku);
 
                         //sku, name , price, unit , supplier , quantity ,total
-                        order.row.add([sku, name, price, unit, supplier_id, quantity, total]);
+                        order.row.add([sku, name, price, unit, supplier_id, quantity, total,"" +
+                        "<input id='order-name-"+id+"'  value='" + name + "' hidden>" +
+                        "<input id='order-id-"+id+"'  value='" + id + "' hidden>" +
+                        "<input id='order-quantity-"+id+"'  value='" + quantity + "' hidden>" +
+                        "<input id='order-price-"+id+"'  value='" + price + "' hidden>" +
+                        "<input id='order-supplier-"+id+"'  value='" + supplier_id + "' hidden>" +
+                        "<span class='input-group-btn'>" +
+                       "<input id='"+id+"' type='button' value='Delete' class='btn btn-danger del' >" +
+                       "<input style='margin-left: 10px;' id='"+id+"' type='button' value='Order' class='btn btn-primary order' >" +
+                       "</span>"]);
                         order.draw();
-                        $('#mymodel').addClass('showSweetAlert');
-                        $('#mymodel').removeClass('hidden');
-                        $('#mymodel').modal('show');
+                        showPopUp('Order was added successfully to your cart.');
 
                     }
 
@@ -90,10 +112,108 @@ $(document).ready(function () {
     }
 
 
+        $('#orders').on( 'click', 'tbody tr .del', function () {
+            var row = order.find('tr').eq(0);
+            order.fnDeleteRow(row[0]);
+        } );
+
+
+
+
+    $("#orders").on("click", ".order",function () {
+
+        var id = jQuery(this).attr('id');
+        var name = $('#order-name-'+id).val();
+        var product_id = $('#order-id-'+id).val();
+        var quantity = $('#order-quantity-'+id).val();
+        var supplier = $('#order-supplier-'+id).val();
+        var price = $('#order-price-'+id).val();
+
+
+
+        var postData = [
+            { "id": id, "qty": quantity,"price":price}
+        ];
+       /* "status"          : "pending",
+            "delivery_status" : "not_delivered",
+            "notes"           : "test notes test notes test notes",
+            "tax"             : "10.00",
+            "outlet_id"       : "51",
+            "supplier_id"       : "52",*/
+
+        $('#demoModal').modal('show');
+
+        $('#submit').on('click',function () {
+
+
+            var notes=$('#order-notes').val();
+            var tax=$('#order-tax').val();
+            var outlet_id=$('#outlet-select').val();
+
+            var req=
+                {
+                    "products" :postData,
+                    "status"          : "pending",
+                    "delivery_status" : "not_delivered",
+                    "notes"           : notes,
+                    "tax"             : tax,
+                    "outlet_id"       : outlet_id,
+                    "supplier_id"       : supplier,
+                    "type" : "normal"
+                }
+            ;
+
+          //  alert(JSON.stringify(req));
+
+            $.ajax({
+                type:'POST',
+                url: '/dashboard/order/store-order',
+                contentType: 'application/json',
+                accept: 'application/json',
+                data: JSON.stringify(req),
+                dataType: 'JSON',
+                beforeSend: function() {
+                    $('#submit').prop('disabled', true);
+                    $('#progress-id').css("width", "100%");
+                },
+                success:function(html){
+                    $('#submit').prop('disabled', false);
+
+                    $('#demoModal').modal('hide');
+                    $('#progress-id').css("width", "0px");
+                    showPopUp(html.message);
+                }
+                ,
+                error: function(xhr, status, error) {
+                    $('#submit').prop('disabled', false);
+                    $('#progress-id').css("width", "0px");
+                    $('#demoModal').modal('hide');
+                    showDangerPopUp("Error in response.");
+
+                }
+            });
+            //alert(JSON.stringify(req));
+            e.preventDefault();
+
+
+
+        });
+
+
+    });
+
     $('#ok-btn').on('click',function () {
         $('#mymodel').removeClass('showSweetAlert');
         $('#mymodel').addClass('hidden');
         $('#mymodel').modal('hide');
+
+    });
+
+    $('#hide-btn').on('click',function () {
+
+        $('#danger-model').removeClass('showSweetAlert');
+        $('#danger-model').addClass('hidden');
+        $('#danger-model').modal('hide');
     });
 
 });
