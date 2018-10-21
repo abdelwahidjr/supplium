@@ -45,26 +45,7 @@ class OrderController extends Controller
     public function store(OrderRequest $request)
     {
 
-        if ($request->type == 'standing') {
-
-            $validator = Validator::make($request->all(), [
-                'standing_order_name' => 'required',
-                'standing_order_status' => 'required',
-                'standing_order_repeated_days' => 'required',
-                'standing_order_repeated_days.*' => 'required',
-                'standing_order_repeated_period' => 'required',
-                'standing_order_start_date' => 'required',
-                'standing_order_end_date' => 'required',
-            ]);
-
-            if ($validator->fails()) {
-                return $validator->errors();
-            }
-
-        }
-
         // order status on creation should be pending
-
         $order = new Order;
         $msg = '';
         $supplier_payment = SupplierPayment::where('supplier_id', $request->supplier_id)->first();
@@ -494,31 +475,7 @@ class OrderController extends Controller
 
     public function web_store(OrderRequest $request)
     {
-
-
-        /*      if ($request->type == 'standing') {
-
-                  $validator = Validator::make($request->all(), [
-                      'standing_order_name' => 'required',
-                      'standing_order_status' => 'required',
-                      'standing_order_repeated_days' => 'required',
-                      'standing_order_repeated_days.*' => 'required',
-                      'standing_order_repeated_period' => 'required',
-                      'standing_order_start_date' => 'required',
-                      'standing_order_end_date' => 'required',
-                  ]);
-
-                  if ($validator->fails()) {
-                      return response([
-                          'message' => "check data because it is invalid",
-                      ]);
-                      //return $validator->errors();
-                  }
-
-              }*/
-
         // order status on creation should be pending
-
         $order = new Order;
         $msg = '';
         $supplier_payment = SupplierPayment::where('supplier_id', $request->supplier_id)->first();
@@ -615,12 +572,8 @@ class OrderController extends Controller
                 Notification::send($supplier, (new SupplierHaveOrder()));
 
                 //success
-                /* return response([
-                     'order' => $order,
-                     'standard order' => $standing_order,
-                 ]);*/
                 return response([
-                    'message' => "order was success",
+                    'message' => "Order was submitted successfully !",
                 ]);
             } else {
                 if (!$allow) {

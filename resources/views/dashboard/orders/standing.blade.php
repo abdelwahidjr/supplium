@@ -41,7 +41,7 @@
                                         <td>{{$order->standing_order_name}}</td>
                                         <td>{{$order->standing_order_status}}</td>
                                         <td>{{$order->standing_order_start_date}}</td>
-                                        <td>{{$order->standing_order_start_date}}</td>
+                                        <td>{{$order->standing_order_end_date}}</td>
                                         <td>
                                             [ @foreach($order->standing_order_repeated_days as $day)
                                                 {{$day." , " }}
@@ -52,7 +52,6 @@
                                         <td>
                                             {{$order->standing_order_repeated_period}}
                                         </td>
-
 
 
                                     </tr>

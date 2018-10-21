@@ -17,7 +17,7 @@ class StandingOrder extends Model implements LogsActivityInterface
             'standing_order_name' ,
             'standing_order_status' ,
             'standing_order_start_date' ,
-            'standing_order_start_date' ,
+            'standing_order_end_date' ,
             'standing_order_repeated_days' ,
             'standing_order_repeated_period' ,
             'created_by_user_id' ,
