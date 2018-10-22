@@ -14,6 +14,8 @@
     <link href="{{ asset('dist/css/plugins.min.css') }}" rel="stylesheet">
     <!--main Css-->
     <link href="{{ asset('dist/css/main.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/shared.css') }}" rel="stylesheet">
+
 {{--
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 --}}
@@ -155,7 +157,7 @@
                             </a>
                             <ul class="dropdown-menu border-bottom-0 rounded-0 py-0">
                                 <li><a class="dropdown-item py-2" href="#"><i class="fa fa-user pr-2"></i> User Profile</a></li>
-                                <li><a class="dropdown-item py-2" href="#"><i class="fa fa-cog pr-2"></i> Setting</a></li>
+                                <li><a class="dropdown-item py-2" href="{{route('user.settings')}}"><i class="fa fa-cog pr-2"></i> Setting</a></li>
                                 <li><a class="dropdown-item py-2" href="{{ route('logout') }}" onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();"><i class="fa fa-sign-out pr-2"></i> {{ __('Logout') }}
 
@@ -238,6 +240,11 @@
                     <a href="{{route('cogs')}}" ><i
                                 class="icofont icofont-chart-bar-graph pr-1"></i> Cogs</a>
 
+                </li>
+
+                <li>
+                    <a href="{{route('user.settings')}}" ><i
+                                class="icofont icofont-settings pr-1"></i> Settings</a>
                 </li>
 
 

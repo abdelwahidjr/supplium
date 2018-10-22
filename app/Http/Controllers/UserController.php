@@ -9,9 +9,11 @@ use App\Http\Requests\UserFindByMail;
 use App\Http\Requests\UserUpdate;
 use App\Http\Resources\ModelResource;
 use App\Models\Company;
+use App\Models\Setting;
 use App\Models\User;
 use Auth;
 use Hash;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -183,5 +185,33 @@ class UserController extends Controller
     }
 
 
+    public function updateNotification(Request $request){
+        //dump($request->all());
+       $user_id=Auth::id();
+        $setting=Setting::where('user_id',$user_id)->first();
+
+        if (is_object($setting))
+        {
+            $setting->notifications=$request->state;
+            $setting->updated_by_user_id=$user_id;
+            $setting->save();
+            return response()->json([
+                'code' => 1,
+                'message' => 'Notification settings updated successfully.' ,
+            ]);
+        }else{
+            return response()->json([
+                'code' => 0,
+                'message' => 'Failed to update notification settings.' ,
+            ]);
+        }
+    }
+    public function settings()
+    {
+        $user_id=Auth::id();
+        $setting=Setting::where('user_id',$user_id)->first();
+
+        return view('dashboard.profile.settings',['setting'=>$setting]);
+    }
 }
 

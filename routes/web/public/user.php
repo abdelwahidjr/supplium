@@ -15,6 +15,11 @@ Route::group(['prefix' => 'user'] , function ()
 
     Route::post('/add-member' , 'UserController@AddMember');
 
+    Route::post('/update-notification' , 'UserController@updateNotification')->where('id' , '[0-9]+');
+
+    Route::get('/settings',   [ 'as' => 'user.settings', 'uses' => 'UserController@settings']);
+
+
 });
 
 
