@@ -14,9 +14,7 @@
                         <li class="nav-item">
                             <a class="nav-link redial-light rounded-0 active" data-toggle="tab" href="#id1" role="tab" aria-selected="true" aria-expanded="true"><i class="icofont icofont-list pr-2"></i> All Products</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link redial-light rounded-0" data-toggle="tab" href="#id2" role="tab" aria-selected="false" aria-expanded="false"><i class="icofont icofont-list pr-2"></i> Guide</a>
-                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link redial-light rounded-0" data-toggle="tab" href="#id3" role="tab" aria-selected="false" aria-expanded="false"><i class="icofont icofont-shopping-cart pr-2"></i> Checkout</a>
                         </li>
@@ -69,11 +67,7 @@
 
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="id2" role="tabpanel" aria-expanded="false">
-                            <div class="card-body">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, suscipit, autem sit natus deserunt officia error odit ea minima soluta ratione maxime molestias fugit explicabo aspernatur praesentium quisquam voluptatum fuga delectus quidem quas aliquam minus at corporis libero? Modi, aperiam, pariatur, sequi illum dolore consequuntur aspernatur eos hic officia doloribus magnam impedit autem maiores.
-                            </div>
-                        </div>
+
                         <div class="tab-pane fade" id="id3" role="tabpanel" aria-expanded="false">
                             <div class="card-body">
 
