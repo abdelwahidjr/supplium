@@ -11,6 +11,8 @@
                 <div class="col-12 col-md-12">
                     <div class="card redial-border-light redial-shadow mb-4">
                         <div class="card-body">
+                            <a href="{{route('standing.new')}}" style="color: white" class="btn btn-primary pull-right"><i class="icofont icofont-plus-square"></i> New</a>
+
                             <h6 class="header-title pl-3 redial-relative">Standing Orders</h6>
 
 

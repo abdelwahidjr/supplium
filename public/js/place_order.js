@@ -144,6 +144,7 @@ $(document).ready(function () {
 
                         $('#collapse-del-' + id).on('click', function () {
                             $('#accordion-item' + id).remove();
+                            order.row('#row' + id).remove().draw();
                             updateCheckoutCount();
                         });
                              //sku, name , price, unit , supplier , quantity ,total
@@ -157,12 +158,24 @@ $(document).ready(function () {
                              "<span class='input-group-btn'>" +
                              "<input id='" + id + "' type='button' value='Delete' class='btn btn-danger del' >" +
                              "<input style='margin-left: 10px;' id='" + id + "' type='button' value='Order' class='btn btn-primary order' >" +
-                             "</span>"]);
+                             "</span>"]).node().id = 'row'+id;;
                               order.draw();
-                             showPopUp('Order was added successfully to your cart.');
+
+
+                        $('#'+id).hide();
+                        jQuery(this).val('Added');
+                        jQuery(this).prop('disabled', true);
+                        showPopUp('Order was added successfully to your cart.');
 
                     }
 
+                });
+
+                $("#orders").on("click", ".del", function () {
+                    var id = jQuery(this).attr('id');
+                    order.row('#row' + id).remove().draw();
+                    $('#accordion-item' + id).remove();
+                    updateCheckoutCount();
                 });
 
             }

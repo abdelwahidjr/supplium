@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ModelResource;
+use App\Models\Brand;
+use App\Models\Outlet;
 use App\Models\StandingOrder;
+use App\Models\Supplier;
+use Illuminate\Support\Facades\Auth;
 
 class StandingOrderController extends Controller
 {
@@ -92,4 +96,19 @@ class StandingOrderController extends Controller
     }
 
 
+    public function web_new()
+    {
+        $company_id = Auth::user()->company->id;
+        $suppliers=Supplier::where('company_id',$company_id)->get();
+
+        $brand_id_array = [];
+        $brands = Brand::where('company_id', $company_id)->get();
+
+        foreach ($brands as $brand) {
+            array_push($brand_id_array, $brand->id);
+        }
+
+        $outlets = Outlet::whereIn('brand_id', $brand_id_array)->get();
+        return view('dashboard.orders.new_standing',['suppliers'=>$suppliers,'outlets'=>$outlets]);
+    }
 }

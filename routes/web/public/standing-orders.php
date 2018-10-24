@@ -12,6 +12,7 @@ Route::group(['prefix' => 'standing-orders'] , function ()
     /*    Route::post('/{id}' , 'StandingOrderController@update')->where('id' , '[0-9]+');*/
 
     Route::delete('/{id}' , 'StandingOrderController@destroy')->where('id' , '[0-9]+');
+    Route::get('/new',   [ 'as' => 'standing.new', 'uses' => 'StandingOrderController@web_new']);
 
 });
 
