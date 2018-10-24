@@ -7,7 +7,9 @@ use App\Http\Requests\StoreProductDirectoryRequest;
 use App\Http\Requests\UpdateProductDirectoryRequest;
 use App\Http\Resources\ModelResource;
 use App\Models\ProductDirectory;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ProductDirectoryController extends Controller
@@ -243,4 +245,78 @@ class ProductDirectoryController extends Controller
 
         return new ModelResource($directories);
     }
+
+
+
+    public function web_create()
+    {
+
+        return view('dashboard.product_directory.new');
+
+    }
+
+    public function web_directory(ProductDirectoryRequest $request)
+    {
+
+        $path           = $request->file->getRealPath();
+        $data           = Excel::load($path , function ($reader)
+        {
+        })->get();
+
+        if ( ! empty($data) && $data->count())
+        {
+            foreach ($data as $key => $value)
+            {
+                if (!isset($value->segment) || !isset($value->category) || !isset($value->sub_category)
+                    || !isset($value->supplier) || !isset($value->brand) || !isset($value->sku)
+                    || !isset($value->item_description) || !isset($value->alsnf) || !isset($value->qty)
+                    || !isset($value->unit_price) || !isset($value->weight)
+                    || !isset($value->unit) || !isset($value->case_price)
+                    || !isset($value->origin) || !isset($value->unit_of_sale)) {
+                    return redirect()->back()->with('error', 'Invalid content of file !');
+                }
+
+
+                if (ProductDirectory::where('sku' , $value->sku)->exists())
+                {
+                    return redirect()->back()->with('error','This sku ' . $value->sku . ' is already taken !');
+                } else
+                {
+
+                    $insert[] = [
+                        'segment'      => $value->segment ,
+                        'category'     => $value->category ,
+                        'sub_category' => $value->sub_category ,
+                        'supplier'     => $value->supplier ,
+                        'brand'        => $value->brand ,
+                        'sku'          => $value->sku ,
+                        'describtion'  => $value->item_description ,
+                        'type'         => $value->alsnf ,
+                        'quantity'     => $value->qty ,
+                        'unit_price'   => $value->unit_price ,
+                        'weight'       => $value->weight ,
+                        'unit'         => $value->unit ,
+                        'case_price'   => $value->case_price ,
+                        'origin'       => $value->origin ,
+                        'unit_of_sale' => $value->unit_of_sale ,
+                    ];
+                }
+            }
+
+            if (! empty($insert))
+            {
+                DB::table('product_directories')->insert($insert);
+                return redirect()->back()->with('success','Products records stored successfully !');
+
+            } else
+            {
+                return redirect()->back()->with('error','Failed to store products.');
+
+            }
+
+        }
+        return redirect()->back()->with('error','Empty data , Please check it and try again !');
+
+    }
+
 }

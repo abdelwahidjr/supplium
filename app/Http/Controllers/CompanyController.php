@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CompanyRequest;
 use App\Http\Resources\ModelResource;
 use App\Models\Company;
+use App\Models\Invoice;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends Controller
 {
@@ -106,4 +108,15 @@ class CompanyController extends Controller
     }
 
 
+
+    public function web_company_invoices()
+    {
+        $company_id = Auth::user()->company->id;
+        $invoices=Invoice::where('company_id',$company_id)->get();
+        $total_amount=Invoice::where('company_id',$company_id)->sum('amount');
+        $paid_amount=Invoice::where('company_id',$company_id)->sum('paid_amount');
+        $remaining_amount=Invoice::where('company_id',$company_id)->sum('remaining_amount');
+
+        return view('dashboard.profile.invoices',['invoices'=>$invoices,'total_amount'=>$total_amount,'paid_amount'=>$paid_amount,'remaining_amount'=>$remaining_amount]);
+    }
 }

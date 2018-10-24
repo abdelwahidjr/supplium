@@ -421,6 +421,27 @@ class OrderController extends Controller
 
     }
 
+    public function web_place()
+    {
+        $company_id = Auth::user()->company->id;
+        $company = Company::find($company_id);
+        if ($company != null) {
+
+            $suppliers = Supplier::where('company_id', $company_id)->get();
+            $brand_id_array = [];
+            $brands = Brand::where('company_id', $company_id)->get();
+
+            foreach ($brands as $brand) {
+                array_push($brand_id_array, $brand->id);
+            }
+
+            $outlets = Outlet::whereIn('brand_id', $brand_id_array)->get();
+
+            return view('dashboard.orders.place', ['suppliers' => $suppliers, 'outlets' => $outlets]);
+        }
+
+    }
+
     public function web_test()
     {
         $company_id = Auth::user()->company->id;
@@ -456,13 +477,6 @@ class OrderController extends Controller
                 }
 
                 $products = Product::whereIn('supplier_id', $supplier_ids)->get();
-                /*  return response([
-                      'draw'=> 1,
-                      'recordsTotal' => count($products),
-                      'recordsFiltered' => count($products),
-                      'data' => $products,
-                  ]);*/
-
                 return response()->json($products);
             }
         } else {

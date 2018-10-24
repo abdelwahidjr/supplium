@@ -17,6 +17,11 @@ Route::group(['prefix' => 'supplier-directory'] , function ()
 
     Route::get('/sort/{type}' , 'SupplierDirectoryController@SortSupplierDirectories');
 
+
+    Route::get('/new',   [ 'as' => 'supplier_directory.create', 'uses' => 'SupplierDirectoryController@web_create']);
+
+    Route::post('/supplier_directory',   [ 'as' => 'supplier_directory.store', 'uses' => 'SupplierDirectoryController@web_directory']);
+
 });
 
 

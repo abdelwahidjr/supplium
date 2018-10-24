@@ -733,6 +733,10 @@ select[multiple], select[size] {
   content: "k";
   padding-left: 5px; }
 
+.fact-box3 .counter_number:after {
+  content: "$";
+  padding-left: 5px; }
+
 /*======================== Header Title Css ===============================*/
 .header-title:before {
   content: "";
