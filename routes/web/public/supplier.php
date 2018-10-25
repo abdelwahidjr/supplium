@@ -3,7 +3,7 @@
 Route::group(['prefix' => 'supplier'] , function ()
 {
 
-    Route::get('/all' , 'SupplierController@web_all');
+    Route::get('/all' , 'SupplierController@web_all')->name('all_suppliers');
 
     Route::get('/add' , 'SupplierController@web_create');
 

@@ -13,7 +13,8 @@
                                         
                                     
  <div class='alert alert-danger alert-error' style='display:none'></div>
-                                        <form id="supplier_form" data-toggle="validator" method="POST" action="{{ url('public/supplier/web_update_products/'.$supplier->id) }}">
+                                        <form id="supplier_form" data-toggle="validator" method="POST"
+                                              action="{{ url('dashboard/supplier/web_update_products/'.$supplier->id) }}">
                                         {{ csrf_field() }}
                                         {{ method_field('PATCH') }}
                               
@@ -45,7 +46,7 @@
 $(document).ready(function () {
        var _token = "{{ csrf_token() }}";
       $.ajax({
-                    url: "{{url('public/supplier/get_products/'.$supplier->id)}}",
+          url: "{{url('dashboard/supplier/get_products/'.$supplier->id)}}",
                     data: {_token:_token}, 
                     type: 'POST',
                     success: function (response) {
@@ -131,7 +132,7 @@ $(document).ready(function () {
                             success: function (response) {
                                 if(response.success == true){
                                     swal("Update Successfully", "", "success");
-                                    window.location.href= "{{url('public/supplier/all')}}";
+                                    window.location.href = "{{url('dashboard/supplier/all')}}";
                                 }
                                 //console.log(response);
                             },

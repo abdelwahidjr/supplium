@@ -11,10 +11,10 @@ use App\Models\Product;
 use App\Models\Supplier;
 use App\Models\SupplierPayment;
 use DB;
-use Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
+use Session;
 
 class SupplierController extends Controller
 {
@@ -371,14 +371,15 @@ class SupplierController extends Controller
          $data['supplier'] = Supplier::find($id);
         return view('dashboard.suppliers.edit_info' , $data);
     }
-    
+
     public function web_update_info(Request $request , $id)
     {
         $supplier = Supplier::find($id);
          $supplier->fill($request->all());
          $supplier->save();
          Session::flash('success_message', 'Update Successfully');
-         return redirect(url('public/supplier/all'));
+
+        return redirect(url('dashboard/supplier/all'));
     }
     
     public function web_edit_payment($id)
@@ -407,7 +408,8 @@ class SupplierController extends Controller
           
           SupplierPayment::where('supplier_id',$id)->update($request_data);
           Session::flash('success_message', 'Update Successfully');
-         return redirect(url('public/supplier/all'));
+
+        return redirect(url('dashboard/supplier/all'));
     }
     
     public function web_edit_products($id)

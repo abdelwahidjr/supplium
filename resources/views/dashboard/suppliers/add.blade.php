@@ -37,7 +37,8 @@
                                             
                                         </div>
                                         <div class='alert alert-danger alert-error' style='display:none'></div>
-                                        <form id="supplier_form" data-toggle="validator" method="POST" action="{{ url('public/supplier') }}">
+                                        <form id="supplier_form" data-toggle="validator" method="POST"
+                                              action="{{ url('dashboard/supplier') }}">
                                         {!! csrf_field() !!}
                                         <div class="tab-content" id="myTabContent">
                                            
@@ -240,7 +241,7 @@ $(document).ready(function(){
                     success: function (response) {
                         if(response.success == true){
                             swal("Insert Successfully", "", "success");
-                            window.location.href= "{{url('public/supplier/all')}}";
+                            window.location.href = "{{url('dashboard/supplier/all')}}";
                         }
                         //console.log(response);
                     },

@@ -624,7 +624,7 @@ class OrderController extends Controller
     }
 
 
-    public function web_update(Request $request, $id)
+    public function web_update(Request $request , $id)
     {
 
     }

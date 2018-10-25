@@ -290,6 +290,16 @@
                     </li>
 
                     <li>
+                        <a href="{{route('all_suppliers')}}"><i
+                                    class="icofont icofont-box pr-1"></i> All Suppliers </a>
+                    </li>
+
+                    <li>
+                        <a href="{{url('dashboard/supplier/add')}}"><i
+                                    class="icofont icofont-box pr-1"></i> Add Suppliers </a>
+                    </li>
+
+                    <li>
                         <a href="{{route('product_directory.create')}}"><i
                                     class="icofont icofont-box pr-1"></i> Product Directory </a>
                     </li>

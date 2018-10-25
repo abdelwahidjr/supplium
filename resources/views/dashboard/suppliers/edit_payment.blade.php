@@ -9,7 +9,8 @@
                                         
                                     
  <div class='alert alert-danger alert-error' style='display:none'></div>
-                                        <form id="supplier_form" data-toggle="validator" method="POST" action="{{ url('public/supplier/web_update_payment/'.$supplier->supplier_id) }}">
+                                        <form id="supplier_form" data-toggle="validator" method="POST"
+                                              action="{{ url('dashboard/supplier/web_update_payment/'.$supplier->supplier_id) }}">
                                         {{ csrf_field() }}
                                         {{ method_field('PATCH') }}
                               
