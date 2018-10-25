@@ -58,6 +58,9 @@ $(document).ready(function () {
         $('#danger-model').modal('show');
     }
 
+    $('#refresh-btn').on('click',function () {
+        getProductsBySupplierId("0");
+    });
     //get products of all suppliers
     getProductsBySupplierId("0");
 

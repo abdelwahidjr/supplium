@@ -4,9 +4,9 @@
 
 
 
-<!--start data table-->
+    <!--start data table-->
 
-<div class="row">
+    <div class="row">
         <div class="col-12 col-sm-12">
             <div class="row mb-4">
                 <div class="col-12 col-md-12">
@@ -39,9 +39,14 @@
                                     <tr>
                                         <td>{{$order->number}}</td>
                                         <td>{{$order->supplier->name}}</td>
-                                        <td>{{$order->delivery_status}}</td>
+                                        <td>
+                                            <span class="badge badge-danger text-white">{{$order->delivery_status}}</span>
+                                        </td>
+                                        </td>
                                         <td>{{$order->total_price_after_tax}}</td>
-                                        <td>{{$order->status}}</td>
+                                        <td>
+                                            <span class="badge badge-primary text-white">{{$order->status}}</span></td>
+                                        </td>
                                         <td>{{$order->outlet->name}}</td>
 
                                     </tr>

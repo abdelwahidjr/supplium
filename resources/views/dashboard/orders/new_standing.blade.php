@@ -6,9 +6,10 @@
             <div class="card redial-border-light redial-shadow form-tab" id="tabcontainer1">
                 <div class="card-body">
                     <ul class="nav nav-fill flex-column flex-md-row mb-4" id="myTab" role="tablist">
+
                         <li class="nav-item">
-                            <a class="nav-link redial-dark redial-relative px-0 rounded active tab1" data-toggle="tab"
-                               href="#tab1" role="tab" aria-controls="tab1" aria-expanded="true">
+                            <a id="first-header" class="nav-link redial-dark redial-relative px-0 rounded disabled tab1" data-toggle="tab"
+                               href="#tab1" role="tab" aria-controls="" aria-expanded="true">
                                 <div class="media text-left pl-3">
                                     <div class="d-flex mr-3 align-self-center"><h1 class="mb-0 redial-font-weight-900">
                                             1</h1></div>
@@ -19,8 +20,9 @@
                                 </div>
                             </a>
                         </li>
+
                         <li class="nav-item ml-lg-3 ml-1">
-                            <a class="nav-link redial-dark redial-relative px-0 rounded tab2" data-toggle="tab"
+                            <a id="second-header" class="nav-link redial-dark redial-relative px-0 rounded disabled tab2" data-toggle="tab"
                                href="#tab2" role="tab" aria-controls="tab2" aria-expanded="true">
                                 <div class="media text-left pl-3">
                                     <div class="d-flex mr-3 align-self-center"><h1 class="mb-0 redial-font-weight-900">
@@ -34,7 +36,7 @@
                         </li>
 
                         <li class="nav-item ml-lg-3 ml-1">
-                            <a class="nav-link redial-dark redial-relative px-0 rounded tab3" data-toggle="tab"
+                            <a id="third-header" class="nav-link redial-dark redial-relative px-0 rounded disabled tab3" data-toggle="tab"
                                href="#tab3" role="tab" aria-controls="tab3" aria-expanded="true">
                                 <div class="media text-left pl-3">
                                     <div class="d-flex mr-3 align-self-center"><h1 class="mb-0 redial-font-weight-900">
@@ -48,7 +50,7 @@
                         </li>
 
                         <li class="nav-item ml-lg-3 ml-1">
-                            <a class="nav-link redial-dark redial-relative px-0 rounded tab4" data-toggle="tab"
+                            <a id="fourth-header" class="nav-link redial-dark redial-relative px-0 rounded disabled tab4" data-toggle="tab"
                                href="#tab4" role="tab" aria-controls="tab4" aria-expanded="true">
                                 <div class="media text-left pl-3">
                                     <div class="d-flex mr-3 align-self-center"><h1 class="mb-0 redial-font-weight-900">
@@ -110,7 +112,11 @@
 
                         <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2"
                              aria-expanded="true">
+
                             <div class='row'>
+                                <div class='row pull-right'>
+                                    <button id="refresh-btn" class="btn btn-primary pull-right" style="margin-left: 5px;"><i class="icofont icofont-refresh"></i></button>
+                                </div>
                                 <!--start data table-->
                                 <div class="col-12 col-lg-12 col-lg-offset-12">
                                     <table id="example"
@@ -145,6 +151,10 @@
 
 
 
+                            </div>
+                            <div class='text-center'>
+                                <a href="#" id="second_prev_btn"  data-tab="tab1" class="tab-next btn btn-primary btn-sm rounded-0 text-uppercase px-5  mr-3"><i class="fa fa-long-arrow-left pr-2"></i> Prev</a>
+                                <a href="#" id="second_next_btn"  data-tab="tab3" class="tab-next btn btn-primary btn-sm rounded-0 text-uppercase px-5 disabled"> Next <i class="fa fa-long-arrow-right pl-2"></i></a>
                             </div>
                         </div>
                         <!--end second tab -->
@@ -194,6 +204,10 @@
 
 
                             </div>
+                            <div class='text-center'>
+                                <a href="#" id="third_prev_btn" data-tab="tab2" class="tab-next btn btn-primary btn-sm rounded-0 text-uppercase px-5  mr-3"><i class="fa fa-long-arrow-left pr-2"></i> Prev</a>
+                                <a href="#" id="third_next_btn" data-tab="tab4" class="tab-next btn btn-primary btn-sm rounded-0 disabled text-uppercase px-5"> Next <i class="fa fa-long-arrow-right pl-2"></i></a>
+                            </div>
                         </div>
                         <!--end third tab -->
 
@@ -237,14 +251,6 @@
 
                                     <div id="standing-container">
 
-
-                                        <div class="form-group">
-                                            <label class="redial-font-weight-600">Select Order State</label>
-                                            <select id="state-select" class="form-control select2" required>
-                                                <option value="active">Active</option>
-                                                <option value="expired">Expired</option>
-                                            </select>
-                                        </div>
 
                                         <div class="form-group">
                                             <label class="redial-font-weight-600">Select Repeted Period</label>
@@ -307,6 +313,9 @@
 
 
 
+                            </div>
+                            <div class='text-center'>
+                                <a href="#"  id="fourth_prev_btn"  data-tab="tab3" class="tab-next btn btn-primary btn-sm rounded-0 text-uppercase px-5  mr-3"><i class="fa fa-long-arrow-left pr-2"></i> Prev</a>
                             </div>
                         </div>
                         <!--end fourth tab -->

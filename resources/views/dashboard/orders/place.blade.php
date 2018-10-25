@@ -25,6 +25,9 @@
 
                                 <div class="form col-lg-12 col-sm-6" style="margin-bottom: 20px;">
                                     <div class="form-group ">
+                                        <div class='row pull-right'>
+                                            <button id="refresh-btn" class="btn btn-primary pull-right" style="margin-left: 15px;"><i class="icofont icofont-refresh"></i></button>
+                                        </div>
                                         <select id="select" class="form-control select2 col-sm-6">
                                             <option value="0">All Suppliers</option>
                                             @foreach($suppliers as $supplier)

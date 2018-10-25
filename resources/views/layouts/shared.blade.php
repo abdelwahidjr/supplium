@@ -70,7 +70,7 @@
                                     <span
                                             class="input-group-btn">
                                         <input id="check-out-count" type="button" value="0"
-                                               class="btn btn-danger add"></span>
+                                               class="btn btn-success add"></span>
                                 </div>
 
                             </li>

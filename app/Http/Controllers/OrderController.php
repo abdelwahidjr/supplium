@@ -572,7 +572,8 @@ class OrderController extends Controller
 
                 // find order company users and send email
 
-                $order = Order::find($order->id);
+                //TODO un comment for notifications
+                /*$order = Order::find($order->id);
                 $users = $order->outlet->brand->company->users;
 
                 foreach ($users as $user) {
@@ -583,7 +584,7 @@ class OrderController extends Controller
 
                 $supplier = Supplier::find($request->supplier_id);
 
-                Notification::send($supplier, (new SupplierHaveOrder()));
+                Notification::send($supplier, (new SupplierHaveOrder()));*/
 
                 //success
                 return response([
