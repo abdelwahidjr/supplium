@@ -21,6 +21,7 @@ Route::get('/test' , 'HomeController@test');
 
 Route::prefix('admin')->group(function ()
 {
+    //dd(File::allFiles(base_path('routes/web/admin')));
     foreach (File::allFiles(base_path('routes/web/admin')) as $file)
     {
         require($file->getPathname());

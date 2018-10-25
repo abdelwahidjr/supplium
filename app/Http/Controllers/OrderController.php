@@ -392,7 +392,7 @@ class OrderController extends Controller
 
         $company = Auth::user()->company()->first();
 
-        $company_id = $company->id;
+        $company_id = 1;//$company->id;
 
         if ($company != null)
         {

@@ -842,8 +842,10 @@ select[multiple], select[size] {
   position: relative;
   padding-left: 25px;
   cursor: pointer; }
-
-[type=radio], [type=checkbox] {
+  [type=radio]{
+    margin-right: 9px !important;
+  }
+ [type=checkbox] {
   position: absolute;
   left: -9999px;
   visibility: hidden; }

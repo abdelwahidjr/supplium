@@ -14,7 +14,7 @@
     <link href="{{ asset('dist/css/plugins.min.css') }}" rel="stylesheet">
     <!--main Css-->
     <link href="{{ asset('dist/css/main.min.css') }}" rel="stylesheet">
-
+    @yield('extra_head')
 </head>
 <body>
 
